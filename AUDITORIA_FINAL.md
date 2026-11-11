@@ -124,7 +124,8 @@ el aspecto de las que cambiaron.
 | Lint | ruff (E9, F, B) en `fuente/` y `simulacion_termica/` | ✔ 0 avisos |
 | Sintaxis JavaScript | `node --check` en todos los .js y .mjs | ✔ |
 | Sitio por HTTP: enlaces (104), video (3:51), galería, páginas de equipos, visor ampliado, textos alternativos, redirección, visores 3D y simulador sin errores, celular (iPhone 13) sin desplazamiento horizontal | Playwright (`tests/e2e/probar_sitio.js`) | ✔ **24 de 24** |
-| Sitio publicado en GitHub Pages (primera publicación): los mismos controles contra la dirección pública, en computadora y en celular | Playwright con `SITIO_URL` | ✔ **24 de 24** |
+| Sitio publicado en GitHub Pages: los mismos controles contra la dirección pública, en computadora y en celular, en la primera publicación (`932a722`) y en la versión con el video y las vistas nuevas (`21e813f`, tamaños de los archivos publicados iguales a los del repositorio) | Playwright con `SITIO_URL` | ✔ **24 de 24** las dos veces |
+| CI en GitHub Actions | `.github/workflows/pruebas.yml` | Corrida 1 (`932a722`): ✔ 202 pruebas; la del sitio quedó colgada en `apt` y se canceló (problema 23). Corrida 2 (`21e813f`): ✔ **202 pasaron** y ✔ **24 de 24** del sitio en `ubuntu-24.04` |
 | Video: tramos nuevos contra el original y versiones finales | PSNR y ffmpeg | ✔ 28 a 40 dB contra el original en el mismo instante. En los empalmes medidos (8 de 10) el salto es como el de dos cuadros seguidos del original (±2 dB). Las cuatro versiones duran 3:51,33 y las públicas no tienen audio |
 | Interferencias de las piezas nuevas del SC-4 | CadQuery (`intersect().Volume()`) | ✔ Ninguna |
 | Secretos y datos personales | Búsqueda de patrones de claves, correos, Drive y metadatos de DOCX, PDF y STEP | ✔ Nada que publicar por error |
@@ -134,7 +135,8 @@ el aspecto de las que cambiaron.
 - Materia y docente en las portadas del informe y de la memoria: siguen como `[COMPLETAR]`, resaltados.
 - Cotizaciones formales: LAR (tarifa T3, potencia, paralelo de G1); PTFE, perfil de silicona y ventilador M40.
 - Ingeniería de detalle de la Rev. F: redibujar los planos 08 y 19 con la prolongación del elevador, la tolva de
-  retención y el enfriador. Hoy están en el informe, en el diagrama 06 (corriente 16) y en el visor.
+  retención y el enfriador, y sumarlos al STEP de la planta (`modelo_3d/`, que sigue siendo el de la Rev. D). Hoy
+  están en el informe, en el diagrama 06 (corriente 16) y en el visor.
 - Módulo piloto: medir el grumo, la curva de secado, la humedad del escape y el aire por los bordes, y confirmar
   los 70 °C de la tolva (el margen es de 4 a 7 K).
 - Ensayo de Wöhler del acero de los ejes y capítulo IX de González Arias (ya figuraban).

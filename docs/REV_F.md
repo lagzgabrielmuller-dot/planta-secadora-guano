@@ -81,4 +81,4 @@ P02 Rev. E · P06 Rev. E · P18 Rev. E · P22 Rev. F · P23 Rev. G · SC-01 a SC
   estimaciones marcadas «a cotizar».
 - Confirmar con el módulo piloto que el producto llega a 70 °C en la tolva de retención: el margen es de 4 a 7 K.
 - MT-02 es opcional: decidir si se instala, según cuánto varíe la humedad del guano que llega.
-- Ingeniería de detalle: redibujar los planos 08 y 19 con la prolongación del elevador, la tolva de retención y el enfriador. Hoy figuran en el informe, en el diagrama 06 y en el visor 3D (F1).
+- Ingeniería de detalle: redibujar los planos 08 y 19 con la prolongación del elevador, la tolva de retención y el enfriador, y sumarlos al STEP de la planta (sigue siendo el de la Rev. D). Hoy figuran en el informe, en el diagrama 06 y en el visor 3D (F1).

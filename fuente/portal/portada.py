@@ -163,11 +163,39 @@ REDIRECCION = """<!DOCTYPE html>
 """
 
 
+def revisiones():
+    """Letra de la revisión vigente de cada lámina, leída de su programa (la última fila de su tabla revs)."""
+    letras = {}
+    for i in range(1, 25):
+        with open(os.path.join(FUENTE, "planos", f"P{i:02d}.py"), encoding="utf-8") as f:
+            filas = re.findall(r'\("([A-Z])",\s*(?:FECHA|"[^"]*")\s*,\s*"', f.read())
+        if filas:
+            letras[f"P{i:02d}"] = filas[-1]
+    with open(os.path.join(FUENTE, "secadora", "planos_sc.py"), encoding="utf-8") as f:
+        sc = re.search(r"REVS = \[(.*?)\]\n", f.read(), re.S).group(1)
+    letra_sc = re.findall(r'\("([A-Z])"', sc)[-1]
+    letras.update({f"SC-{i:02d}": letra_sc for i in range(1, 7)})
+    return letras
+
+
+def con_revisiones(s):
+    """Pone en los epígrafes de la galería de planos la revisión vigente de cada lámina."""
+    letras = revisiones()
+    m = re.search(r'(<script type="application/json" id="datos">)(.*?)(</script>)', s, re.S)
+    datos = json.loads(m.group(2))
+    for p in datos["planos"]:
+        lam = p["cap"].split(" · ")[0]
+        if lam in letras:
+            p["cap"] = re.sub(r"Rev\. [A-Z]$", f"Rev. {letras[lam]}", p["cap"])
+    return s[:m.start(2)] + json.dumps(datos, ensure_ascii=False) + s[m.end(2):]
+
+
 def main():
     zips_dxf()
     miniaturas()
     with open(os.path.join(AQUI, "portada.html"), encoding="utf-8") as f:
         s = f.read()
+    s = con_revisiones(s)
     v = valores()
     v["FILAS_DESCARGAS"] = html_filas()
     s = re.sub(r"\{\{(\w+)\}\}", lambda m: v[m.group(1)], s)

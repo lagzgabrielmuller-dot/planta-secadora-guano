@@ -105,6 +105,7 @@ el aspecto de las que cambiaron.
 |---|---|---|
 | Regenerar toda la entrega desde el entorno nuevo (venv con Python 3.12, `npm ci`, fuentes Liberation): CadQuery, 30 láminas, memoria, informe, manual, visores, renders y portada | `fuente/regenerar.py` | ✔ Sin errores; DXF con 0 errores de auditoría de ezdxf |
 | Cálculos, datos cruzados entre documentos, archivos de la entrega, integrantes en DXF, PDF y DOCX, Rev. F | pytest (`tests/`) | ✔ **202 pasaron**, 0 fallaron |
+| Clon limpio del repositorio, entorno virtual nuevo con **Python 3.11.18** y solo `tests/requirements.txt` | git clone + venv + pytest | ✔ **202 pasaron** (otra versión de Python que la de los generadores) |
 | Lint | ruff (E9, F, B) en `fuente/` y `simulacion_termica/` | ✔ 0 avisos |
 | Sintaxis JavaScript | `node --check` en todos los .js y .mjs | ✔ |
 | Sitio por HTTP: enlaces (104), video (3:51), galería, páginas de equipos, visor ampliado, textos alternativos, redirección, visores 3D y simulador sin errores, celular (iPhone 13) sin desplazamiento horizontal | Playwright (`tests/e2e/probar_sitio.js`) | ✔ **24 de 24** |

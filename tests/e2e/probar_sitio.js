@@ -86,12 +86,19 @@ async function vigilar(pagina, nombre) {
   await p.click("[data-planos] [data-next]");
   const pdf2 = await p.evaluate(() => document.querySelector("[data-p=pdf]").getAttribute("href"));
   ok(/P02\.pdf$/.test(pdf2), `la galería pasa a la lámina 2 (${pdf2})`);
+  // la portada cambia de página con una transición (400 ms y la pantalla de paso): se espera la condición, no un
+  // tiempo fijo, porque con la máquina cargada los temporizadores se atrasan
+  const sinTransicion = () => p.waitForFunction(() => !document.querySelector(".transicion.activa"), null, { timeout: 15000 });
   for (const id of ["secador", "biogas", "electrica"]) {
-    await p.evaluate((id) => (location.hash = "#equipo-" + id), id); await p.waitForTimeout(700);
-    const visible = await p.evaluate((id) => !document.getElementById("vista-" + id).hidden, id);
+    await p.evaluate((id) => (location.hash = "#equipo-" + id), id);
+    const visible = await p.waitForFunction((id) => !document.getElementById("vista-" + id).hidden, id, { timeout: 15000 })
+      .then(() => true, () => false);
     ok(visible, `página del equipo «${id}» se abre con #equipo-${id}`);
+    await sinTransicion();
   }
-  await p.evaluate(() => (location.hash = "#inicio")); await p.waitForTimeout(500);
+  await p.evaluate(() => (location.hash = "#inicio"));
+  await p.waitForFunction(() => !document.getElementById("vista-inicio").hidden, null, { timeout: 15000 });
+  await sinTransicion();
   // todas las imágenes llevan atributo alt; las visibles, con texto (la del visor ampliado recibe el suyo al abrirse)
   const sinTexto = await p.evaluate(() => [...document.querySelectorAll("img")].filter((i) =>
     !i.hasAttribute("alt") || (!i.getAttribute("alt") && i.offsetParent !== null)).length);

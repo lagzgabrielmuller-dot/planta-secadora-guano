@@ -40,8 +40,19 @@
 - sin respaldos ni temporales.
 
 **3D:**
-- visor del secador con oclusión ambiental (GTAO), antialiasing multimuestra y materiales físicos;
+- visor del secador con oclusión ambiental (GTAO), antialiasing multimuestra, materiales físicos y rótulos que no se
+  pisan; vistas del informe, de las láminas SC y del manual sacadas de nuevo con este visor;
 - visor de la planta con la tolva de retención, el enfriador, el elevador prolongado y el escape aislado.
+
+**Video:** cinco tramos dibujados de nuevo sobre el original de máxima calidad (créditos con Hofstetter, nave de
+33 × 18 m, secador de 9.538 kg, 117,0 kW instalados). Versiones públicas sin audio y en rango de color de TV, como el
+original.
+
+**Lámina SC-01:** la tabla de datos pasa a 72 % → 15 % de humedad y aire a ≈ 100 °C (máx. 135), como el resto del
+proyecto.
+
+**Publicación:** GitHub Pages desde `main`. La CI ya no instala paquetes del sistema para la prueba del sitio y cada
+trabajo tiene un tiempo máximo.
 
 ## Rev. E · 23-24/10/2026: entrega final
 

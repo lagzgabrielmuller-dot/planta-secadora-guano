@@ -50,7 +50,10 @@ Si cambia un texto del guion (por ejemplo, los créditos o una cifra), no hace f
 cuadros. Se toma el video original de máxima calidad y se extraen sus cuadros (`ffmpeg -i alta.mp4 -q:v 2
 f_%06d.jpg`). Después se dibujan de nuevo solo los cuadros de los tramos cambiados, con `capturar.js <carpeta>
 <desde> <hasta> 60 1920 1080 92`, usando el mismo visor, el mismo GLB del secador, el mismo mapa y el mismo ritmo que
-el original. Por último se reemplazan esos cuadros y se monta con `montar.py`. Antes de reemplazar, conviene comparar
+el original. Cada tramo tiene que cubrir todo el intervalo `[t0, t1]` del texto en `guion.js`: `ventana()` hace el
+fundido de salida antes de `t1`, así que el texto se ve hasta `t1` (los créditos van de `B(76)` a `B(80, 2)`, cuadros
+12.586 a 13.328; el cuadro `n` es el instante `n/60` y se guarda como `f_{n+1}.jpg`). Por último se reemplazan esos
+cuadros y se monta con `montar.py`. Antes de reemplazar, conviene comparar
 un cuadro nuevo con el original en el mismo instante: el 11/11/2026 dieron 36,8 dB de PSNR, que es solo la diferencia
 de compresión. Así se corrigieron, el 11/11/2026, el apellido Hofstetter en los créditos, la masa del secador
 (9.538 kg), la potencia instalada (117,0 kW) y la nave (33 × 18 m).

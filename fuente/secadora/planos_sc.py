@@ -35,7 +35,7 @@ CARPETA = os.path.join(RAIZ, "secadora", "planos")
 RENDERS = os.path.join(RAIZ, "secadora", "renders")
 SERIE = {"prefijo": "SC-", "total": 6}
 REVS = [("A", FECHA, "Emisión original: juego aparte del secador SC-4"),
-        ("B", "11/2026", "Estudio térmico (Rev. F): guías PTFE en pisos 2 y 3, faldones de sellado 4.21")]
+        ("B", "11/2026", "Estudio térmico (Rev. F): guías PTFE pisos 2-3, faldones 4.21, tabla de datos")]
 PIEZAS = json.load(open(os.path.join(RAIZ, "secadora", "modelo_3d", "piezas.json"), encoding="utf-8"))["piezas"]
 RES = json.load(open(os.path.join(RAIZ, "fuente", "calculos", "resultados.json"), encoding="utf-8"))
 FAT = RES["fatiga"]
@@ -176,7 +176,7 @@ def sc01():
     t(msp, "Vista 3D del modelo (visor Visor_Secador_SC4.html)", (xr, 131.5), 1.7, "TOP_LEFT")
     ms = sum(p["masa_kg"] for p in PIEZAS)
     datos = [["Dato", "Valor"],
-             ["Capacidad", "8 t/día de guano húmedo (60 % → 15 %)"],
+             ["Capacidad", "8 t/día de guano húmedo (72 % → 15 %)"],
              ["Tipo", "Secador de cinta continuo, 3 pisos"],
              ["Cámara (largo × ancho × alto)", "13,0 × 2,6 × 3,4 m"],
              ["Bandas", "3 × malla AISI 304, 2,0 m de ancho"],
@@ -185,7 +185,7 @@ def sc01():
              ["Tambores", "motriz Ø316 con goma / reenvío Ø250"],
              ["Ejes", "SAE 1045 Ø60/Ø50 (Rev. E de fatiga)"],
              ["Cerramiento", "panel sándwich 80 mm lana de roca"],
-             ["Aire caliente", "entrada 1,2 × 0,4 m cara Norte, ≤ 120 °C"],
+             ["Aire caliente", "entrada 1,2 × 0,4 m cara Norte, ≈ 100 °C (máx. 135)"],
              ["Masa del equipo (modelo 3D)", f"{coma(ms, 0)} kg (sin producto)"],
              ["Fijación al piso", "10 placas, 40 anclajes químicos M16 (SC-05)"],
              ["Ubicación en planta", "x = 11,50 m, y = 8,00 m (plano 13)"]]

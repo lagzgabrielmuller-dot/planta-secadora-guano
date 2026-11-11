@@ -17,7 +17,8 @@ las cuentas:
 - La página pública tenía números escritos a mano y descargas por una carpeta privada de Drive.
 
 Todo quedó corregido. Las propuestas del estudio quedaron incorporadas como **Rev. F** ([`docs/REV_F.md`](docs/REV_F.md)).
-Pasan las **202 pruebas automáticas** de datos y archivos y los **24 controles del sitio** (sección 6).
+Pasan las **202 pruebas automáticas** de datos y archivos y los **24 controles del sitio**, también sobre el sitio
+publicado en https://lagzgabrielmuller-dot.github.io/planta-secadora-guano/ (sección 6).
 
 ## 2. Método y qué se leyó
 
@@ -56,6 +57,11 @@ el aspecto de las que cambiaron.
 | 18 | UX | Baja | Plano 02: textos que se salían de las celdas (tabla DATOS) | Abreviados |
 | 19 | Datos | Baja | La portada daba la TIR y el repago solo en dos turnos | Ahora da los dos escenarios (dos turnos: 17,7 % / 5,2 años; un turno: 4,4 % / 10,8 años) |
 | 20 | Visor | Baja | El panel «Datos de diseño» del visor de la planta (Rev. C) decía 135 → 65 °C y 314 kg/h | Reemplazos controlados en `build_visor.py` |
+| 21 | Visor | Baja | Visor del secador: los rótulos se pisaban según el ángulo. En la vista general (figura del informe y lámina SC-01), «Alimentación (cinta)» quedaba tapado por «Campana de salida» | `separarEtiquetas()` en `secadora/visor/app.js`: el rótulo de más abajo baja lo justo para quedar libre. Renders, láminas SC, informe y manual regenerados |
+| 22 | Código | Baja | `montar.py` con el ffmpeg actual: el video salía marcado como de rango completo (0-255) y los reproductores que ignoran la marca lo ven más contrastado | Conversión explícita a rango de TV (16-235), como el video original |
+| 23 | CI | Media | La prueba del sitio instalaba fuentes del sistema con `apt` (`--with-deps`). En la primera corrida los espejos de Ubuntu no resolvían y el paso quedó colgado hasta que se canceló | Sin `--with-deps` (las fuentes no hacen falta), imagen `ubuntu-24.04`, tiempo máximo por trabajo y acciones que corren en Node 24 |
+| 24 | Datos | Media | Lámina SC-01, tabla de datos: guano «60 % → 15 %» y aire «≤ 120 °C». El resto del proyecto usa 72 % de humedad de entrada, 135 °C de diseño y ≈ 100 °C de trabajo | Corregida (72 % → 15 %; ≈ 100 °C, máx. 135), dentro de la Rev. B del juego SC |
+| 25 | Pruebas | Baja | La prueba del sitio esperaba 700 ms fijos el cambio a la página de un equipo, que tiene una transición de 400 ms: con la máquina cargada fallaba sin que la portada tuviera un error | Espera la condición (hasta 15 s) y el fin de la transición |
 
 ## 4. Datos verificados y no verificables
 
@@ -93,11 +99,20 @@ el aspecto de las que cambiaron.
 - **Modelo 3D:**
   - Secador SC-4: guías de PTFE y faldones de sellado (68 piezas, sin interferencias, controlado con CadQuery).
   - Visor del secador: oclusión ambiental GTAO, antialiasing multimuestra, materiales físicos con barniz en el
-    acero pintado y botón «Calidad» (normal automática en celulares).
+    acero pintado, botón «Calidad» (normal automática en celulares) y rótulos que no se pisan. Las vistas del
+    informe, de las láminas SC y del manual se volvieron a sacar con este visor.
   - Visor de la planta: tolva de retención, enfriador, prolongación del elevador (verificada contra la cumbrera de
     8,35 m), escape aislado con purga y textos de la Rev. F.
 - **Estudio térmico** incorporado al repositorio (`simulacion_termica/`), con el simulador marcando los cambios como
   incorporados.
+- **Video corregido:**
+  - Se volvieron a dibujar los cinco tramos con texto cambiado: créditos con Hofstetter, nave de 33 × 18 m,
+    secador de 9.538 kg en el cartel y en la placa, y 117,0 kW instalados. Son 2.359 cuadros, hechos con el mismo
+    visor, mapa y ritmo que el original y montados sobre sus cuadros de máxima calidad.
+  - Las versiones públicas (1080p60, 720p y web) no tienen audio.
+  - La versión con la música del grupo es solo para proyectar en la escuela y no está en el repositorio.
+- **Publicación** en GitHub Pages desde `main` (carpeta raíz): https://lagzgabrielmuller-dot.github.io/planta-secadora-guano/.
+  Cada push a `main` la vuelve a publicar ([`docs/DESPLIEGUE.md`](docs/DESPLIEGUE.md)).
 
 ## 6. Pruebas ejecutadas (resultados reales)
 
@@ -109,6 +124,8 @@ el aspecto de las que cambiaron.
 | Lint | ruff (E9, F, B) en `fuente/` y `simulacion_termica/` | ✔ 0 avisos |
 | Sintaxis JavaScript | `node --check` en todos los .js y .mjs | ✔ |
 | Sitio por HTTP: enlaces (104), video (3:51), galería, páginas de equipos, visor ampliado, textos alternativos, redirección, visores 3D y simulador sin errores, celular (iPhone 13) sin desplazamiento horizontal | Playwright (`tests/e2e/probar_sitio.js`) | ✔ **24 de 24** |
+| Sitio publicado en GitHub Pages (primera publicación): los mismos controles contra la dirección pública, en computadora y en celular | Playwright con `SITIO_URL` | ✔ **24 de 24** |
+| Video: tramos nuevos contra el original y versiones finales | PSNR y ffmpeg | ✔ 28 a 40 dB contra el original en el mismo instante. En los empalmes medidos (8 de 10) el salto es como el de dos cuadros seguidos del original (±2 dB). Las cuatro versiones duran 3:51,33 y las públicas no tienen audio |
 | Interferencias de las piezas nuevas del SC-4 | CadQuery (`intersect().Volume()`) | ✔ Ninguna |
 | Secretos y datos personales | Búsqueda de patrones de claves, correos, Drive y metadatos de DOCX, PDF y STEP | ✔ Nada que publicar por error |
 
@@ -121,10 +138,6 @@ el aspecto de las que cambiaron.
 - Módulo piloto: medir el grumo, la curva de secado, la humedad del escape y el aire por los bordes, y confirmar
   los 70 °C de la tolva (el margen es de 4 a 7 K).
 - Ensayo de Wöhler del acero de los ejes y capítulo IX de González Arias (ya figuraban).
-- **Video:** la versión pública no tiene música. Los créditos con «Hofstetter» y los números de la Rev. F (masa
-  9.538 kg, 117,0 kW) están corregidos en el guion (`fuente/video/escena/guion.js`). Para volver a renderizar esos
-  tramos hacen falta los datos del mapa satelital, que no se guardan en el repositorio. El estado final del video
-  está en el README.
 - Revocar las claves de API que quedaron en el historial del repositorio anterior.
 
 ## 8. Evaluación final

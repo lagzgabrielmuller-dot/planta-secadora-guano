@@ -13,9 +13,10 @@ jobs:
   calculos-y-entrega:
     name: Cálculos, datos y archivos de la entrega
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
@@ -28,14 +29,18 @@ jobs:
 
   sitio:
     name: Sitio (portada, visores 3D y simulador)
-    runs-on: ubuntu-latest
+    # imagen estable: la máquina ya trae las bibliotecas que usa Chromium
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: "22"
+      # sin --with-deps: no depende de los espejos de apt (el 11/11/2026 no resolvían y el paso quedó colgado);
+      # esas dependencias solo agregan fuentes tipográficas que el sitio no usa
       - name: Instalar Playwright y Chromium
         working-directory: tests/e2e
-        run: npm install --no-audit --no-fund && npx playwright install --with-deps chromium
+        run: npm install --no-audit --no-fund && npx playwright install chromium
       - name: Probar el sitio servido por HTTP
         run: node tests/e2e/probar_sitio.js

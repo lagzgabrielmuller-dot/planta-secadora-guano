@@ -379,6 +379,31 @@ function etiquetas() {
   etiqueta("Descarga al sinfín", mm([12750, 1300, -100]), "4.19a");
   etiqueta("Escalera marinera con jaula", mm([-500, 300, 2600]), "4.13");
 }
+// rótulos que se pisan en pantalla: el de más abajo baja lo justo para quedar libre (cada cuadro, después de
+// ubicarlos; CSS2DRenderer maneja la posición con transform, así que el corrimiento va como margen superior)
+function separarEtiquetas() {
+  if (rotulos.domElement.style.display === "none") return;
+  for (const it of listaEtiquetas) it.div.style.marginTop = "0px";
+  const cajas = [];
+  for (const it of listaEtiquetas) {
+    if (!it.e.visible || it.div.style.display === "none") continue;
+    const r = it.div.getBoundingClientRect();
+    if (r.width) cajas.push({ div: it.div, l: r.left, r: r.right, t: r.top, b: r.bottom });
+  }
+  cajas.sort((a, b) => a.t - b.t);
+  const puestas = [];
+  for (const c of cajas) {
+    let dy = 0, choca = true;
+    while (choca) {
+      choca = false;
+      for (const p of puestas) {
+        if (c.l < p.r + 4 && c.r > p.l - 4 && c.t + dy < p.b + 2 && c.b + dy > p.t - 2) { dy = p.b + 2 - c.t; choca = true; }
+      }
+    }
+    if (dy) c.div.style.marginTop = `${Math.round(dy)}px`;
+    puestas.push({ l: c.l, r: c.r, t: c.t + dy, b: c.b + dy });
+  }
+}
 const rayoEt = new THREE.Raycaster();
 let cuadro = 0;
 function actualizarEtiquetas() {
@@ -547,6 +572,6 @@ renderer.setAnimationLoop((ahora) => {
     camara.position.lerpVectors(viaje.p0, viaje.p1, k); controles.target.lerpVectors(viaje.o0, viaje.o1, k);
     if (viaje.t >= 1) viaje = null;
   }
-  controles.update(); dibujar(); rotulos.render(escena, camara);
+  controles.update(); dibujar(); rotulos.render(escena, camara); separarEtiquetas();
 });
 cargar();

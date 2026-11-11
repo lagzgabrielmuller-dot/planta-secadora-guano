@@ -44,12 +44,14 @@ def main():
         for i, c in enumerate(cuadros):
             os.symlink(os.path.abspath(c), os.path.join(tmp.name, f"f_{i + 1:06d}.jpg"))
         lista = os.path.join(tmp.name, "f_%06d.jpg")
-    vf = [f"scale={x.ancho}:-2:flags=lanczos"] if x.ancho else []
+    # los cuadros JPEG están en rango completo (0-255) y el video va en rango de TV (16-235): sin la conversión, el
+    # ffmpeg nuevo marca el video como de rango completo y los reproductores que ignoran la marca lo ven más contrastado
+    rango = "in_range=full:out_range=limited"
+    vf = [f"scale={x.ancho}:-2:flags=lanczos:{rango}" if x.ancho else f"scale={rango}"]
     entrada = [ffmpeg(), "-y", "-v", "error", "-stats", "-framerate", str(fps), "-i", lista]
-    video = ["-c:v", "libx264", "-preset", x.preset, "-pix_fmt", "yuv420p", "-profile:v", "high"]
+    video = ["-c:v", "libx264", "-preset", x.preset, "-pix_fmt", "yuv420p", "-color_range", "tv", "-profile:v", "high"]
     video += ["-b:v", f"{x.kbps}k", "-maxrate", f"{int(x.kbps * 1.5)}k", "-bufsize", f"{x.kbps * 2}k"] if x.kbps else ["-crf", str(x.crf)]
-    if vf:
-        video += ["-vf", ",".join(vf)]
+    video += ["-vf", ",".join(vf)]
     if x.pasadas == 2 and x.kbps:   # primera pasada: solo analiza el video y guarda las estadísticas
         log = ["-passlogfile", os.path.join(tmp.name, "x264")]
         subprocess.run(entrada + video + log + ["-pass", "1", "-an", "-f", "mp4", os.devnull], check=True)

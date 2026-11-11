@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Secador SC-4 – visor 3D, despiece y montaje</title>
+<style>
+  :root { --fondo:#11161d; --panel:rgba(22,28,37,.94); --texto:#e9eef4; --sub:#9aabbd; --acento:#f0b429; --borde:#2c3746; }
+  html, body { margin:0; height:100%; background:#dde4ec; color:var(--texto);
+    font:14px/1.4 system-ui, "Segoe UI", Roboto, sans-serif; overflow:hidden; }
+  #lienzo { position:fixed; inset:0; }
+  #panel { position:fixed; top:12px; left:12px; width:300px; max-height:calc(100% - 24px); overflow:auto;
+    background:var(--panel); border:1px solid var(--borde); border-radius:10px; padding:12px 14px; }
+  #panel h1 { font-size:16px; margin:0 0 2px; }
+  #panel p { color:var(--sub); font-size:12px; margin:0 0 8px; }
+  #panel h2 { font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:var(--sub); margin:12px 0 4px; }
+  .fila { display:flex; align-items:center; gap:6px; padding:2px 0; font-size:13px; }
+  .fila label { flex:1; cursor:pointer; }
+  button { background:#1d2734; color:var(--texto); border:1px solid var(--borde); border-radius:6px;
+    padding:4px 8px; margin:2px 3px 2px 0; font:inherit; font-size:12px; cursor:pointer; }
+  button:hover, button.activo { border-color:var(--acento); color:#fff; }
+  button.grande { font-size:13px; padding:6px 10px; }
+  .solo { padding:1px 6px; font-size:11px; }
+  .sub { color:var(--sub); font-size:12px; }
+  #paso { background:#18212c; border:1px solid var(--borde); border-radius:8px; padding:8px; margin-top:4px; }
+  #pasoTexto { font-size:12.5px; margin-top:6px; }
+  #info { position:fixed; right:12px; bottom:12px; max-width:360px; background:var(--panel);
+    border:1px solid var(--borde); border-radius:10px; padding:10px 12px; display:none; }
+  #abrir { position:fixed; top:12px; left:12px; display:none; }
+  #lista { position:fixed; right:12px; top:12px; width:min(560px, calc(100% - 24px)); max-height:58%; overflow:auto;
+    background:var(--panel); border:1px solid var(--borde); border-radius:10px; padding:8px 10px; display:none; }
+  #lista table { border-collapse:collapse; width:100%; font-size:12px; }
+  #lista th, #lista td { border-bottom:1px solid #2c3746; padding:3px 4px; text-align:left; vertical-align:top; }
+  #lista td.n { text-align:right; white-space:nowrap; } #lista tr:hover td { background:#24303f; cursor:pointer; }
+  .etiqueta { background:rgba(10,14,20,.82); color:#fff; padding:2px 6px; border-radius:4px; font-size:11px;
+    white-space:nowrap; pointer-events:none; }
+  #cargando { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:#11161d;
+    color:#e9eef4; font-size:16px; z-index:9; }
+  @media (max-width:640px) { #panel { width:auto; right:12px; max-height:46%; } #lista { top:auto; bottom:12px; } }
+</style>
+</head>
+<body>
+<div id="lienzo"></div>
+<div id="cargando">Cargando el modelo del secador SC-4…</div>
+<div id="panel">
+  <h1>Secador de cinta SC-4</h1>
+  <p>3 pisos · 2,0 × 12 m · 8 t/día de guano · E.P.N.M. y S. N° 35 – Crespo · Proyecto final 2026</p>
+  <div><button id="despiece" class="grande">Despiece</button><button id="corte" class="grande">Corte</button>
+    <button id="verLista" class="grande">Lista de piezas</button></div>
+  <h2>Montaje paso a paso</h2>
+  <div id="paso"><button id="pasoAnt">◀ Anterior</button><button id="pasoSig">Siguiente ▶</button>
+    <button id="pasoFin">Armado completo</button> <span id="pasoN" class="sub">—</span>
+    <div id="pasoTexto"><span class="sub">Recorré los 13 pasos del manual de armado: en cada uno aparecen (resaltadas) las piezas que se montan.</span></div></div>
+  <h2>Capas</h2><div id="capas"></div>
+  <h2>Vistas</h2><div id="vistas"></div>
+  <h2>Animación (bandas y tambores)</h2>
+  <div><button id="pausa">Pausar</button><button id="velocidad">Velocidad ×60</button></div>
+  <h2>Herramientas</h2>
+  <div><button id="etiquetas" class="activo">Etiquetas</button><button id="calidad" title="Oclusión ambiental y bordes suaves; en equipos lentos conviene la calidad normal">Calidad alta</button><button id="captura">Captura PNG</button>
+    <button id="completa">Pantalla completa</button><button id="ocultar">Ocultar panel</button></div>
+  <p style="margin-top:10px">Arrastrar: rotar · Rueda: zoom · Clic derecho: mover · Clic en una pieza: datos</p>
+  <p>Modelo: fuente/secadora/modelo_secador.py (CadQuery) · STEP en secadora/modelo_3d</p>
+</div>
+<button id="abrir">☰ Panel</button>
+<div id="info"></div>
+<div id="lista"><table><thead><tr><th>Cód.</th><th>Pieza</th><th>Cant.</th><th>kg</th></tr></thead><tbody></tbody>
+  <tfoot><tr><td></td><td><b>Masa total del secador</b></td><td></td><td class="n"><b id="masaTotal"></b></td></tr></tfoot></table></div>
+<script>window.__GLB_B64 = "__GLB__"; window.__PIEZAS = __PIEZAS__; window.__PASOS = __PASOS__;</script>
+<script>__APP__</script>
+</body>
+</html>

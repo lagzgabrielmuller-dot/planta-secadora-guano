@@ -1,0 +1,2253 @@
+{
+ "offset_planta_mm": [
+  11500.0,
+  8000,
+  0.0
+ ],
+ "piezas": [
+  {
+   "id": "P000",
+   "cod": "4.11a",
+   "nombre": "Columnas UPN 120 × 3.388 mm",
+   "grupo": "estructura",
+   "material": "F-24 (IRAM-IAS U 500-503)",
+   "cantidad": 10,
+   "nota": "",
+   "color": [
+    0.3,
+    0.34,
+    0.38
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    0
+   ],
+   "centro_mm": [
+    6500.0,
+    1300.0,
+    1706.0
+   ],
+   "caja_mm": [
+    0,
+    0,
+    12,
+    13000,
+    2600,
+    3400
+   ],
+   "masa_kg": 453.2
+  },
+  {
+   "id": "P001",
+   "cod": "4.11b",
+   "nombre": "Vigas longitudinales IPN 140 × 13.000 mm",
+   "grupo": "estructura",
+   "material": "F-24",
+   "cantidad": 4,
+   "nota": "",
+   "color": [
+    0.3,
+    0.34,
+    0.38
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    0
+   ],
+   "centro_mm": [
+    6500.0,
+    1300.0,
+    1900.0
+   ],
+   "caja_mm": [
+    0,
+    27,
+    400,
+    13000,
+    2573,
+    3400
+   ],
+   "masa_kg": 749.1
+  },
+  {
+   "id": "P002",
+   "cod": "4.20",
+   "nombre": "Travesaños L 50×50×5 (soportes de guías) c/1,0 m",
+   "grupo": "estructura",
+   "material": "F-24",
+   "cantidad": 39,
+   "nota": "",
+   "color": [
+    0.3,
+    0.34,
+    0.38
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    0
+   ],
+   "centro_mm": [
+    6175.0,
+    1300.0,
+    1755.0
+   ],
+   "caja_mm": [
+    150,
+    80,
+    880,
+    12200,
+    2520,
+    2630
+   ],
+   "masa_kg": 354.8
+  },
+  {
+   "id": "P003",
+   "cod": "4.17",
+   "nombre": "Placa base PL 200×200×12 (4 agujeros Ø18)",
+   "grupo": "anclaje",
+   "material": "F-24",
+   "cantidad": 10,
+   "nota": "",
+   "color": [
+    0.3,
+    0.34,
+    0.38
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    -250
+   ],
+   "centro_mm": [
+    6500.0,
+    1300.0,
+    6.0
+   ],
+   "caja_mm": [
+    -40,
+    -70,
+    0,
+    13040,
+    2670,
+    12
+   ],
+   "masa_kg": 36.7
+  },
+  {
+   "id": "P004",
+   "cod": "4.17a",
+   "nombre": "Anclaje químico: varilla M16 5.8 × 190, tuerca y arandela (h_ef 125 mm)",
+   "grupo": "anclaje",
+   "material": "acero 5.8 zincado",
+   "cantidad": 40,
+   "nota": "",
+   "color": [
+    0.7,
+    0.72,
+    0.74
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    -450
+   ],
+   "centro_mm": [
+    6500.0,
+    1300.0,
+    -30.0
+   ],
+   "caja_mm": [
+    -25,
+    -55,
+    -125,
+    13025,
+    2655,
+    65
+   ],
+   "masa_kg": 15.2
+  },
+  {
+   "id": "P005",
+   "cod": "4.8a",
+   "nombre": "Paneles sándwich 80 mm – lado Sur (accionamientos)",
+   "grupo": "panel_s",
+   "material": "lana de roca + inox 0,6 / galv. 0,5",
+   "cantidad": 13,
+   "nota": "",
+   "color": [
+    0.93,
+    0.93,
+    0.9
+   ],
+   "explosion_mm": [
+    0,
+    -2600,
+    0
+   ],
+   "centro_mm": [
+    6500.0,
+    40.0,
+    1900.0
+   ],
+   "caja_mm": [
+    0,
+    0,
+    400,
+    13000,
+    80,
+    3400
+   ],
+   "masa_kg": 663
+  },
+  {
+   "id": "P006",
+   "cod": "4.8b",
+   "nombre": "Paneles sándwich 80 mm – lado Norte",
+   "grupo": "panel_n",
+   "material": "lana de roca + inox 0,6 / galv. 0,5",
+   "cantidad": 13,
+   "nota": "",
+   "color": [
+    0.93,
+    0.93,
+    0.9
+   ],
+   "explosion_mm": [
+    0,
+    2600,
+    0
+   ],
+   "centro_mm": [
+    6500.0,
+    2560.0,
+    1900.0
+   ],
+   "caja_mm": [
+    0,
+    2520,
+    400,
+    13000,
+    2600,
+    3400
+   ],
+   "masa_kg": 663
+  },
+  {
+   "id": "P007",
+   "cod": "4.8c",
+   "nombre": "Paneles sándwich 80 mm – testero Oeste",
+   "grupo": "panel_o",
+   "material": "lana de roca",
+   "cantidad": 3,
+   "nota": "",
+   "color": [
+    0.93,
+    0.93,
+    0.9
+   ],
+   "explosion_mm": [
+    -2200,
+    0,
+    0
+   ],
+   "centro_mm": [
+    40.0,
+    1300.0,
+    1900.0
+   ],
+   "caja_mm": [
+    0,
+    80,
+    400,
+    80,
+    2520,
+    3400
+   ],
+   "masa_kg": 124.1
+  },
+  {
+   "id": "P008",
+   "cod": "4.8d",
+   "nombre": "Paneles sándwich 80 mm – testero Este",
+   "grupo": "panel_e",
+   "material": "lana de roca",
+   "cantidad": 3,
+   "nota": "",
+   "color": [
+    0.93,
+    0.93,
+    0.9
+   ],
+   "explosion_mm": [
+    2200,
+    0,
+    0
+   ],
+   "centro_mm": [
+    12960.0,
+    1300.0,
+    1900.0
+   ],
+   "caja_mm": [
+    12920,
+    80,
+    400,
+    13000,
+    2520,
+    3400
+   ],
+   "masa_kg": 124.1
+  },
+  {
+   "id": "P009",
+   "cod": "4.8e",
+   "nombre": "Paneles sándwich 80 mm – techo",
+   "grupo": "techo",
+   "material": "lana de roca",
+   "cantidad": 13,
+   "nota": "",
+   "color": [
+    0.93,
+    0.93,
+    0.9
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    3600
+   ],
+   "centro_mm": [
+    6500.0,
+    1300.0,
+    3360.0
+   ],
+   "caja_mm": [
+    0,
+    0,
+    3320,
+    13000,
+    2600,
+    3400
+   ],
+   "masa_kg": 574.6
+  },
+  {
+   "id": "P010",
+   "cod": "4.8f",
+   "nombre": "Paneles sándwich 80 mm – piso de la cámara",
+   "grupo": "piso",
+   "material": "lana de roca",
+   "cantidad": 13,
+   "nota": "",
+   "color": [
+    0.93,
+    0.93,
+    0.9
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    -150
+   ],
+   "centro_mm": [
+    6500.0,
+    1300.0,
+    440.0
+   ],
+   "caja_mm": [
+    0,
+    0,
+    400,
+    13000,
+    2600,
+    480
+   ],
+   "masa_kg": 574.6
+  },
+  {
+   "id": "P011",
+   "cod": "4.9",
+   "nombre": "Puertas de inspección 700 × 600 con leva y microinterruptor",
+   "grupo": "puertas",
+   "material": "AISI 304 + lana de roca",
+   "cantidad": 6,
+   "nota": "",
+   "color": [
+    0.8,
+    0.82,
+    0.84
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    0
+   ],
+   "centro_mm": [
+    4876.5,
+    1300.0,
+    1900.0
+   ],
+   "caja_mm": [
+    1283,
+    -90,
+    755,
+    8470,
+    2690,
+    3045
+   ],
+   "masa_kg": 90
+  },
+  {
+   "id": "P012",
+   "cod": "4.1-1",
+   "nombre": "Banda de malla AISI 304 Ø2 p5 × 2.000 – piso 1",
+   "grupo": "cinta1",
+   "material": "AISI 304",
+   "cantidad": 1,
+   "nota": "desarrollo ≈ 25 m",
+   "color": [
+    0.62,
+    0.64,
+    0.66
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    0
+   ],
+   "centro_mm": [
+    6516.5,
+    1300.0,
+    2542.0
+   ],
+   "caja_mm": [
+    421,
+    300,
+    2380,
+    12612,
+    2300,
+    2704
+   ],
+   "masa_kg": 600.0
+  },
+  {
+   "id": "P013",
+   "cod": "4.2-1",
+   "nombre": "Tambor motriz Ø300 × 2.100 con goma 8 mm – piso 1",
+   "grupo": "cinta1",
+   "material": "SAE 1020 + goma romboidal",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.12,
+    0.12,
+    0.13
+   ],
+   "explosion_mm": [
+    1600,
+    0,
+    0
+   ],
+   "centro_mm": [
+    12450.0,
+    1300.0,
+    2542.0
+   ],
+   "caja_mm": [
+    12292,
+    222,
+    2384,
+    12608,
+    2378,
+    2700
+   ],
+   "masa_kg": 110
+  },
+  {
+   "id": "P014",
+   "cod": "4.2.1-1",
+   "nombre": "Eje motriz SAE 1045 Ø60 / Ø50 × 3.000 (asiento rectificado) – piso 1",
+   "grupo": "cinta1",
+   "material": "SAE 1045",
+   "cantidad": 1,
+   "nota": "chavetero 14×9 en Ø50; escalón r = 2",
+   "color": [
+    0.3,
+    0.34,
+    0.38
+   ],
+   "explosion_mm": [
+    1600,
+    -3200,
+    0
+   ],
+   "centro_mm": [
+    12450.0,
+    1247.5,
+    2542.0
+   ],
+   "caja_mm": [
+    12420,
+    -260,
+    2512,
+    12480,
+    2755,
+    2572
+   ],
+   "masa_kg": 65.9
+  },
+  {
+   "id": "P015",
+   "cod": "4.4-1",
+   "nombre": "Rodamientos con brida UCF 212 (2) – piso 1",
+   "grupo": "cinta1",
+   "material": "fundición gris + rodamiento",
+   "cantidad": 2,
+   "nota": "C = 52,5 kN; C0 = 36 kN (NTN)",
+   "color": [
+    0.3,
+    0.34,
+    0.38
+   ],
+   "explosion_mm": [
+    1600,
+    0,
+    0
+   ],
+   "centro_mm": [
+    12450.0,
+    1300.5,
+    2542.0
+   ],
+   "caja_mm": [
+    12366,
+    -102,
+    2458,
+    12534,
+    2703,
+    2626
+   ],
+   "masa_kg": 13.5
+  },
+  {
+   "id": "P016",
+   "cod": "4.16-1",
+   "nombre": "Ménsulas PL 12 de los apoyos (2) – piso 1",
+   "grupo": "estructura",
+   "material": "F-24",
+   "cantidad": 2,
+   "nota": "",
+   "color": [
+    0.3,
+    0.34,
+    0.38
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    0
+   ],
+   "centro_mm": [
+    12450.0,
+    1300.0,
+    2467.0
+   ],
+   "caja_mm": [
+    12330,
+    -100,
+    2282,
+    12570,
+    2700,
+    2652
+   ],
+   "masa_kg": 30.7
+  },
+  {
+   "id": "P017",
+   "cod": "4.3-1",
+   "nombre": "Tambor de reenvío Ø250 × 2.100 – piso 1",
+   "grupo": "cinta1",
+   "material": "SAE 1020",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.7,
+    0.72,
+    0.74
+   ],
+   "explosion_mm": [
+    -1600,
+    0,
+    0
+   ],
+   "centro_mm": [
+    550.0,
+    1300.0,
+    2575.0
+   ],
+   "caja_mm": [
+    425,
+    250,
+    2450,
+    675,
+    2350,
+    2700
+   ],
+   "masa_kg": 85
+  },
+  {
+   "id": "P018",
+   "cod": "4.3.1-1",
+   "nombre": "Eje de reenvío SAE 1045 Ø60 con muñones Ø50 – piso 1",
+   "grupo": "cinta1",
+   "material": "SAE 1045",
+   "cantidad": 1,
+   "nota": "Rev. E: Ø60 entre cubos (fatiga)",
+   "color": [
+    0.3,
+    0.34,
+    0.38
+   ],
+   "explosion_mm": [
+    -1600,
+    3200,
+    0
+   ],
+   "centro_mm": [
+    550.0,
+    1300.0,
+    2575.0
+   ],
+   "caja_mm": [
+    520,
+    -250,
+    2545,
+    580,
+    2850,
+    2605
+   ],
+   "masa_kg": 64.7
+  },
+  {
+   "id": "P019",
+   "cod": "4.14-1",
+   "nombre": "Unidades tensoras UCT 210 con tornillo M20 (2) – piso 1",
+   "grupo": "cinta1",
+   "material": "fundición + acero",
+   "cantidad": 2,
+   "nota": "carrera 150 mm",
+   "color": [
+    0.7,
+    0.72,
+    0.74
+   ],
+   "explosion_mm": [
+    -1600,
+    0,
+    0
+   ],
+   "centro_mm": [
+    375.0,
+    1300.0,
+    2575.0
+   ],
+   "caja_mm": [
+    145,
+    -98,
+    2505,
+    605,
+    2698,
+    2645
+   ],
+   "masa_kg": 30.2
+  },
+  {
+   "id": "P020",
+   "cod": "4.6-1",
+   "nombre": "Rodillos de retorno Ø89 – piso 1",
+   "grupo": "cinta1",
+   "material": "acero galvanizado",
+   "cantidad": 5,
+   "nota": "",
+   "color": [
+    0.7,
+    0.72,
+    0.74
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    0
+   ],
+   "centro_mm": [
+    6500.0,
+    1300.0,
+    2338.0
+   ],
+   "caja_mm": [
+    2456,
+    170,
+    2294,
+    10544,
+    2430,
+    2382
+   ],
+   "masa_kg": 94.7
+  },
+  {
+   "id": "P021",
+   "cod": "4.7-1",
+   "nombre": "Guías UHMW-PE 40 × 20 (5) – piso 1",
+   "grupo": "cinta1",
+   "material": "UHMW-PE",
+   "cantidad": 5,
+   "nota": "",
+   "color": [
+    0.96,
+    0.96,
+    0.92
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    0
+   ],
+   "centro_mm": [
+    6500.0,
+    1300.0,
+    2686.0
+   ],
+   "caja_mm": [
+    800,
+    530,
+    2676,
+    12200,
+    2070,
+    2696
+   ],
+   "masa_kg": 42.9
+  },
+  {
+   "id": "P022",
+   "cod": "4.21-1",
+   "nombre": "Faldones de sellado de bordes AISI 304 1,5 mm + labio de silicona (2) – piso 1",
+   "grupo": "cinta1",
+   "material": "AISI 304 + goma siliconada",
+   "cantidad": 2,
+   "nota": "Rev. F: el aire no sube por los bordes",
+   "color": [
+    0.8,
+    0.82,
+    0.84
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    250
+   ],
+   "centro_mm": [
+    6500.0,
+    1300.0,
+    2734.0
+   ],
+   "caja_mm": [
+    750,
+    80,
+    2704,
+    12250,
+    2520,
+    2764
+   ],
+   "masa_kg": 87.5
+  },
+  {
+   "id": "P023",
+   "cod": "4.15-1",
+   "nombre": "Transmisión ASA 60: corona Z75, piñón Z15 y cadena – piso 1",
+   "grupo": "trans1",
+   "material": "acero C45 / ASA 60",
+   "cantidad": 1,
+   "nota": "relación 1:5",
+   "color": [
+    0.1,
+    0.1,
+    0.11
+   ],
+   "explosion_mm": [
+    0,
+    -900,
+    0
+   ],
+   "centro_mm": [
+    12450.0,
+    -205.0,
+    2382.9
+   ],
+   "caja_mm": [
+    12214,
+    -241,
+    1991,
+    12686,
+    -169,
+    2774
+   ],
+   "masa_kg": 21.5
+  },
+  {
+   "id": "P024",
+   "cod": "4.15c-1",
+   "nombre": "Cárter protector de la cadena (chapa 1,6 mm) – piso 1",
+   "grupo": "trans1",
+   "material": "chapa 1,6 mm",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.95,
+    0.75,
+    0.1
+   ],
+   "explosion_mm": [
+    0,
+    -1500,
+    0
+   ],
+   "centro_mm": [
+    12450.0,
+    -209.5,
+    2382.8
+   ],
+   "caja_mm": [
+    12178,
+    -252,
+    1951,
+    12722,
+    -167,
+    2814
+   ],
+   "masa_kg": 9.7
+  },
+  {
+   "id": "P025",
+   "cod": "4.5-1",
+   "nombre": "Reductor doble sinfín-corona 1:300 – piso 1",
+   "grupo": "trans1",
+   "material": "fundición gris",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.42,
+    0.45,
+    0.5
+   ],
+   "explosion_mm": [
+    0,
+    -1300,
+    0
+   ],
+   "centro_mm": [
+    12420.0,
+    -365.0,
+    2083.5
+   ],
+   "caja_mm": [
+    12260,
+    -480,
+    1912,
+    12580,
+    -250,
+    2255
+   ],
+   "masa_kg": 45
+  },
+  {
+   "id": "P026",
+   "cod": "M5",
+   "nombre": "Motor M5 0,75 kW 4 polos IE3 (carcasa 80, B5) – piso 1",
+   "grupo": "trans1",
+   "material": "aluminio / acero",
+   "cantidad": 1,
+   "nota": "VFD; ≈ 20 Hz en régimen",
+   "color": [
+    0.15,
+    0.33,
+    0.55
+   ],
+   "explosion_mm": [
+    0,
+    -1700,
+    0
+   ],
+   "centro_mm": [
+    12375.8,
+    -369.0,
+    2215.8
+   ],
+   "caja_mm": [
+    12220,
+    -445,
+    2127,
+    12532,
+    -293,
+    2305
+   ],
+   "masa_kg": 11
+  },
+  {
+   "id": "P027",
+   "cod": "4.16b-1",
+   "nombre": "Consola del motorreductor con colisos – piso 1",
+   "grupo": "trans1",
+   "material": "F-24",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.3,
+    0.34,
+    0.38
+   ],
+   "explosion_mm": [
+    0,
+    -1100,
+    0
+   ],
+   "centro_mm": [
+    12450.0,
+    -253.5,
+    1702.0
+   ],
+   "caja_mm": [
+    12260,
+    -505,
+    1472,
+    12640,
+    -2,
+    1932
+   ],
+   "masa_kg": 48.2
+  },
+  {
+   "id": "P028",
+   "cod": "4.1-2",
+   "nombre": "Banda de malla AISI 304 Ø2 p5 × 2.000 – piso 2",
+   "grupo": "cinta2",
+   "material": "AISI 304",
+   "cantidad": 1,
+   "nota": "desarrollo ≈ 25 m",
+   "color": [
+    0.62,
+    0.64,
+    0.66
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    0
+   ],
+   "centro_mm": [
+    6608.5,
+    1300.0,
+    1692.0
+   ],
+   "caja_mm": [
+    388,
+    300,
+    1530,
+    12829,
+    2300,
+    1854
+   ],
+   "masa_kg": 600.0
+  },
+  {
+   "id": "P029",
+   "cod": "4.2-2",
+   "nombre": "Tambor motriz Ø300 × 2.100 con goma 8 mm – piso 2",
+   "grupo": "cinta2",
+   "material": "SAE 1020 + goma romboidal",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.12,
+    0.12,
+    0.13
+   ],
+   "explosion_mm": [
+    -1600,
+    0,
+    0
+   ],
+   "centro_mm": [
+    550.0,
+    1300.0,
+    1692.0
+   ],
+   "caja_mm": [
+    392,
+    222,
+    1534,
+    708,
+    2378,
+    1850
+   ],
+   "masa_kg": 110
+  },
+  {
+   "id": "P030",
+   "cod": "4.2.1-2",
+   "nombre": "Eje motriz SAE 1045 Ø60 / Ø50 × 3.000 (asiento rectificado) – piso 2",
+   "grupo": "cinta2",
+   "material": "SAE 1045",
+   "cantidad": 1,
+   "nota": "chavetero 14×9 en Ø50; escalón r = 2",
+   "color": [
+    0.3,
+    0.34,
+    0.38
+   ],
+   "explosion_mm": [
+    -1600,
+    -3200,
+    0
+   ],
+   "centro_mm": [
+    550.0,
+    1247.5,
+    1692.0
+   ],
+   "caja_mm": [
+    520,
+    -260,
+    1662,
+    580,
+    2755,
+    1722
+   ],
+   "masa_kg": 65.9
+  },
+  {
+   "id": "P031",
+   "cod": "4.4-2",
+   "nombre": "Rodamientos con brida UCF 212 (2) – piso 2",
+   "grupo": "cinta2",
+   "material": "fundición gris + rodamiento",
+   "cantidad": 2,
+   "nota": "C = 52,5 kN; C0 = 36 kN (NTN)",
+   "color": [
+    0.3,
+    0.34,
+    0.38
+   ],
+   "explosion_mm": [
+    -1600,
+    0,
+    0
+   ],
+   "centro_mm": [
+    550.0,
+    1300.5,
+    1692.0
+   ],
+   "caja_mm": [
+    466,
+    -102,
+    1608,
+    634,
+    2703,
+    1776
+   ],
+   "masa_kg": 13.5
+  },
+  {
+   "id": "P032",
+   "cod": "4.16-2",
+   "nombre": "Ménsulas PL 12 de los apoyos (2) – piso 2",
+   "grupo": "estructura",
+   "material": "F-24",
+   "cantidad": 2,
+   "nota": "",
+   "color": [
+    0.3,
+    0.34,
+    0.38
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    0
+   ],
+   "centro_mm": [
+    550.0,
+    1300.0,
+    1617.0
+   ],
+   "caja_mm": [
+    430,
+    -100,
+    1432,
+    670,
+    2700,
+    1802
+   ],
+   "masa_kg": 30.7
+  },
+  {
+   "id": "P033",
+   "cod": "4.3-2",
+   "nombre": "Tambor de reenvío Ø250 × 2.100 – piso 2",
+   "grupo": "cinta2",
+   "material": "SAE 1020",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.7,
+    0.72,
+    0.74
+   ],
+   "explosion_mm": [
+    1600,
+    0,
+    0
+   ],
+   "centro_mm": [
+    12700.0,
+    1300.0,
+    1725.0
+   ],
+   "caja_mm": [
+    12575,
+    250,
+    1600,
+    12825,
+    2350,
+    1850
+   ],
+   "masa_kg": 85
+  },
+  {
+   "id": "P034",
+   "cod": "4.3.1-2",
+   "nombre": "Eje de reenvío SAE 1045 Ø60 con muñones Ø50 – piso 2",
+   "grupo": "cinta2",
+   "material": "SAE 1045",
+   "cantidad": 1,
+   "nota": "Rev. E: Ø60 entre cubos (fatiga)",
+   "color": [
+    0.3,
+    0.34,
+    0.38
+   ],
+   "explosion_mm": [
+    1600,
+    3200,
+    0
+   ],
+   "centro_mm": [
+    12700.0,
+    1300.0,
+    1725.0
+   ],
+   "caja_mm": [
+    12670,
+    -250,
+    1695,
+    12730,
+    2850,
+    1755
+   ],
+   "masa_kg": 64.7
+  },
+  {
+   "id": "P035",
+   "cod": "4.14-2",
+   "nombre": "Unidades tensoras UCT 210 con tornillo M20 (2) – piso 2",
+   "grupo": "cinta2",
+   "material": "fundición + acero",
+   "cantidad": 2,
+   "nota": "carrera 150 mm",
+   "color": [
+    0.7,
+    0.72,
+    0.74
+   ],
+   "explosion_mm": [
+    1600,
+    0,
+    0
+   ],
+   "centro_mm": [
+    12875.0,
+    1300.0,
+    1725.0
+   ],
+   "caja_mm": [
+    12645,
+    -98,
+    1655,
+    13105,
+    2698,
+    1795
+   ],
+   "masa_kg": 30.2
+  },
+  {
+   "id": "P036",
+   "cod": "4.6-2",
+   "nombre": "Rodillos de retorno Ø89 – piso 2",
+   "grupo": "cinta2",
+   "material": "acero galvanizado",
+   "cantidad": 5,
+   "nota": "",
+   "color": [
+    0.7,
+    0.72,
+    0.74
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    0
+   ],
+   "centro_mm": [
+    6500.0,
+    1300.0,
+    1488.0
+   ],
+   "caja_mm": [
+    2456,
+    170,
+    1444,
+    10544,
+    2430,
+    1532
+   ],
+   "masa_kg": 94.7
+  },
+  {
+   "id": "P037",
+   "cod": "4.7-2",
+   "nombre": "Guías PTFE 40 × 20 (5) – piso 2",
+   "grupo": "cinta2",
+   "material": "PTFE",
+   "cantidad": 5,
+   "nota": "Rev. F: PTFE (uso continuo hasta 260 °C)",
+   "color": [
+    0.92,
+    0.93,
+    0.96
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    0
+   ],
+   "centro_mm": [
+    6625.0,
+    1300.0,
+    1836.0
+   ],
+   "caja_mm": [
+    800,
+    530,
+    1826,
+    12450,
+    2070,
+    1846
+   ],
+   "masa_kg": 101.1
+  },
+  {
+   "id": "P038",
+   "cod": "4.21-2",
+   "nombre": "Faldones de sellado de bordes AISI 304 1,5 mm + labio de silicona (2) – piso 2",
+   "grupo": "cinta2",
+   "material": "AISI 304 + goma siliconada",
+   "cantidad": 2,
+   "nota": "Rev. F: el aire no sube por los bordes",
+   "color": [
+    0.8,
+    0.82,
+    0.84
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    250
+   ],
+   "centro_mm": [
+    6625.0,
+    1300.0,
+    1884.0
+   ],
+   "caja_mm": [
+    750,
+    80,
+    1854,
+    12500,
+    2520,
+    1914
+   ],
+   "masa_kg": 89.5
+  },
+  {
+   "id": "P039",
+   "cod": "4.15-2",
+   "nombre": "Transmisión ASA 60: corona Z75, piñón Z15 y cadena – piso 2",
+   "grupo": "trans2",
+   "material": "acero C45 / ASA 60",
+   "cantidad": 1,
+   "nota": "relación 1:5",
+   "color": [
+    0.1,
+    0.1,
+    0.11
+   ],
+   "explosion_mm": [
+    0,
+    -900,
+    0
+   ],
+   "centro_mm": [
+    550.0,
+    -205.0,
+    1532.9
+   ],
+   "caja_mm": [
+    314,
+    -241,
+    1141,
+    786,
+    -169,
+    1924
+   ],
+   "masa_kg": 21.5
+  },
+  {
+   "id": "P040",
+   "cod": "4.15c-2",
+   "nombre": "Cárter protector de la cadena (chapa 1,6 mm) – piso 2",
+   "grupo": "trans2",
+   "material": "chapa 1,6 mm",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.95,
+    0.75,
+    0.1
+   ],
+   "explosion_mm": [
+    0,
+    -1500,
+    0
+   ],
+   "centro_mm": [
+    550.0,
+    -209.5,
+    1532.8
+   ],
+   "caja_mm": [
+    278,
+    -252,
+    1101,
+    822,
+    -167,
+    1964
+   ],
+   "masa_kg": 9.7
+  },
+  {
+   "id": "P041",
+   "cod": "4.5-2",
+   "nombre": "Reductor doble sinfín-corona 1:300 – piso 2",
+   "grupo": "trans2",
+   "material": "fundición gris",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.42,
+    0.45,
+    0.5
+   ],
+   "explosion_mm": [
+    0,
+    -1300,
+    0
+   ],
+   "centro_mm": [
+    580.0,
+    -365.0,
+    1233.5
+   ],
+   "caja_mm": [
+    420,
+    -480,
+    1062,
+    740,
+    -250,
+    1405
+   ],
+   "masa_kg": 45
+  },
+  {
+   "id": "P042",
+   "cod": "M6",
+   "nombre": "Motor M6 0,75 kW 4 polos IE3 (carcasa 80, B5) – piso 2",
+   "grupo": "trans2",
+   "material": "aluminio / acero",
+   "cantidad": 1,
+   "nota": "VFD; ≈ 20 Hz en régimen",
+   "color": [
+    0.15,
+    0.33,
+    0.55
+   ],
+   "explosion_mm": [
+    0,
+    -1700,
+    0
+   ],
+   "centro_mm": [
+    624.2,
+    -361.0,
+    1365.8
+   ],
+   "caja_mm": [
+    468,
+    -437,
+    1277,
+    780,
+    -285,
+    1455
+   ],
+   "masa_kg": 11
+  },
+  {
+   "id": "P043",
+   "cod": "4.16b-2",
+   "nombre": "Consola del motorreductor con colisos – piso 2",
+   "grupo": "trans2",
+   "material": "F-24",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.3,
+    0.34,
+    0.38
+   ],
+   "explosion_mm": [
+    0,
+    -1100,
+    0
+   ],
+   "centro_mm": [
+    550.0,
+    -253.5,
+    852.0
+   ],
+   "caja_mm": [
+    360,
+    -505,
+    622,
+    740,
+    -2,
+    1082
+   ],
+   "masa_kg": 48.2
+  },
+  {
+   "id": "P044",
+   "cod": "4.1-3",
+   "nombre": "Banda de malla AISI 304 Ø2 p5 × 2.000 – piso 3",
+   "grupo": "cinta3",
+   "material": "AISI 304",
+   "cantidad": 1,
+   "nota": "desarrollo ≈ 25 m",
+   "color": [
+    0.62,
+    0.64,
+    0.66
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    0
+   ],
+   "centro_mm": [
+    6391.5,
+    1300.0,
+    842.0
+   ],
+   "caja_mm": [
+    171,
+    300,
+    680,
+    12612,
+    2300,
+    1004
+   ],
+   "masa_kg": 600.0
+  },
+  {
+   "id": "P045",
+   "cod": "4.2-3",
+   "nombre": "Tambor motriz Ø300 × 2.100 con goma 8 mm – piso 3",
+   "grupo": "cinta3",
+   "material": "SAE 1020 + goma romboidal",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.12,
+    0.12,
+    0.13
+   ],
+   "explosion_mm": [
+    1600,
+    0,
+    0
+   ],
+   "centro_mm": [
+    12450.0,
+    1300.0,
+    842.0
+   ],
+   "caja_mm": [
+    12292,
+    222,
+    684,
+    12608,
+    2378,
+    1000
+   ],
+   "masa_kg": 110
+  },
+  {
+   "id": "P046",
+   "cod": "4.2.1-3",
+   "nombre": "Eje motriz SAE 1045 Ø60 / Ø50 × 3.000 (asiento rectificado) – piso 3",
+   "grupo": "cinta3",
+   "material": "SAE 1045",
+   "cantidad": 1,
+   "nota": "chavetero 14×9 en Ø50; escalón r = 2",
+   "color": [
+    0.3,
+    0.34,
+    0.38
+   ],
+   "explosion_mm": [
+    1600,
+    -3200,
+    0
+   ],
+   "centro_mm": [
+    12450.0,
+    1247.5,
+    842.0
+   ],
+   "caja_mm": [
+    12420,
+    -260,
+    812,
+    12480,
+    2755,
+    872
+   ],
+   "masa_kg": 65.9
+  },
+  {
+   "id": "P047",
+   "cod": "4.4-3",
+   "nombre": "Rodamientos con brida UCF 212 (2) – piso 3",
+   "grupo": "cinta3",
+   "material": "fundición gris + rodamiento",
+   "cantidad": 2,
+   "nota": "C = 52,5 kN; C0 = 36 kN (NTN)",
+   "color": [
+    0.3,
+    0.34,
+    0.38
+   ],
+   "explosion_mm": [
+    1600,
+    0,
+    0
+   ],
+   "centro_mm": [
+    12450.0,
+    1300.5,
+    842.0
+   ],
+   "caja_mm": [
+    12366,
+    -102,
+    758,
+    12534,
+    2703,
+    926
+   ],
+   "masa_kg": 13.5
+  },
+  {
+   "id": "P048",
+   "cod": "4.16-3",
+   "nombre": "Ménsulas PL 12 de los apoyos (2) – piso 3",
+   "grupo": "estructura",
+   "material": "F-24",
+   "cantidad": 2,
+   "nota": "",
+   "color": [
+    0.3,
+    0.34,
+    0.38
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    0
+   ],
+   "centro_mm": [
+    12450.0,
+    1300.0,
+    767.0
+   ],
+   "caja_mm": [
+    12330,
+    -100,
+    582,
+    12570,
+    2700,
+    952
+   ],
+   "masa_kg": 30.7
+  },
+  {
+   "id": "P049",
+   "cod": "4.3-3",
+   "nombre": "Tambor de reenvío Ø250 × 2.100 – piso 3",
+   "grupo": "cinta3",
+   "material": "SAE 1020",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.7,
+    0.72,
+    0.74
+   ],
+   "explosion_mm": [
+    -1600,
+    0,
+    0
+   ],
+   "centro_mm": [
+    300.0,
+    1300.0,
+    875.0
+   ],
+   "caja_mm": [
+    175,
+    250,
+    750,
+    425,
+    2350,
+    1000
+   ],
+   "masa_kg": 85
+  },
+  {
+   "id": "P050",
+   "cod": "4.3.1-3",
+   "nombre": "Eje de reenvío SAE 1045 Ø60 con muñones Ø50 – piso 3",
+   "grupo": "cinta3",
+   "material": "SAE 1045",
+   "cantidad": 1,
+   "nota": "Rev. E: Ø60 entre cubos (fatiga)",
+   "color": [
+    0.3,
+    0.34,
+    0.38
+   ],
+   "explosion_mm": [
+    -1600,
+    3200,
+    0
+   ],
+   "centro_mm": [
+    300.0,
+    1300.0,
+    875.0
+   ],
+   "caja_mm": [
+    270,
+    -250,
+    845,
+    330,
+    2850,
+    905
+   ],
+   "masa_kg": 64.7
+  },
+  {
+   "id": "P051",
+   "cod": "4.14-3",
+   "nombre": "Unidades tensoras UCT 210 con tornillo M20 (2) – piso 3",
+   "grupo": "cinta3",
+   "material": "fundición + acero",
+   "cantidad": 2,
+   "nota": "carrera 150 mm",
+   "color": [
+    0.7,
+    0.72,
+    0.74
+   ],
+   "explosion_mm": [
+    -1600,
+    0,
+    0
+   ],
+   "centro_mm": [
+    125.0,
+    1300.0,
+    875.0
+   ],
+   "caja_mm": [
+    -105,
+    -98,
+    805,
+    355,
+    2698,
+    945
+   ],
+   "masa_kg": 30.2
+  },
+  {
+   "id": "P052",
+   "cod": "4.6-3",
+   "nombre": "Rodillos de retorno Ø89 – piso 3",
+   "grupo": "cinta3",
+   "material": "acero galvanizado",
+   "cantidad": 5,
+   "nota": "",
+   "color": [
+    0.7,
+    0.72,
+    0.74
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    0
+   ],
+   "centro_mm": [
+    6500.0,
+    1300.0,
+    638.0
+   ],
+   "caja_mm": [
+    2456,
+    170,
+    594,
+    10544,
+    2430,
+    682
+   ],
+   "masa_kg": 94.7
+  },
+  {
+   "id": "P053",
+   "cod": "4.7-3",
+   "nombre": "Guías PTFE 40 × 20 (5) – piso 3",
+   "grupo": "cinta3",
+   "material": "PTFE",
+   "cantidad": 5,
+   "nota": "Rev. F: PTFE (uso continuo hasta 260 °C)",
+   "color": [
+    0.92,
+    0.93,
+    0.96
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    0
+   ],
+   "centro_mm": [
+    6375.0,
+    1300.0,
+    986.0
+   ],
+   "caja_mm": [
+    550,
+    530,
+    976,
+    12200,
+    2070,
+    996
+   ],
+   "masa_kg": 101.1
+  },
+  {
+   "id": "P054",
+   "cod": "4.21-3",
+   "nombre": "Faldones de sellado de bordes AISI 304 1,5 mm + labio de silicona (2) – piso 3",
+   "grupo": "cinta3",
+   "material": "AISI 304 + goma siliconada",
+   "cantidad": 2,
+   "nota": "Rev. F: el aire no sube por los bordes",
+   "color": [
+    0.8,
+    0.82,
+    0.84
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    250
+   ],
+   "centro_mm": [
+    6375.0,
+    1300.0,
+    1034.0
+   ],
+   "caja_mm": [
+    500,
+    80,
+    1004,
+    12250,
+    2520,
+    1064
+   ],
+   "masa_kg": 89.5
+  },
+  {
+   "id": "P055",
+   "cod": "4.15-3",
+   "nombre": "Transmisión ASA 60: corona Z75, piñón Z15 y cadena – piso 3",
+   "grupo": "trans3",
+   "material": "acero C45 / ASA 60",
+   "cantidad": 1,
+   "nota": "relación 1:5",
+   "color": [
+    0.1,
+    0.1,
+    0.11
+   ],
+   "explosion_mm": [
+    0,
+    -900,
+    0
+   ],
+   "centro_mm": [
+    12450.0,
+    -205.0,
+    682.9
+   ],
+   "caja_mm": [
+    12214,
+    -241,
+    291,
+    12686,
+    -169,
+    1074
+   ],
+   "masa_kg": 21.5
+  },
+  {
+   "id": "P056",
+   "cod": "4.15c-3",
+   "nombre": "Cárter protector de la cadena (chapa 1,6 mm) – piso 3",
+   "grupo": "trans3",
+   "material": "chapa 1,6 mm",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.95,
+    0.75,
+    0.1
+   ],
+   "explosion_mm": [
+    0,
+    -1500,
+    0
+   ],
+   "centro_mm": [
+    12450.0,
+    -209.5,
+    682.8
+   ],
+   "caja_mm": [
+    12178,
+    -252,
+    251,
+    12722,
+    -167,
+    1114
+   ],
+   "masa_kg": 9.7
+  },
+  {
+   "id": "P057",
+   "cod": "4.5-3",
+   "nombre": "Reductor doble sinfín-corona 1:300 – piso 3",
+   "grupo": "trans3",
+   "material": "fundición gris",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.42,
+    0.45,
+    0.5
+   ],
+   "explosion_mm": [
+    0,
+    -1300,
+    0
+   ],
+   "centro_mm": [
+    12420.0,
+    -365.0,
+    383.5
+   ],
+   "caja_mm": [
+    12260,
+    -480,
+    212,
+    12580,
+    -250,
+    555
+   ],
+   "masa_kg": 45
+  },
+  {
+   "id": "P058",
+   "cod": "M7",
+   "nombre": "Motor M7 0,75 kW 4 polos IE3 (carcasa 80, B5) – piso 3",
+   "grupo": "trans3",
+   "material": "aluminio / acero",
+   "cantidad": 1,
+   "nota": "VFD; ≈ 20 Hz en régimen",
+   "color": [
+    0.15,
+    0.33,
+    0.55
+   ],
+   "explosion_mm": [
+    0,
+    -1700,
+    0
+   ],
+   "centro_mm": [
+    12375.8,
+    -369.0,
+    515.8
+   ],
+   "caja_mm": [
+    12220,
+    -445,
+    427,
+    12532,
+    -293,
+    605
+   ],
+   "masa_kg": 11
+  },
+  {
+   "id": "P059",
+   "cod": "4.16b-3",
+   "nombre": "Consola del motorreductor con colisos – piso 3",
+   "grupo": "trans3",
+   "material": "F-24",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.3,
+    0.34,
+    0.38
+   ],
+   "explosion_mm": [
+    0,
+    -1100,
+    0
+   ],
+   "centro_mm": [
+    12450.0,
+    -253.5,
+    2.0
+   ],
+   "caja_mm": [
+    12260,
+    -505,
+    -228,
+    12640,
+    -2,
+    232
+   ],
+   "masa_kg": 48.2
+  },
+  {
+   "id": "P060",
+   "cod": "4.10",
+   "nombre": "Tolvas de transferencia entre pisos (chapa inox 2 mm)",
+   "grupo": "acces",
+   "material": "AISI 304",
+   "cantidad": 2,
+   "nota": "",
+   "color": [
+    0.8,
+    0.82,
+    0.84
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    0
+   ],
+   "centro_mm": [
+    6500.0,
+    1300.0,
+    1840.0
+   ],
+   "caja_mm": [
+    260,
+    250,
+    1060,
+    12740,
+    2350,
+    2620
+   ],
+   "masa_kg": 80
+  },
+  {
+   "id": "P061",
+   "cod": "4.19a",
+   "nombre": "Tolva de descarga al sinfín (10)",
+   "grupo": "acces",
+   "material": "AISI 304",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.8,
+    0.82,
+    0.84
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    -600
+   ],
+   "centro_mm": [
+    12700.0,
+    1300.0,
+    260.0
+   ],
+   "caja_mm": [
+    12450,
+    300,
+    120,
+    12950,
+    2300,
+    400
+   ],
+   "masa_kg": 45
+  },
+  {
+   "id": "P062",
+   "cod": "4.19b",
+   "nombre": "Boca de entrada de aire caliente 1.200 × 400 con brida (plenum)",
+   "grupo": "acces",
+   "material": "chapa galv. BWG 18",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.7,
+    0.72,
+    0.74
+   ],
+   "explosion_mm": [
+    0,
+    1200,
+    0
+   ],
+   "centro_mm": [
+    11000.0,
+    2675.0,
+    680.0
+   ],
+   "caja_mm": [
+    10340,
+    2600,
+    420,
+    11660,
+    2750,
+    940
+   ],
+   "masa_kg": 35
+  },
+  {
+   "id": "P063",
+   "cod": "4.12",
+   "nombre": "Campana de salida 800 × 800 y arranque del conducto Ø800 (17)",
+   "grupo": "acces",
+   "material": "chapa galv.",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.7,
+    0.72,
+    0.74
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    1800
+   ],
+   "centro_mm": [
+    3000.0,
+    1300.0,
+    3775.0
+   ],
+   "caja_mm": [
+    2598,
+    898,
+    3400,
+    3402,
+    1702,
+    4150
+   ],
+   "masa_kg": 60
+  },
+  {
+   "id": "P064",
+   "cod": "4.18",
+   "nombre": "Rodillo esparcidor de paletas Ø240 × 2.000 (M9)",
+   "grupo": "acces",
+   "material": "AISI 304",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.8,
+    0.82,
+    0.84
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    2400
+   ],
+   "centro_mm": [
+    1350.0,
+    1300.0,
+    2850.0
+   ],
+   "caja_mm": [
+    1230,
+    100,
+    2730,
+    1470,
+    2500,
+    2970
+   ],
+   "masa_kg": 90
+  },
+  {
+   "id": "P065",
+   "cod": "4.18b",
+   "nombre": "Compuerta niveladora regulable (capa de 30 mm)",
+   "grupo": "acces",
+   "material": "AISI 304",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.8,
+    0.82,
+    0.84
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    2400
+   ],
+   "centro_mm": [
+    1650.0,
+    1300.0,
+    2915.0
+   ],
+   "caja_mm": [
+    1647,
+    300,
+    2730,
+    1653,
+    2300,
+    3100
+   ],
+   "masa_kg": 35.2
+  },
+  {
+   "id": "P066",
+   "cod": "4.19c",
+   "nombre": "Boca de alimentación desde la cinta de alimentación (3)",
+   "grupo": "acces",
+   "material": "AISI 304",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.8,
+    0.82,
+    0.84
+   ],
+   "explosion_mm": [
+    0,
+    0,
+    2000
+   ],
+   "centro_mm": [
+    900.0,
+    1300.0,
+    3525.0
+   ],
+   "caja_mm": [
+    700,
+    1000,
+    3400,
+    1100,
+    1600,
+    3650
+   ],
+   "masa_kg": 38.9
+  },
+  {
+   "id": "P067",
+   "cod": "4.13",
+   "nombre": "Pasarela superior con baranda y escalera marinera con jaula",
+   "grupo": "pasarela",
+   "material": "acero pintado amarillo seguridad",
+   "cantidad": 1,
+   "nota": "",
+   "color": [
+    0.95,
+    0.75,
+    0.1
+   ],
+   "explosion_mm": [
+    0,
+    -900,
+    1500
+   ],
+   "centro_mm": [
+    5730.5,
+    450.0,
+    2250.0
+   ],
+   "caja_mm": [
+    -1260,
+    50,
+    0,
+    12721,
+    850,
+    4500
+   ],
+   "masa_kg": 530
+  }
+ ]
+}

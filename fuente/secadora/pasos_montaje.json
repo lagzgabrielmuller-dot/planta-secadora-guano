@@ -1,0 +1,283 @@
+[
+ {
+  "titulo": "1. Replanteo y anclajes químicos",
+  "texto": "Marcar los ejes del secador sobre la platea (x = 11,50 a 24,50 m; y = 8,00 a 10,60 m, plano SC-05). Perforar 40 agujeros Ø18 × 135 mm con taladro percutor, soplar y cepillar (4 ciclos), inyectar la resina epoxi desde el fondo y colocar las varillas M16 clase 5.8 girándolas. Respetar el tiempo de curado del fabricante antes de cargar (≈ 24 h a 20 °C).",
+  "herramientas": "nivel óptico o láser, cinta, tiza de línea, taladro percutor con mecha Ø18, bomba de soplado, cepillo, pistola de resina",
+  "prefijos": [
+   "4.17a"
+  ],
+  "camara": [
+   [
+    -0.55,
+    0.62,
+    0.62
+   ],
+   [
+    0.12,
+    0.02,
+    -0.08
+   ]
+  ]
+ },
+ {
+  "titulo": "2. Columnas con placa base",
+  "texto": "Presentar las 10 columnas UPN 120, que vienen del taller con la placa base 200 × 200 × 12 soldada, sobre las varillas de los anclajes, apoyadas en cuñas de acero. Nivelar cada placa a ±1 mm, aplomar la columna (±2 mm en 3,4 m) y llenar debajo con mortero sin contracción (grout) de 20 mm. Con el grout fraguado, apretar las tuercas M16 a 80 N·m con llave dinamométrica.",
+  "herramientas": "grúa o autoelevador, llave dinamométrica, plomada o láser, cuñas de acero, grout, encofrado perimetral",
+  "prefijos": [
+   "4.17",
+   "4.11a"
+  ],
+  "camara": [
+   [
+    16,
+    6,
+    9
+   ],
+   [
+    6.5,
+    1.2,
+    -1.3
+   ]
+  ]
+ },
+ {
+  "titulo": "3. Vigas longitudinales IPN 140",
+  "texto": "Abulonar las vigas inferiores (+0,47 m) y superiores (+3,33 m) a las cartelas de las columnas con bulones M16 8.8 (210 N·m). Verificar la escuadra midiendo las dos diagonales de la planta: deben diferir menos de 3 mm. Recién entonces dar el apriete final.",
+  "herramientas": "grúa, llaves fijas y dinamométrica, escuadra, cinta métrica, punzón de alineación",
+  "prefijos": [
+   "4.11b"
+  ],
+  "camara": [
+   [
+    18,
+    7,
+    10
+   ],
+   [
+    6.5,
+    1.6,
+    -1.3
+   ]
+  ]
+ },
+ {
+  "titulo": "4. Travesaños y ménsulas de apoyo",
+  "texto": "Soldar los travesaños L 50 × 50 × 5 cada 1,0 m en los tres niveles (piso 1 a +2,63; piso 2 a +1,78; piso 3 a +0,93 m) y las ménsulas PL 12 de los rodamientos fuera de la cámara. Controlar que todos los travesaños de un piso estén en un mismo plano (±1 mm).",
+  "herramientas": "soldadora, nivel de manguera o láser, plantilla de altura",
+  "prefijos": [
+   "4.20",
+   "4.16-"
+  ],
+  "camara": [
+   [
+    14,
+    5,
+    8
+   ],
+   [
+    6.5,
+    1.6,
+    -1.3
+   ]
+  ]
+ },
+ {
+  "titulo": "5. Piso de la cámara, plenum y tolva de descarga",
+  "texto": "Colocar los paneles del piso (lana de roca, cara interior inoxidable) sellando las juntas con silicona de alta temperatura. Montar la boca de entrada de aire caliente en la cara Norte y la tolva de descarga sobre el sinfín (10).",
+  "herramientas": "pistola de silicona, remachadora, atornilladora, sellador de alta temperatura",
+  "prefijos": [
+   "4.8f",
+   "4.19a",
+   "4.19b"
+  ],
+  "camara": [
+   [
+    14,
+    6,
+    8
+   ],
+   [
+    9,
+    0.5,
+    -1.3
+   ]
+  ]
+ },
+ {
+  "titulo": "6. Guías, faldones de sellado y rodillos de retorno",
+  "texto": "Atornillar las 5 guías de cada piso sobre los travesaños con tornillos de cabeza fresada embutidos (que no rocen la malla): de PTFE en los pisos 2 y 3 y de UHMW-PE en el piso 1. Atornillar a las paredes los faldones de sellado de ambos bordes, con el labio de silicona apoyado sobre el borde de la banda sin frenarla. Montar los rodillos de retorno Ø89 cada 2,0 m y verificar que giren libres.",
+  "herramientas": "atornilladora, avellanador, llaves fijas",
+  "prefijos": [
+   "4.7",
+   "4.21",
+   "4.6"
+  ],
+  "camara": [
+   [
+    12,
+    5,
+    7
+   ],
+   [
+    6.5,
+    1.6,
+    -1.3
+   ]
+  ]
+ },
+ {
+  "titulo": "7. Tambores motrices, ejes y rodamientos UCF 212",
+  "texto": "Montar cada tambor motriz sobre su eje SAE 1045 (Ø60, asiento rectificado) con los bujes de fijación cónicos apretados en cruz al par del fabricante. Calzar los UCF 212 en las ménsulas, alinear el eje a escuadra con la cámara (diagonales iguales) y bloquear los prisioneros. Engrasar.",
+  "herramientas": "aparejo o autoelevador, llave dinamométrica, comparador, escuadra, grasera",
+  "prefijos": [
+   "4.2-",
+   "4.2.1",
+   "4.4"
+  ],
+  "camara": [
+   [
+    14,
+    3,
+    5
+   ],
+   [
+    12.4,
+    1.8,
+    -1.3
+   ]
+  ]
+ },
+ {
+  "titulo": "8. Tambores de reenvío y tensores UCT 210",
+  "texto": "Montar los tambores de reenvío con el eje Ø60 entre cubos y muñones Ø50 (Rev. E) en las unidades tensoras UCT 210, con los tornillos M20 al principio de la carrera (quedan 150 mm para tensar).",
+  "herramientas": "aparejo, llaves fijas, llave dinamométrica",
+  "prefijos": [
+   "4.3-",
+   "4.3.1",
+   "4.14"
+  ],
+  "camara": [
+   [
+    -2,
+    3,
+    5
+   ],
+   [
+    0.6,
+    1.8,
+    -1.3
+   ]
+  ]
+ },
+ {
+  "titulo": "9. Bandas de malla AISI 304",
+  "texto": "Desenrollar cada banda (≈ 25 m) desde la cola, pasarla por el tambor motriz y por los rodillos de retorno y unir los extremos con la varilla de empalme. Tensar con los dos tornillos M20 por igual hasta T2 ≈ 2.000 N (flecha del ramal de retorno ≈ 15 mm entre rodillos) y centrar la banda en marcha lenta.",
+  "herramientas": "malacate o tirfor, varilla de empalme, pinzas, llaves fijas, dinamómetro de mano",
+  "prefijos": [
+   "4.1-"
+  ],
+  "camara": [
+   [
+    16,
+    5,
+    6
+   ],
+   [
+    6.5,
+    1.8,
+    -1.3
+   ]
+  ]
+ },
+ {
+  "titulo": "10. Accionamientos: motorreductores, cadenas y cárteres",
+  "texto": "Fijar la consola con colisos, montar el motorreductor 1:300 con el piñón Z15 y la corona Z75 en el eje (chaveta 14 × 9 × 63). Alinear las ruedas con regla (desalineación < 1 mm), colocar la cadena ASA 60 y tensarla con los colisos (flecha ≈ 2 % de la distancia entre centros). Colocar los cárteres amarillos antes de energizar.",
+  "herramientas": "llaves fijas, regla de acero, extractor de cadena, aceitera, llave dinamométrica",
+  "prefijos": [
+   "4.16b",
+   "4.5",
+   "M",
+   "4.15"
+  ],
+  "camara": [
+   [
+    13.5,
+    2.2,
+    5
+   ],
+   [
+    12.4,
+    1.4,
+    0.3
+   ]
+  ]
+ },
+ {
+  "titulo": "11. Tolvas de transferencia, esparcidor y alimentación",
+  "texto": "Montar las chapas deflectoras inoxidables entre pisos, el rodillo esparcidor de paletas (M9) y la compuerta niveladora a 30 mm sobre la malla, y la boca de alimentación de la cinta de alimentación (M8).",
+  "herramientas": "aparejo, llaves, galgas de espesor (30 mm)",
+  "prefijos": [
+   "4.10",
+   "4.18",
+   "4.19c"
+  ],
+  "camara": [
+   [
+    3,
+    5,
+    5
+   ],
+   [
+    1.5,
+    2.6,
+    -1.3
+   ]
+  ]
+ },
+ {
+  "titulo": "12. Cerramiento, puertas y campana",
+  "texto": "Colocar los paneles sándwich laterales, testeros y techo sobre las columnas, con juntas de silicona de alta temperatura. Montar las 6 puertas de inspección con sus microinterruptores ZS-01 a ZS-06 y la campana de salida con el arranque del conducto Ø800.",
+  "herramientas": "aparejo, remachadora, atornilladora, sellador, escalera o andamio",
+  "prefijos": [
+   "4.8a",
+   "4.8b",
+   "4.8c",
+   "4.8d",
+   "4.8e",
+   "4.9",
+   "4.12"
+  ],
+  "camara": [
+   [
+    20,
+    9,
+    9
+   ],
+   [
+    6.5,
+    1.6,
+    -1.3
+   ]
+  ]
+ },
+ {
+  "titulo": "13. Pasarela superior y escalera con jaula",
+  "texto": "Montar la pasarela de rejilla de 0,8 m con baranda de 1,0 m, travesaño intermedio y zócalo, y la escalera marinera con jaula en el extremo Oeste. Hacer la prueba de carga de la pasarela antes de habilitarla (capítulo de pruebas).",
+  "herramientas": "aparejo, llaves, soldadora, bolsas de arena para la prueba de carga",
+  "prefijos": [
+   "4.13"
+  ],
+  "camara": [
+   [
+    -8,
+    8,
+    7
+   ],
+   [
+    4,
+    3,
+    -1.3
+   ]
+  ]
+ }
+]

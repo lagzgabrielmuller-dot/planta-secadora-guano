@@ -1,0 +1,41 @@
+name: Pruebas
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  calculos-y-entrega:
+    name: Cálculos, datos y archivos de la entrega
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tests/requirements.txt
+      - run: pip install -r tests/requirements.txt ruff
+      - name: Lint de los programas (errores reales, no estilo)
+        run: ruff check fuente simulacion_termica --select E9,F,B --ignore B905
+      - name: Pruebas de cálculos, datos y entrega
+        run: python -m pytest tests -q
+
+  sitio:
+    name: Sitio (portada, visores 3D y simulador)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Instalar Playwright y Chromium
+        working-directory: tests/e2e
+        run: npm install --no-audit --no-fund && npx playwright install --with-deps chromium
+      - name: Probar el sitio servido por HTTP
+        run: node tests/e2e/probar_sitio.js

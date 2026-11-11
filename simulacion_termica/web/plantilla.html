@@ -1,0 +1,949 @@
+<title>Simulador SC-4</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Sinóptico de planta (como la HMI del secador): tablero de consignas a la izquierda, esquema vivo
+   del SC-4 a la derecha; abajo, los perfiles por dentro del secador y el estudio en láminas. */
+:root {
+  --bg: #e7eae8;
+  --panel: #f7f8f7;
+  --hundido: #dce1de;
+  --ink: #16201c;
+  --ink-2: #45504b;
+  --ink-3: #737e79;
+  --linea: #c3cac6;
+  --grilla: #dde2df;
+  --acento: #0d6775;
+  --acento-suave: #d2e7ea;
+  --producto: #2a78d6;
+  --aire: #eb6834;
+  --agua: #1baf7a;
+  --bien: #0ca30c;
+  --alerta: #fab219;
+  --serio: #ec835a;
+  --critico: #d03b3b;
+  --neutro: #f0efec;
+  --papel: #fcfcfb;
+  --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --font-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --radio: 6px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101413; --panel: #181d1c; --hundido: #222927; --ink: #e3e8e6; --ink-2: #b1bab6; --ink-3: #7e8984;
+    --linea: #2d3532; --grilla: #252c2a; --acento: #4fb2c2; --acento-suave: #163a40;
+    --producto: #3987e5; --aire: #d95926; --agua: #199e70; --neutro: #383835; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #101413; --panel: #181d1c; --hundido: #222927; --ink: #e3e8e6; --ink-2: #b1bab6; --ink-3: #7e8984;
+  --linea: #2d3532; --grilla: #252c2a; --acento: #4fb2c2; --acento-suave: #163a40;
+  --producto: #3987e5; --aire: #d95926; --agua: #199e70; --neutro: #383835; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.5; }
+.pagina { max-width: 1280px; margin: 0 auto; padding-block: 20px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 28px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; text-wrap: balance; margin: 0; letter-spacing: 0.005em; }
+h1 { font-size: clamp(30px, 4.6vw, 46px); line-height: 1.02; font-weight: 700; }
+h2 { font-size: 27px; line-height: 1.1; }
+h3 { font-size: 20px; line-height: 1.15; }
+p { margin: 0; }
+a { color: var(--acento); text-underline-offset: 2px; }
+.etiqueta { font-family: var(--font-display); font-weight: 600; font-size: 13px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-3); }
+.tag { font-family: var(--font-mono); font-size: 12px; color: var(--ink-2); }
+.num { font-variant-numeric: tabular-nums; }
+:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+
+/* ---------- cabecera con rótulo de plano */
+.cabecera { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px 32px; align-items: end; }
+.cabecera .lede { max-width: 64ch; color: var(--ink-2); margin-top: 10px; font-size: 16px; }
+.rotulo { border: 1px solid var(--ink-3); font-size: 12px; min-width: 300px; background: var(--panel); }
+.rotulo div { display: grid; grid-template-columns: 92px minmax(0, 1fr); border-top: 1px solid var(--linea); }
+.rotulo div:first-child { border-top: 0; }
+.rotulo span { padding: 4px 8px; }
+.rotulo span:first-child { color: var(--ink-3); border-right: 1px solid var(--linea); font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+@media (max-width: 760px) { .cabecera { grid-template-columns: minmax(0, 1fr); } .rotulo { min-width: 0; } }
+
+/* ---------- simulador */
+.app { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 920px) { .app { grid-template-columns: minmax(0, 1fr); } }
+.tablero { background: var(--panel); border: 1px solid var(--linea); border-radius: var(--radio); padding: 14px; display: flex; flex-direction: column; gap: 16px; }
+.grupo { display: flex; flex-direction: column; gap: 10px; }
+.grupo + .grupo { border-top: 1px solid var(--linea); padding-top: 14px; }
+.grupo > .etiqueta { display: flex; justify-content: space-between; gap: 8px; }
+.ctrl { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 8px; align-items: baseline; }
+.ctrl label { font-size: 14px; color: var(--ink); }
+.ctrl output { font-family: var(--font-mono); font-size: 13px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.ctrl input[type=range] { grid-column: 1 / -1; width: 100%; accent-color: var(--acento); margin: 2px 0 0; }
+.ctrl input[type=range]:disabled { opacity: 0.45; }
+.ctrl .ayuda { grid-column: 1 / -1; font-size: 12px; color: var(--ink-3); }
+.ctrl.fijado output { color: var(--acento); font-weight: 500; }
+select { font: inherit; font-size: 14px; padding: 6px 8px; border-radius: 4px; border: 1px solid var(--linea); background: var(--bg); color: var(--ink); width: 100%; }
+.modos { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--linea); border-radius: 5px; overflow: hidden; }
+.modos input { position: absolute; opacity: 0; pointer-events: none; }
+.modos label { text-align: center; font-size: 12.5px; line-height: 1.2; padding: 7px 4px; cursor: pointer; background: var(--bg); color: var(--ink-2); border-left: 1px solid var(--linea); font-weight: 500; }
+.modos label:first-of-type { border-left: 0; }
+.modos input:checked + label { background: var(--acento); color: #fff; }
+:root[data-theme="dark"] .modos input:checked + label { color: #0d1213; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .modos input:checked + label { color: #0d1213; } }
+.modos input:focus-visible + label { outline: 2px solid var(--acento); outline-offset: -2px; }
+.nota-modo { font-size: 12.5px; color: var(--ink-2); }
+.presets { display: flex; flex-wrap: wrap; gap: 6px; }
+.presets button, .boton { font: inherit; font-size: 13px; padding: 5px 10px; border-radius: 4px; border: 1px solid var(--acento); background: transparent; color: var(--acento); cursor: pointer; }
+.presets button:hover, .boton:hover { background: var(--acento-suave); }
+
+.vista { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.barra-estado { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; justify-content: space-between; font-size: 13px; color: var(--ink-2); }
+.barra-estado .busqueda { color: var(--ink); font-weight: 500; }
+.calculando .kpis, .calculando .sinoptico, .calculando .graficos { opacity: 0.55; transition: opacity 0.2s; }
+.kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+@media (max-width: 600px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.kpi-cab { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; }
+.kpi { background: var(--panel); border: 1px solid var(--linea); border-radius: var(--radio); padding: 9px 11px; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.kpi .valor { font-size: 25px; font-weight: 600; line-height: 1.15; font-family: var(--font-body); }
+.kpi .sub { font-size: 12px; color: var(--ink-3); }
+.kpi .tag { font-size: 11px; }
+.sinoptico { margin: 0; background: var(--panel); border: 1px solid var(--linea); border-radius: var(--radio); padding: 8px; position: relative; }
+.sinoptico svg { width: 100%; height: auto; display: block; }
+.sinoptico svg[hidden] { display: none; }
+.sinoptico figcaption { font-size: 12px; color: var(--ink-3); padding: 2px 6px 4px; }
+.ley-sin { display: inline-flex; align-items: center; gap: 6px; margin-right: 16px; color: var(--ink-2); }
+.v3d { position: relative; border-radius: calc(var(--radio) - 2px); overflow: hidden; touch-action: none;
+  background: radial-gradient(120% 95% at 38% 28%, #f6f7f9 0%, #e4e9ed 55%, #d3d9df 100%); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .v3d { background: radial-gradient(120% 95% at 38% 28%, #2c343b 0%, #1e252b 60%, #151a1f 100%); }
+}
+:root[data-theme="dark"] .v3d { background: radial-gradient(120% 95% at 38% 28%, #2c343b 0%, #1e252b 60%, #151a1f 100%); }
+.v3d-lienzo { display: block; cursor: grab; }
+.v3d-lienzo:active { cursor: grabbing; }
+.v3d-etiquetas { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.v3d-etq { position: absolute; left: 0; top: 0; white-space: nowrap; font: 500 12px var(--font-mono); color: #16201c;
+  background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(22, 32, 28, 0.2); border-radius: 4px; padding: 2px 7px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14); will-change: transform; }
+.v3d-etq b { font-family: var(--font-display); font-weight: 600; letter-spacing: 0.04em; margin-right: 3px; }
+.v3d-etq.serio { background: #fde3d6; border-color: var(--serio); }
+.v3d-etq.critico { background: #f8d6d6; border-color: var(--critico); }
+@media (max-width: 600px) { .v3d-etq { font-size: 10.5px; padding: 1px 5px; } .v3d-botones button { font-size: 12px; padding: 3px 7px; } }
+.v3d-botones { position: absolute; top: 8px; right: 8px; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; z-index: 2; }
+.v3d-botones button { font: 500 12.5px var(--font-body); padding: 4px 9px; border-radius: 4px; border: 1px solid rgba(22, 32, 28, 0.25);
+  background: rgba(255, 255, 255, 0.88); color: #16201c; cursor: pointer; }
+.v3d-botones button:hover { background: #fff; }
+.sw.grad-aire { width: 64px; height: 8px; border: 1px solid var(--linea); }
+.solo-3d[hidden], .solo-2d[hidden] { display: none; }
+.sw { display: inline-block; width: 14px; height: 6px; }
+.sw.grad { width: 64px; height: 8px; background: linear-gradient(90deg, rgb(74,47,26), rgb(118,82,50), rgb(160,120,80), rgb(196,158,112), rgb(220,194,155), rgb(236,220,192)); border: 1px solid var(--linea); }
+
+/* tooltips */
+.tip { position: absolute; pointer-events: none; background: var(--panel); border: 1px solid var(--ink-3); border-radius: 4px; padding: 6px 8px; font-size: 12.5px; line-height: 1.35; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12); z-index: 5; min-width: 150px; color: var(--ink); }
+.tip b { font-family: var(--font-display); font-weight: 600; letter-spacing: 0.03em; }
+.tip .fila { display: flex; justify-content: space-between; gap: 12px; }
+.tip .fila span:last-child { font-family: var(--font-mono); font-size: 12px; }
+
+/* ---------- perfiles */
+.seccion { display: flex; flex-direction: column; gap: 14px; }
+.seccion > .intro { max-width: 70ch; color: var(--ink-2); }
+.graficos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 900px) { .graficos { grid-template-columns: minmax(0, 1fr); } }
+.grafico { background: var(--panel); border: 1px solid var(--linea); border-radius: var(--radio); padding: 10px 12px 6px; position: relative; min-width: 0; }
+.grafico.ancho { grid-column: 1 / -1; }
+.grafico h3 { font-size: 17px; }
+.leyenda { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12.5px; color: var(--ink-2); margin: 4px 0 2px; }
+.leyenda i { display: inline-block; width: 16px; height: 2px; vertical-align: middle; margin-right: 6px; border-radius: 1px; }
+.leyenda i.banda { height: 9px; opacity: 0.35; }
+.grafico svg { width: 100%; display: block; overflow: visible; }
+.grafico canvas { width: 100%; display: block; }
+.escala { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-3); margin-top: 4px; flex-wrap: wrap; }
+.escala .barra { height: 10px; width: 220px; max-width: 60%; border-radius: 2px; }
+details.tabla { font-size: 13px; }
+details.tabla summary { cursor: pointer; color: var(--acento); }
+.tabla-cont { overflow-x: auto; max-height: 360px; overflow-y: auto; margin-top: 8px; border: 1px solid var(--linea); border-radius: 4px; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+th, td { padding: 4px 10px; text-align: right; border-bottom: 1px solid var(--grilla); white-space: nowrap; }
+th { position: sticky; top: 0; background: var(--panel); font-weight: 600; color: var(--ink-2); font-size: 12px; }
+td:first-child, th:first-child { text-align: left; }
+
+/* ---------- estudio */
+.hallazgos { display: flex; flex-direction: column; gap: 30px; }
+.hallazgo { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 2fr); gap: 18px 28px; align-items: start; }
+@media (max-width: 900px) { .hallazgo { grid-template-columns: minmax(0, 1fr); } }
+.hallazgo .texto { display: flex; flex-direction: column; gap: 10px; }
+.hallazgo .texto p { color: var(--ink-2); }
+.hallazgo .cifra { font-family: var(--font-display); font-size: 40px; font-weight: 700; line-height: 1; color: var(--ink); }
+.hallazgo .cifra small { font-size: 16px; font-weight: 500; color: var(--ink-3); letter-spacing: 0.02em; display: block; margin-top: 4px; font-family: var(--font-body); }
+.laminas { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.lamina { margin: 0; background: var(--papel); border: 1px solid var(--linea); border-radius: 3px; padding: 8px; }
+.lamina img { display: block; width: 100%; height: auto; }
+.lamina figcaption { font-size: 12px; color: #52514e; padding: 6px 2px 0; }
+.cambios { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
+.cambio { background: var(--panel); border: 1px solid var(--linea); border-radius: var(--radio); padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+.cambio .tag { font-size: 11.5px; }
+.cambio p { font-size: 14px; color: var(--ink-2); }
+.columnas { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px 32px; }
+@media (max-width: 900px) { .columnas { grid-template-columns: minmax(0, 1fr); } }
+.columnas p + p { margin-top: 10px; }
+.columnas p { color: var(--ink-2); max-width: 68ch; }
+.datos td:first-child { color: var(--ink-2); white-space: normal; }
+.datos td { text-align: left; white-space: normal; }
+.datos td.v { font-family: var(--font-mono); font-size: 12.5px; white-space: normal; }
+.datos-cont { overflow-x: auto; min-width: 0; }
+.fuentes { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; color: var(--ink-2); font-size: 14px; max-width: 90ch; }
+footer { border-top: 1px solid var(--linea); padding-top: 12px; font-size: 12.5px; color: var(--ink-3); display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: space-between; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="pagina">
+  <header class="cabecera">
+    <div>
+      <div class="etiqueta">Proyecto final · Secadora de guano</div>
+      <h1>Simulador térmico del secador SC-4</h1>
+      <p class="lede">Un modelo físico del secador de cinta de tres pisos, armado con los datos de la última revisión. Mové la temperatura del aire, las bandas o el guano y mirá cómo sale el producto, cuánta cáscara se quema y qué pasa con el escape y las guías.</p>
+    </div>
+    <div class="rotulo" aria-label="Datos del estudio">
+      <div><span>Equipo</span><span>SC-4 · cinta de 3 pisos de 2,0 × 12 m</span></div>
+      <div><span>Proceso</span><span>1.000 kg/h · 72 % → 15 % · aire a 135 °C</span></div>
+      <div><span>Base</span><span>Informe final Rev. E (24/10/2026), planos 18 y 22</span></div>
+      <div><span>Escuela</span><span>E.P.N.M. y S. N.º 35 · Crespo, Entre Ríos</span></div>
+      <div><span>Estudio</span><span>26/10/2026 · modelo validado con ensayos publicados</span></div>
+    </div>
+  </header>
+
+  <section class="app" id="simulador" aria-label="Simulador">
+    <form class="tablero" id="tablero" onsubmit="return false">
+      <div class="grupo">
+        <div class="etiqueta">Lazo de humedad MIC-01</div>
+        <div class="modos" role="radiogroup" aria-label="Modo de control">
+          <input type="radio" name="modo" id="modo-manual" value="manual" checked><label for="modo-manual">Manual</label>
+          <input type="radio" name="modo" id="modo-aire" value="aire"><label for="modo-aire">Mueve el aire</label>
+          <input type="radio" name="modo" id="modo-bandas" value="bandas"><label for="modo-bandas">Mueve las bandas</label>
+        </div>
+        <p class="nota-modo" id="nota-modo">Fijás la temperatura del aire y la velocidad de las bandas; el modelo calcula cómo sale el guano.</p>
+        <div class="ctrl" id="c-objetivo" hidden>
+          <label for="objetivo">Humedad objetivo (consigna)</label><output id="o-objetivo">15 %</output>
+          <input type="range" id="objetivo" min="10" max="20" step="0.5" value="15">
+        </div>
+      </div>
+      <div class="grupo">
+        <div class="etiqueta"><span>Aire caliente</span><span class="tag">TIC-01 · CD-03</span></div>
+        <div class="ctrl" id="c-T">
+          <label for="T_aire">Temperatura de entrada</label><output id="o-T">135 °C</output>
+          <input type="range" id="T_aire" min="70" max="150" step="1" value="135">
+        </div>
+        <div class="ctrl">
+          <label for="recirc">Recirculación</label><output id="o-recirc">25 %</output>
+          <input type="range" id="recirc" min="0" max="35" step="5" value="25">
+        </div>
+        <div class="ctrl">
+          <label for="aire">Caudal de aire</label><output id="o-aire">26.600 kg/h</output>
+          <input type="range" id="aire" min="80" max="120" step="5" value="100">
+        </div>
+      </div>
+      <div class="grupo">
+        <div class="etiqueta"><span>Guano</span><span class="tag">dosificador M8</span></div>
+        <div class="ctrl">
+          <label for="alimentacion">Caudal de guano húmedo</label><output id="o-alimentacion">1.000 kg/h</output>
+          <input type="range" id="alimentacion" min="500" max="1600" step="10" value="1000">
+        </div>
+        <div class="ctrl">
+          <label for="humedad">Humedad del guano fresco</label><output id="o-humedad">72 %</output>
+          <input type="range" id="humedad" min="60" max="80" step="1" value="72">
+        </div>
+        <div class="ctrl">
+          <label for="grumo">Tamaño de grumo</label><output id="o-grumo">10 mm</output>
+          <input type="range" id="grumo" min="5" max="30" step="1" value="10">
+          <span class="ayuda">Lo que deja el esparcidor de paletas; es el dato más incierto.</span>
+        </div>
+      </div>
+      <div class="grupo">
+        <div class="etiqueta"><span>Bandas</span><span class="tag">M5 · M6 · M7</span></div>
+        <div class="ctrl" id="c-v">
+          <label for="vel">Velocidad de las tres bandas</label><output id="o-vel">0,37 m/min</output>
+          <input type="range" id="vel" min="0.20" max="0.90" step="0.01" value="0.37">
+        </div>
+        <div class="ctrl">
+          <label for="borde">Aire que sube por los bordes</label><output id="o-borde">0 %</output>
+          <input type="range" id="borde" min="0" max="20" step="5" value="0">
+          <span class="ayuda">Si entre las bandas y las paredes no hay sello, parte del aire sube por la rendija sin tocar el guano.</span>
+        </div>
+      </div>
+      <div class="grupo">
+        <div class="etiqueta">Clima del turno</div>
+        <select id="mes" aria-label="Clima del turno"></select>
+      </div>
+      <div class="grupo">
+        <div class="etiqueta">Casos para empezar</div>
+        <div class="presets">
+          <button type="button" data-preset="diseno">Diseño Rev. E</button>
+          <button type="button" data-preset="ajuste">Aire ajustado al 15 %</button>
+          <button type="button" data-preset="capacidad">Capacidad a 135 °C</button>
+          <button type="button" data-preset="invierno">Invierno, guano al 76 %</button>
+          <button type="button" data-preset="grumos">Grumos de 25 mm</button>
+        </div>
+      </div>
+    </form>
+
+    <div class="vista" id="vista">
+      <div class="barra-estado" aria-live="polite"><span class="busqueda" id="busqueda"></span><span id="estado-calc"></span></div>
+      <div class="kpis" id="kpis"></div>
+      <figure class="sinoptico">
+        <div class="v3d" id="v3d" hidden>
+          <div class="v3d-botones">
+            <button type="button" id="v3d-vista">Vista inicial</button>
+            <button type="button" id="v3d-frente" aria-pressed="false">Cerrar el frente</button>
+            <button type="button" id="v3d-aire" aria-pressed="true">Aire quieto</button>
+          </div>
+        </div>
+        <svg id="sinoptico" viewBox="0 0 820 432" role="img" aria-label="Esquema del secador SC-4 con los valores calculados"></svg>
+        <figcaption><span class="ley-sin"><span class="sw grad"></span>guano húmedo (72 %) → seco</span><span class="ley-sin solo-3d" hidden><span class="sw grad-aire" id="ley-aire"></span>aire 20 → 135 °C</span><span class="ley-sin"><span class="sw" style="background:var(--serio)"></span>guía UHMW-PE sobre 80 °C</span><span class="ley-sin"><span class="sw" style="background:var(--critico)"></span>sobre 130 °C</span><br><span class="solo-3d" hidden>Corte del SC-4 con el frente sur abierto. El guano entra arriba a la izquierda, recorre los tres pisos y cae a la descarga; el aire caliente entra por la cara norte debajo del piso 3 y sube hasta la campana. El lecho se dibuja 6 veces más grueso y en su borde se ven las capas (abajo, más secas). Arrastrá para girar, rueda o dos dedos para acercar, doble clic para volver; con el puntero sobre el guano ves los valores.</span><span class="solo-2d">Corte del SC-4, con el oeste a la izquierda. El guano entra arriba, recorre los tres pisos y sale abajo a la derecha; el aire sube desde el plenum. El espesor del lecho está exagerado. Pasá el puntero por las bandas para ver los valores.</span></figcaption>
+        <div class="tip" id="tip-sinoptico" hidden></div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="seccion" id="perfiles">
+    <h2>Por dentro del secador</h2>
+    <p class="intro">Lo que le pasa al guano en los 36 m de banda para el caso del simulador. La banda sombreada es la diferencia entre la capa de abajo, que recibe primero el aire, y la de arriba.</p>
+    <div class="graficos" id="graficos">
+      <div class="grafico">
+        <h3>Humedad del guano</h3>
+        <div class="leyenda"><span><i style="background:var(--producto)"></i>media de las capas</span><span><i class="banda" style="background:var(--producto)"></i>entre capas</span></div>
+        <svg id="g-humedad" aria-label="Humedad del guano a lo largo del secador"></svg>
+        <div class="tip" hidden></div>
+      </div>
+      <div class="grafico">
+        <h3>Temperaturas</h3>
+        <div class="leyenda"><span><i style="background:var(--producto)"></i>guano</span><span><i style="background:var(--aire)"></i>aire que sale del lecho</span><span><i style="background:var(--ink-3)"></i>aire bajo la banda</span></div>
+        <svg id="g-temperatura" aria-label="Temperaturas a lo largo del secador"></svg>
+        <div class="tip" hidden></div>
+      </div>
+      <div class="grafico ancho">
+        <h3>Humedad de cada capa del lecho</h3>
+        <div class="leyenda"><span>Abajo, la capa que recibe primero el aire; arriba, la última. Rojo: más seca que la consigna; azul: más húmeda.</span></div>
+        <canvas id="g-capas" height="150" aria-label="Mapa de humedad por capa"></canvas>
+        <div class="escala"><span>0 %</span><span class="barra" id="escala-capas"></span><span>72 %</span><span id="escala-centro"></span></div>
+        <div class="tip" hidden></div>
+      </div>
+    </div>
+    <details class="tabla">
+      <summary>Ver los valores en una tabla</summary>
+      <div class="tabla-cont"><table id="tabla"></table></div>
+    </details>
+  </section>
+
+  <section class="seccion" id="hallazgos">
+    <h2>Lo que muestra el estudio</h2>
+    <p class="intro">Corrimos el modelo fino (120 posiciones y 8 capas por piso) en cientos de condiciones. Estas son las conclusiones que cambian algo del proyecto; cada una trae la lámina para la defensa.</p>
+    <div class="hallazgos">
+      <!--__HALLAZGOS__-->
+    </div>
+  </section>
+
+  <section class="seccion" id="cambios">
+    <h2>Cambios incorporados al proyecto en la Rev. F (11/11/2026)</h2>
+    <div class="cambios">
+      <!--__CAMBIOS__-->
+    </div>
+  </section>
+
+  <section class="seccion" id="modelo">
+    <h2>Cómo está hecho el modelo</h2>
+    <div class="columnas">
+      <div>
+        <!--__METODO__-->
+      </div>
+      <div class="datos-cont">
+        <table class="datos">
+          <!--__DATOS_TABLA__-->
+        </table>
+      </div>
+    </div>
+    <figure class="lamina"><img src="figuras/13_validacion_cinetica.png" alt="Comparación de la cinética del modelo con los ensayos de estufa publicados"><figcaption>Validación de la cinética de secado con los ensayos de estufa de Ghaly y MacDonald (2012) y de Liška y Kic (2011).</figcaption></figure>
+  </section>
+
+  <section class="seccion" id="fuentes">
+    <h2>Fuentes</h2>
+    <ol class="fuentes">
+      <!--__FUENTES__-->
+    </ol>
+  </section>
+
+  <footer>
+    <span>Simulador hecho con el mismo modelo que el paquete Python <span class="tag">simulacion_termica</span> (resultados idénticos en la misma malla).</span>
+    <span>Malla del simulador: 40 posiciones × 5 capas por piso.</span>
+  </footer>
+</div>
+
+<script>/*__LIB3D__*/</script>
+<script>/*__ORBITA__*/</script>
+<script>/*__VISTA3D__*/</script>
+<script id="src-datos">
+/*__DATOS__*/
+</script>
+<script id="src-modelo">
+/*__MODELO__*/
+</script>
+<script>
+const INICIAL = /*__INICIAL__*/null;
+</script>
+<script>
+"use strict";
+(function () {
+  const D = DATOS_SC4;
+  const M = window.ModeloSecador;
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+  const NX = 40, NZ = 5;
+
+  // ------------------------------------------------------------------ números en castellano
+  function fmt(x, d) {
+    d = d || 0;
+    if (x === null || x === undefined || !isFinite(x)) return "—";
+    const s = Math.abs(x).toFixed(d);
+    let [e, f] = s.split(".");
+    e = e.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    const neg = x < 0 && Number(s) !== 0;
+    return (neg ? "−" : "") + e + (f ? "," + f : "");
+  }
+  const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  // bajo 2 % la humedad sale de extrapolar la isoterma a más de 100 °C: se informa "< 2"
+  const fmtHum = (h) => (h < 0.02 ? "< 2" : fmt(100 * h, 1));
+
+  // ------------------------------------------------------------------ estado de los controles
+  const est = { modo: "manual", objetivo: 15, T_aire: 135, recirc: 25, aire: 100, alimentacion: 1000,
+    humedad: 72, grumo: 10, vel: 0.37, mes: -1, borde: 0 };
+  const PRESETS = {
+    diseno: { modo: "manual", T_aire: 135, recirc: 25, aire: 100, alimentacion: 1000, humedad: 72, grumo: 10, vel: 0.37, mes: -1, objetivo: 15, borde: 0 },
+    ajuste: { modo: "aire", T_aire: 102, recirc: 25, aire: 100, alimentacion: 1000, humedad: 72, grumo: 10, vel: 0.37, mes: -1, objetivo: 15, borde: 0 },
+    capacidad: { modo: "manual", T_aire: 135, recirc: 0, aire: 100, alimentacion: 1440, humedad: 72, grumo: 10, vel: 0.5, mes: -1, objetivo: 15, borde: 0 },
+    invierno: { modo: "aire", T_aire: 108, recirc: 25, aire: 100, alimentacion: 1000, humedad: 76, grumo: 10, vel: 0.37, mes: 6, objetivo: 15, borde: 0 },
+    grumos: { modo: "manual", T_aire: 135, recirc: 25, aire: 100, alimentacion: 1000, humedad: 72, grumo: 25, vel: 0.37, mes: -1, objetivo: 15, borde: 0 },
+  };
+  const NOTAS = {
+    manual: "Fijás la temperatura del aire y la velocidad de las bandas; el modelo calcula cómo sale el guano.",
+    aire: "Lo que proponemos: el lazo de humedad corrige la consigna de temperatura del aire (cascada sobre TIC-01) y las bandas quedan fijas.",
+    bandas: "Lo que dice el informe (14.5.2): el lazo de humedad mueve la velocidad de las tres bandas con el aire fijo.",
+  };
+
+  const mesSel = $("#mes");
+  mesSel.innerHTML = `<option value="-1">Diseño: 18 °C y 60 %</option>` + D.meses.map((m, i) =>
+    `<option value="${i}">${m}: ${fmt(D.clima[i].T, 1)} °C y ${fmt(100 * D.clima[i].HR)} %</option>`).join("");
+
+  function escribirControles() {
+    $("#objetivo").value = est.objetivo; $("#T_aire").value = est.T_aire; $("#recirc").value = est.recirc;
+    $("#aire").value = est.aire; $("#alimentacion").value = est.alimentacion; $("#humedad").value = est.humedad;
+    $("#grumo").value = est.grumo; $("#vel").value = est.vel; $("#borde").value = est.borde; mesSel.value = String(est.mes);
+    $(`#modo-${est.modo}`).checked = true;
+    rotulos();
+  }
+  function rotulos() {
+    $("#o-objetivo").textContent = fmt(est.objetivo, est.objetivo % 1 ? 1 : 0) + " %";
+    $("#o-T").textContent = fmt(est.T_aire, est.modo === "aire" ? 1 : 0) + " °C";
+    $("#o-recirc").textContent = fmt(est.recirc) + " %";
+    $("#o-aire").textContent = fmt(D.defecto.aire_seco * est.aire / 100) + " kg/h";
+    $("#o-alimentacion").textContent = fmt(est.alimentacion) + " kg/h";
+    $("#o-humedad").textContent = fmt(est.humedad) + " %";
+    $("#o-grumo").textContent = fmt(est.grumo) + " mm";
+    $("#o-vel").textContent = fmt(est.vel, 2) + " m/min";
+    $("#o-borde").textContent = fmt(est.borde) + " %";
+    $("#c-objetivo").hidden = est.modo === "manual";
+    $("#T_aire").disabled = est.modo === "aire";
+    $("#vel").disabled = est.modo === "bandas";
+    $("#c-T").classList.toggle("fijado", est.modo === "aire");
+    $("#c-v").classList.toggle("fijado", est.modo === "bandas");
+    $("#nota-modo").textContent = NOTAS[est.modo];
+  }
+
+  function armarCfg() {
+    const c = Object.assign({}, D.defecto);
+    Object.assign(c, { nx: NX, nz: NZ, nbis: 30, tol: 0.02, maxit: 80, acelerar: true, capas: true });
+    c.T_aire = est.T_aire; c.recirc = est.recirc / 100; c.aire_seco = D.defecto.aire_seco * est.aire / 100;
+    c.alimentacion = est.alimentacion; c.humedad_entrada = est.humedad / 100; c.humedad_objetivo = est.objetivo / 100;
+    c.vel = est.vel / 60; c.prm = { d0: est.grumo / 1000 }; c.bypass_pila = est.borde / 100;
+    if (est.mes >= 0) { c.T_amb = D.clima[est.mes].T; c.HR_amb = D.clima[est.mes].HR; }
+    else { c.T_amb = D.defecto.T_amb; c.HR_amb = D.defecto.HR_amb; }
+    return c;
+  }
+
+  // ------------------------------------------------------------------ cálculo en un Web Worker
+  const CODIGO_TRABAJADOR = `
+    const D = DATOS_SC4, M = self.ModeloSecador;
+    function resolver(cfg, ini) { return M.resolver(D, cfg, ini || null); }
+    function buscarT(cfg, obj, ini, avisar) {
+      const f = (r) => r.hum_out - obj;
+      let pts = [];
+      let T = cfg.T_aire, r = resolver(Object.assign({}, cfg, { T_aire: T }), ini), fv = f(r);
+      pts.push({ T, f: fv, r }); avisar(1, T);
+      let mejor = pts[0];
+      for (let k = 0; k < 14 && Math.abs(mejor.f) > 0.002; k++) {
+        const lo = pts.filter(p => p.f > 0).sort((a, b) => b.T - a.T)[0];
+        const hi = pts.filter(p => p.f < 0).sort((a, b) => a.T - b.T)[0];
+        let Tn;
+        if (lo && hi) {
+          Tn = hi.T - hi.f * (hi.T - lo.T) / (hi.f - lo.f);
+          const a = Math.min(lo.T, hi.T), b = Math.max(lo.T, hi.T);
+          if (!(Tn > a + 0.08 * (b - a) && Tn < b - 0.08 * (b - a))) Tn = 0.5 * (a + b);
+        } else if (lo) {
+          if (lo.T >= 150) return { r: lo.r, estado: "falta", valor: 150 };
+          Tn = Math.min(150, lo.T + Math.min(25, Math.max(2, lo.f / 0.017)));
+        } else {
+          if (hi.T <= 70) return { r: hi.r, estado: "sobra", valor: 70 };
+          Tn = Math.max(70, hi.T - Math.min(25, Math.max(2, -hi.f / 0.017)));
+        }
+        r = resolver(Object.assign({}, cfg, { T_aire: Tn }), mejor.r.estado); fv = f(r);
+        pts.push({ T: Tn, f: fv, r }); avisar(k + 2, Tn);
+        if (Math.abs(fv) < Math.abs(mejor.f)) mejor = pts[pts.length - 1];
+      }
+      return { r: mejor.r, estado: Math.abs(mejor.f) <= 0.004 ? "ok" : (mejor.f > 0 ? "falta" : "sobra"), valor: mejor.T };
+    }
+    function buscarV(cfg, obj, ini, avisar) {
+      const vmin = D.vel_min, vmax = D.vel_max, f = (r) => r.hum_out - obj;
+      let rmax = resolver(Object.assign({}, cfg, { vel: vmax }), ini); avisar(1, vmax);
+      if (f(rmax) <= 0) return { r: rmax, estado: "sobra", valor: vmax };
+      let rmin = resolver(Object.assign({}, cfg, { vel: vmin }), rmax.estado); avisar(2, vmin);
+      if (f(rmin) >= 0) return { r: rmin, estado: "falta", valor: vmin };
+      let lo = { x: Math.log(vmin), f: f(rmin), r: rmin }, hi = { x: Math.log(vmax), f: f(rmax), r: rmax };
+      let mejor = Math.abs(lo.f) < Math.abs(hi.f) ? lo : hi;
+      for (let k = 0; k < 14 && Math.abs(mejor.f) > 0.002; k++) {
+        let x = hi.x - hi.f * (hi.x - lo.x) / (hi.f - lo.f);
+        if (!(x > lo.x + 0.08 * (hi.x - lo.x) && x < hi.x - 0.08 * (hi.x - lo.x))) x = 0.5 * (lo.x + hi.x);
+        const r = resolver(Object.assign({}, cfg, { vel: Math.exp(x) }), mejor.r.estado), fv = f(r);
+        avisar(k + 3, Math.exp(x));
+        const p = { x, f: fv, r };
+        if (fv > 0) hi = p; else lo = p;
+        if (Math.abs(fv) < Math.abs(mejor.f)) mejor = p;
+      }
+      return { r: mejor.r, estado: "ok", valor: Math.exp(mejor.x) };
+    }
+    self.onmessage = (ev) => {
+      const { id, cfg, modo, ini } = ev.data;
+      const t0 = performance.now();
+      const avisar = (paso, valor) => self.postMessage({ id, tipo: "progreso", paso, valor });
+      let out;
+      try {
+        if (modo === "aire") out = buscarT(cfg, cfg.humedad_objetivo, ini, avisar);
+        else if (modo === "bandas") out = buscarV(cfg, cfg.humedad_objetivo, ini, avisar);
+        else out = { r: resolver(cfg, ini), estado: "manual", valor: null };
+        self.postMessage({ id, tipo: "listo", r: out.r, estado: out.estado, valor: out.valor, ms: performance.now() - t0 });
+      } catch (e) { self.postMessage({ id, tipo: "error", mensaje: String(e && e.message || e) }); }
+    };`;
+  let trabajador = null;
+  try {
+    const src = $("#src-datos").textContent + "\n" + $("#src-modelo").textContent + "\n" + CODIGO_TRABAJADOR;
+    trabajador = new Worker(URL.createObjectURL(new Blob([src], { type: "text/javascript" })));
+  } catch (e) { trabajador = null; }
+
+  let pedido = 0, enCurso = null, pendiente = false, ultimoEstado = null, temporizador = null;
+  function calcular() {
+    clearTimeout(temporizador);
+    temporizador = setTimeout(enviar, 140);
+  }
+  function enviar() {
+    if (enCurso) { pendiente = true; return; }
+    const cfg = armarCfg();
+    const id = ++pedido;
+    enCurso = { id, modo: est.modo, t0: performance.now() };
+    $("#vista").classList.add("calculando");
+    $("#estado-calc").textContent = est.modo === "manual" ? "Calculando…" : "Buscando…";
+    if (trabajador) trabajador.postMessage({ id, cfg, modo: est.modo, ini: ultimoEstado });
+    else setTimeout(() => {   // sin Worker: mismo cálculo en el hilo principal
+      const r = M.resolver(D, cfg, ultimoEstado);
+      recibir({ data: { id, tipo: "listo", r, estado: "manual", valor: null, ms: performance.now() - enCurso.t0 } });
+    }, 10);
+  }
+  function recibir(ev) {
+    const m = ev.data;
+    if (!enCurso || m.id !== enCurso.id) return;
+    if (m.tipo === "progreso") {
+      const que = enCurso.modo === "aire" ? `aire a ${fmt(m.valor, 1)} °C` : `bandas a ${fmt(m.valor * 60, 2)} m/min`;
+      $("#estado-calc").textContent = `Buscando · paso ${m.paso}: ${que}`;
+      return;
+    }
+    enCurso = null;
+    $("#vista").classList.remove("calculando");
+    if (m.tipo === "error") { $("#estado-calc").textContent = "No se pudo calcular: " + m.mensaje; return; }
+    ultimoEstado = m.r.estado;
+    if (m.estado !== "manual") {
+      if (est.modo === "aire") { est.T_aire = Math.round(m.valor * 10) / 10; $("#T_aire").value = est.T_aire; }
+      if (est.modo === "bandas") { est.vel = Math.round(m.valor * 60 * 100) / 100; $("#vel").value = est.vel; }
+      rotulos();
+    }
+    pintar(m.r, { estado: m.estado, valor: m.valor, modo: est.modo });
+    $("#estado-calc").textContent = `Calculado en ${fmt(m.ms / 1000, 1)} s`;
+    if (pendiente) { pendiente = false; enviar(); }
+  }
+  if (trabajador) trabajador.onmessage = recibir;
+
+  // ------------------------------------------------------------------ eventos
+  $$("#tablero input[type=range]").forEach((el) => el.addEventListener("input", () => {
+    est[el.id] = Number(el.value); rotulos(); calcular();
+  }));
+  $$("input[name=modo]").forEach((el) => el.addEventListener("change", () => { est.modo = el.value; rotulos(); calcular(); }));
+  mesSel.addEventListener("change", () => { est.mes = Number(mesSel.value); calcular(); });
+  $$(".presets button").forEach((b) => b.addEventListener("click", () => {
+    Object.assign(est, PRESETS[b.dataset.preset]); escribirControles(); calcular();
+  }));
+
+  // ------------------------------------------------------------------ dibujo: utilidades
+  function humedadDe(X) { return X / (1 + X); }
+  function colorGuano(h) {     // húmedo: marrón oscuro → seco: tierra clara
+    const p = [[0, [236, 220, 192]], [0.05, [220, 194, 155]], [0.15, [196, 158, 112]], [0.3, [160, 120, 80]],
+      [0.5, [118, 82, 50]], [0.72, [74, 47, 26]]];
+    h = Math.max(0, Math.min(0.72, h));
+    for (let i = 1; i < p.length; i++) if (h <= p[i][0]) {
+      const t = (h - p[i - 1][0]) / (p[i][0] - p[i - 1][0]), a = p[i - 1][1], b = p[i][1];
+      return `rgb(${a.map((v, k) => Math.round(v + t * (b[k] - v))).join(",")})`;
+    }
+    return "rgb(74,47,26)";
+  }
+  function hex2rgb(h) { h = h.replace("#", ""); return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16)); }
+  function colorDivergente(h, centro) {   // rojo (seco) · neutro · azul (húmedo)
+    const rojos = ["#7f1d1d", "#b42828", "#e34948", "#f09a99"], azules = ["#9ec5f4", "#3987e5", "#1c5cab", "#0d366b"];
+    const neutro = css("--neutro") || "#f0efec";
+    let paleta, t;
+    if (h <= centro) { paleta = rojos.concat([neutro]); t = h / centro; }
+    else { paleta = [neutro].concat(azules); t = (h - centro) / (0.72 - centro); }
+    t = Math.max(0, Math.min(1, t)) * (paleta.length - 1);
+    const i = Math.min(paleta.length - 2, Math.floor(t)), u = t - i;
+    const a = hex2rgb(paleta[i]), b = hex2rgb(paleta[i + 1]);
+    return `rgb(${a.map((v, k) => Math.round(v + u * (b[k] - v))).join(",")})`;
+  }
+
+  // recorre los tres pisos en un solo eje de 0 a 36 m (con el punto de entrada de cada piso)
+  function recorrido(r) {
+    const filas = [];
+    let hPrev = r.X_feed / (1 + r.X_feed), TPrev = r.T_nave;
+    const nz = NZ;
+    r.perfiles.forEach((p, k) => {
+      const n = p.x.length;
+      filas.push({ x: 12 * k, piso: k, t: 12 * k / r.vel[k] / 60, h: hPrev, hmin: hPrev, hmax: hPrev, T: TPrev, Tmin: TPrev, Tmax: TPrev, Ta: p.Taout[0], Tin: r.Tin[k], borde: true });
+      for (let i = 0; i < n; i++) {
+        filas.push({ x: 12 * k + p.x[i], piso: k, t: (12 * k + p.x[i]) / r.vel[k] / 60,
+          h: humedadDe(p.Xmed[i]), hmin: humedadDe(p.Xmin[i]), hmax: humedadDe(p.Xmax[i]),
+          T: p.Tmed[i], Tmin: p.Tmin[i], Tmax: p.Tmax[i], Ta: p.Taout[i], Tin: r.Tin[k], H: p.H[i],
+          capas: p.capas ? Array.from(p.capas.slice(i * nz, i * nz + nz)) : null });
+      }
+      const ult = filas[filas.length - 1];
+      hPrev = ult.h;
+      TPrev = ult.T;      // al caer, las capas se mezclan (se toma la media)
+    });
+    return filas;
+  }
+
+  // ------------------------------------------------------------------ KPIs y estado del lazo
+  function pintarKPIs(r) {
+    const hp = r.hig_peor[0] / 60, hm = r.hig_med[0] / 60;
+    const tiles = [
+      ["Humedad a la salida", "MT-01", fmtHum(r.hum_out) + " %", `consigna 15 % · producto ${fmt(r.prod_kg_h)} kg/h`],
+      ["Guano a la descarga", "TT-05", fmt(r.T_prod_out) + " °C", "el informe supone 60 °C"],
+      ["Cáscara de arroz", "M12", fmt(r.comb_kg_h) + " kg/h", `${fmt(r.Q_gen_kW)} kW · ${fmt(r.consumo_MJ_kg, 1)} MJ/kg de agua`],
+      ["Aire de escape", "TT-02", `${fmt(r.T_exh)} °C · ${fmt(100 * r.HR_exh)} %`, `humedad relativa · rocío ${fmt(r.T_rocio_exh)} °C`],
+      ["Más de 55 °C", "higiene", `${fmt(hp)} / ${fmt(hm)} min`, "capa de arriba / promedio (pide 60)"],
+      ["Capa y residencia", "piso 1", `${fmt(r.capa_mm)} mm · ${fmt(r.t_res_min[0] * 3)} min`, `bandas a ${fmt(r.vel[0] * 60, 2)} m/min`],
+    ];
+    $("#kpis").innerHTML = tiles.map(([a, tag, v, s]) =>
+      `<div class="kpi"><div class="kpi-cab"><span class="etiqueta">${a}</span><span class="tag">${tag}</span></div><span class="valor num">${v}</span><span class="sub">${s}</span></div>`).join("");
+  }
+  function pintarEstado(r, info) {
+    let txt = "";
+    if (info.modo === "aire") txt = info.estado === "ok" ? `El lazo llevó el aire a ${fmt(info.valor, 1)} °C para dejar el guano al ${fmtHum(r.hum_out)} %.` : info.estado === "falta" ? "El lazo de aire llegó al máximo (150 °C)." : "El lazo de aire llegó al mínimo.";
+    if (info.modo === "bandas") txt = info.estado === "ok" ? `El lazo llevó las bandas a ${fmt(info.valor * 60, 2)} m/min.` : info.estado === "sobra" ? `Bandas al máximo (${fmt(D.vel_max * 60, 2)} m/min) y el guano igual sale al ${fmtHum(r.hum_out)} %.` : `Bandas al mínimo y el guano sale al ${fmtHum(r.hum_out)} %.`;
+    $("#busqueda").textContent = txt;
+  }
+
+  // ------------------------------------------------------------------ vista 3D (si no hay WebGL, queda el esquema plano)
+  let V3 = null;
+  if (window.Vista3D) {
+    $("#v3d").hidden = false;
+    try { V3 = window.Vista3D.crear($("#v3d"), { fmt, colorGuano, tip: $("#tip-sinoptico") }); } catch (e) { V3 = null; }
+    if (!V3) $("#v3d").hidden = true;
+  }
+  $("#sinoptico").style.display = V3 ? "none" : "";     // (en un <svg>, .hidden no existe)
+  $$(".solo-3d").forEach((el) => { el.hidden = !V3; });
+  $$(".solo-2d").forEach((el) => { el.hidden = !!V3; });
+  if (V3) {
+    const rampa = window.Vista3D.RAMPA_T;
+    $("#ley-aire").style.background = `linear-gradient(90deg, ${rampa.map(([T]) => `${V3.colorT(T)} ${(100 * (T - 20) / 115).toFixed(0)}%`).join(", ")})`;
+    $("#v3d-vista").addEventListener("click", () => V3.volver());
+    $("#v3d-frente").addEventListener("click", (ev) => {
+      const b = ev.currentTarget, cerrado = b.getAttribute("aria-pressed") !== "true";
+      b.setAttribute("aria-pressed", String(cerrado)); b.textContent = cerrado ? "Abrir el frente" : "Cerrar el frente";
+      V3.frente(cerrado);
+    });
+    const bAire = $("#v3d-aire");
+    if (V3.reducido) { bAire.hidden = true; }
+    bAire.addEventListener("click", () => {
+      const sigue = !V3.animando();
+      V3.animar(sigue); bAire.setAttribute("aria-pressed", String(sigue)); bAire.textContent = sigue ? "Aire quieto" : "Mover el aire";
+    });
+  }
+
+  // ------------------------------------------------------------------ sinóptico plano
+  const SX = (m) => 170 + m * 38;            // 13 m de cámara: 170 a 664 px
+  const SY = (z) => 350 - (z - 0.4) * 86;     // cota 0,4 m (piso de cámara) a 3,4 m (techo)
+  const Z_PISO = [2.63, 1.78, 0.93];
+  const EXAG = 7;                             // espesor del lecho exagerado 7 veces
+  function pintarSinoptico(r, filas) {
+    const t3 = "var(--ink-3)";
+    const g = [];
+    const tinte = (T) => Math.max(0.03, Math.min(0.2, 0.03 + 0.17 * (T - 20) / 130));
+    const zonas = [[0.4, 0.93, r.Tin[2]], [0.93, 1.78, r.Tin[1]], [1.78, 2.63, r.Tin[0]], [2.63, 3.4, r.T_exh]];
+    g.push(`<defs><marker id="flecha" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ink-2)"/></marker></defs>`);
+    // recirculación, escape y ciclón
+    const xCampana = SX(6.5);
+    g.push(`<path d="M${xCampana} 40H30V400H180" fill="none" stroke="var(--agua)" stroke-width="3" opacity="${r.cfg_recirc > 0 ? 0.85 : 0.25}"/>`);
+    g.push(`<text x="36" y="32" class="s-tag">recirculación CD-03 · ${fmt(100 * r.cfg_recirc)} %</text>`);
+    g.push(`<path d="M${xCampana} ${SY(3.4)}V40H748" fill="none" stroke="${t3}" stroke-width="6" opacity="0.55"/>`);
+    g.push(`<text x="${xCampana + 10}" y="32" class="s-tag">escape ${fmt(r.T_exh)} °C · HR ${fmt(100 * r.HR_exh)} %</text>`);
+    g.push(`<path d="M748 22h40v52l-20 44l-20 -44z" fill="var(--hundido)" stroke="${t3}"/><text x="768" y="134" text-anchor="middle" class="s-sub">ciclón</text>`);
+    // cámara y aire por zonas
+    g.push(`<rect x="${SX(0)}" y="${SY(3.4)}" width="${SX(13) - SX(0)}" height="${SY(0.4) - SY(3.4)}" fill="var(--panel)" stroke="${t3}" stroke-width="1.5"/>`);
+    zonas.forEach(([z0, z1, T]) => g.push(`<rect x="${SX(0) + 1}" y="${SY(z1)}" width="${SX(13) - SX(0) - 2}" height="${SY(z0) - SY(z1)}" fill="var(--aire)" opacity="${tinte(T).toFixed(3)}"/>`));
+    zonas.forEach(([z0, z1]) => {
+      const y = 0.5 * (SY(z0) + SY(z1)) + 10;
+      [2.5, 6.5, 10.5].forEach((m) => g.push(`<path d="M${SX(m) - 6} ${y + 4}l6 -7l6 7" fill="none" stroke="var(--aire)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>`));
+    });
+    // generador debajo de la cámara y ducto al plenum
+    g.push(`<rect x="180" y="372" width="160" height="56" rx="3" fill="var(--hundido)" stroke="${t3}"/>`);
+    g.push(`<text x="260" y="388" text-anchor="middle" class="s-tit">Generador</text><text x="260" y="405" text-anchor="middle" class="s-val">${fmt(r.comb_kg_h)} kg/h de cáscara</text><text x="260" y="421" text-anchor="middle" class="s-sub">${fmt(r.Q_gen_kW)} kW al aire</text>`);
+    g.push(`<path d="M300 372V${SY(0.4)}" stroke="var(--aire)" stroke-width="8" opacity="0.6"/>`);
+    g.push(`<text x="310" y="366" class="s-tag">TT-01 ${fmt(r.cfg_T_aire)} °C</text>`);
+    // pisos, lecho y guías
+    filas = filas || [];
+    for (let k = 0; k < 3; k++) {
+      const y = SY(Z_PISO[k]);
+      const sentido = k === 1 ? -1 : 1;    // el piso 2 va de este a oeste
+      const pts = filas.filter((f) => f.piso === k && !f.borde);
+      const stops = pts.map((f) => {
+        const xm = f.x - 12 * k, pos = sentido > 0 ? xm / 12 : 1 - xm / 12;
+        return `<stop offset="${pos.toFixed(4)}" stop-color="${colorGuano(f.h)}"/>`;
+      });
+      if (sentido < 0) stops.reverse();
+      g.push(`<defs><linearGradient id="lecho${k}" x1="0" x2="1" y1="0" y2="0">${stops.join("")}</linearGradient></defs>`);
+      const arriba = pts.map((f) => { const xm = f.x - 12 * k, mb = sentido > 0 ? 0.5 + xm : 12.5 - xm; return `${SX(mb).toFixed(1)},${(y - 3 - (f.H || 0.028) * EXAG * 86).toFixed(1)}`; });
+      if (sentido < 0) arriba.reverse();
+      g.push(`<polygon points="${SX(0.5)},${y - 3} ${arriba.join(" ")} ${SX(12.5)},${y - 3}" fill="url(#lecho${k})" stroke="${t3}" stroke-width="0.6"/>`);
+      g.push(`<line x1="${SX(0.4)}" y1="${y - 2}" x2="${SX(12.6)}" y2="${y - 2}" stroke="var(--ink-2)" stroke-width="2.2"/>`);
+      g.push(`<circle cx="${SX(0.4)}" cy="${y + 2}" r="4.5" fill="var(--panel)" stroke="var(--ink-2)" stroke-width="1.5"/><circle cx="${SX(12.6)}" cy="${y + 2}" r="4.5" fill="var(--panel)" stroke="var(--ink-2)" stroke-width="1.5"/>`);
+      const Tg = r.Tin[k];
+      const col = Tg >= D.uhmw_fusion ? "var(--critico)" : Tg >= D.uhmw_continuo ? "var(--serio)" : "var(--ink-3)";
+      for (let m = 1.5; m < 12.5; m += 2) g.push(`<rect x="${SX(m) - 5}" y="${y + 1.5}" width="10" height="4" fill="${col}"/>`);
+      const xa = sentido > 0 ? SX(1.3) : SX(11.7);
+      g.push(`<path d="M${xa - 9 * sentido} ${y - 30}h${18 * sentido}m${-6 * sentido} -4l${6 * sentido} 4l${-6 * sentido} 4" fill="none" stroke="var(--ink-2)" stroke-width="1.3"/>`);
+      g.push(`<text x="${SX(13) + 8}" y="${y + 4}" class="s-sub">piso ${k + 1}</text>`);
+      g.push(`<rect class="zona-hover" data-piso="${k}" x="${SX(0.5)}" y="${y - 34}" width="${SX(12.5) - SX(0.5)}" height="44" fill="transparent"/>`);
+    }
+    // aire que sale de cada piso (TT-02/03/04)
+    [[3.0, "TT-02", r.Tout[0]], [2.2, "TT-03", r.Tout[1]], [1.35, "TT-04", r.Tout[2]]].forEach(([z, tag, T]) =>
+      g.push(`<text x="160" y="${SY(z) + 4}" text-anchor="end" class="s-tag">${tag} ${fmt(T)} °C</text>`));
+    // alimentación, caídas y descarga
+    g.push(`<path d="M${SX(0.9)} 58V${SY(Z_PISO[0]) - 24}" stroke="var(--ink-2)" stroke-width="1.5" marker-end="url(#flecha)"/>`);
+    g.push(`<text x="${SX(0.9) + 8}" y="70" class="s-tag">guano ${fmt(r.cfg_alim)} kg/h · ${fmt(100 * r.X_feed / (1 + r.X_feed))} %</text>`);
+    g.push(`<path d="M${SX(12.8)} ${SY(Z_PISO[0]) + 6}V${SY(Z_PISO[1]) - 16}" stroke="${t3}" stroke-width="1.3" marker-end="url(#flecha)"/>`);
+    g.push(`<path d="M${SX(0.2)} ${SY(Z_PISO[1]) + 6}V${SY(Z_PISO[2]) - 16}" stroke="${t3}" stroke-width="1.3" marker-end="url(#flecha)"/>`);
+    g.push(`<path d="M${SX(12.8)} ${SY(Z_PISO[2]) + 6}V378" stroke="var(--ink-2)" stroke-width="1.5" marker-end="url(#flecha)"/>`);
+    g.push(`<text x="812" y="398" text-anchor="end" class="s-val2">MT-01 ${fmtHum(r.hum_out)} % · TT-05 ${fmt(r.T_prod_out)} °C</text>`);
+    g.push(`<text x="812" y="416" text-anchor="end" class="s-sub">producto ${fmt(r.prod_kg_h)} kg/h</text>`);
+    const svg = $("#sinoptico");
+    svg.innerHTML = `<style>
+      .s-tit{font:600 12.5px var(--font-display);fill:var(--ink);letter-spacing:.05em;text-transform:uppercase}
+      .s-val{font:600 13.5px var(--font-body);fill:var(--ink)}
+      .s-val2{font:500 13px var(--font-mono);fill:var(--ink)}
+      .s-sub{font:400 11.5px var(--font-body);fill:var(--ink-3)}
+      .s-tag{font:500 11.5px var(--font-mono);fill:var(--ink-2)}
+    </style>` + g.join("");
+    const tip = $("#tip-sinoptico");
+    $$(".zona-hover", svg).forEach((el) => {
+      el.addEventListener("mousemove", (ev) => {
+        const k = Number(el.dataset.piso);
+        const box = svg.getBoundingClientRect(), esc = 820 / box.width;
+        const px = (ev.clientX - box.left) * esc;
+        const m = Math.max(0, Math.min(12, (px - 170) / 38 - 0.5));
+        const xr = k === 1 ? 12 - m : m;
+        const pts = filas.filter((f) => f.piso === k && !f.borde);
+        let f = pts[0];
+        pts.forEach((q) => { if (Math.abs(q.x - 12 * k - xr) < Math.abs(f.x - 12 * k - xr)) f = q; });
+        tip.innerHTML = `<b>Piso ${k + 1} · ${fmt(xr, 1)} m de banda</b><div class="fila"><span>tiempo desde la entrada</span><span>${fmt(f.t)} min</span></div><div class="fila"><span>humedad</span><span>${fmt(100 * f.h, 1)} %</span></div><div class="fila"><span>guano</span><span>${fmt(f.T)} °C</span></div><div class="fila"><span>aire que sale</span><span>${fmt(f.Ta)} °C</span></div><div class="fila"><span>aire bajo la banda</span><span>${fmt(f.Tin)} °C</span></div>`;
+        tip.hidden = false;
+        const fig = svg.parentElement.getBoundingClientRect();
+        let left = ev.clientX - fig.left + 14;
+        if (left + 230 > fig.width) left = ev.clientX - fig.left - 240;
+        tip.style.left = left + "px"; tip.style.top = (ev.clientY - fig.top + 14) + "px";
+      });
+      el.addEventListener("mouseleave", () => { tip.hidden = true; });
+    });
+  }
+
+  // ------------------------------------------------------------------ gráficos de perfiles
+  let FILAS = [], RES = null;
+  function ejeX(w, ml, mr) { return (x) => ml + (w - ml - mr) * x / 36; }
+  function graficoPerfil(svg, filas, def) {
+    const w = Math.max(280, svg.parentElement.clientWidth - 24), h = 230, ml = 42, mr = 10, mt = 18, mb = 30;
+    svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+    svg.setAttribute("height", h);
+    const X = ejeX(w, ml, mr), Y = (v) => mt + (h - mt - mb) * (1 - (v - def.min) / (def.max - def.min));
+    const o = [];
+    def.ticks.forEach((t) => o.push(`<line x1="${ml}" x2="${w - mr}" y1="${Y(t)}" y2="${Y(t)}" stroke="var(--grilla)"/><text x="${ml - 6}" y="${Y(t) + 4}" text-anchor="end" class="t-eje">${fmt(t)}</text>`));
+    [0, 6, 12, 18, 24, 30, 36].forEach((t) => o.push(`<text x="${X(t)}" y="${h - mb + 16}" text-anchor="middle" class="t-eje">${fmt(t)}</text>`));
+    o.push(`<text x="${w - mr}" y="${h - 2}" text-anchor="end" class="t-eje">recorrido [m]</text>`);
+    [12, 24].forEach((t) => o.push(`<line x1="${X(t)}" x2="${X(t)}" y1="${mt - 6}" y2="${h - mb}" stroke="var(--linea)"/>`));
+    [0, 1, 2].forEach((k) => o.push(`<text x="${X(12 * k + 6)}" y="${mt - 6}" text-anchor="middle" class="t-eje">piso ${k + 1}</text>`));
+    o.push(`<line x1="${ml}" x2="${w - mr}" y1="${h - mb}" y2="${h - mb}" stroke="var(--linea)"/>`);
+    (def.refs || []).forEach((rf) => o.push(`<line x1="${ml}" x2="${w - mr}" y1="${Y(rf.y)}" y2="${Y(rf.y)}" stroke="var(--ink-3)"/><text x="${ml + 4}" y="${Y(rf.y) - 4}" class="t-ref">${rf.texto}</text>`));
+    for (let k = 0; k < 3; k++) {
+      const f = filas.filter((q) => q.piso === k);
+      def.bandas.forEach((b) => {
+        const sup = f.map((q) => `${X(q.x).toFixed(1)},${Y(b.max(q)).toFixed(1)}`), inf = f.map((q) => `${X(q.x).toFixed(1)},${Y(b.min(q)).toFixed(1)}`).reverse();
+        o.push(`<polygon points="${sup.concat(inf).join(" ")}" fill="${b.color}" opacity="0.14"/>`);
+      });
+      def.series.forEach((s) => {
+        const p = f.filter((q) => !(s.sinBorde && q.borde)).map((q) => `${X(q.x).toFixed(1)},${Y(s.v(q)).toFixed(1)}`).join(" ");
+        o.push(`<polyline points="${p}" fill="none" stroke="${s.color}" stroke-width="${s.ancho || 2}" stroke-linejoin="round" stroke-linecap="round"/>`);
+      });
+    }
+    o.push(`<line class="cruz" x1="0" x2="0" y1="${mt}" y2="${h - mb}" stroke="var(--ink-3)" visibility="hidden"/>`);
+    o.push(`<rect class="caza" x="${ml}" y="${mt}" width="${w - ml - mr}" height="${h - mt - mb}" fill="transparent"/>`);
+    svg.innerHTML = `<style>.t-eje{font:400 11.5px var(--font-body);fill:var(--ink-3)}.t-ref{font:400 11.5px var(--font-body);fill:var(--ink-2)}</style>` + o.join("");
+    svg._X = X; svg._w = w; svg._ml = ml; svg._mr = mr;
+  }
+  function filaCercana(x) {
+    let f = FILAS[0];
+    FILAS.forEach((q) => { if (!q.borde && Math.abs(q.x - x) < Math.abs(f.x - x)) f = q; });
+    return f;
+  }
+  function textoTip(f) {
+    return `<b>${fmt(f.x, 1)} m · ${fmt(f.t)} min · piso ${f.piso + 1}</b>
+      <div class="fila"><span>humedad media</span><span>${fmt(100 * f.h, 1)} %</span></div>
+      <div class="fila"><span>capas: de / a</span><span>${fmt(100 * f.hmin, 1)} – ${fmt(100 * f.hmax, 1)} %</span></div>
+      <div class="fila"><span>guano</span><span>${fmt(f.T)} °C</span></div>
+      <div class="fila"><span>aire que sale</span><span>${fmt(f.Ta)} °C</span></div>
+      <div class="fila"><span>aire bajo la banda</span><span>${fmt(f.Tin)} °C</span></div>`;
+  }
+  function cruzEn(x) {
+    ["#g-humedad", "#g-temperatura"].forEach((s) => {
+      const svg = $(s), c = svg && svg.querySelector(".cruz");
+      if (!c || !svg._X) return;
+      if (x === null) { c.setAttribute("visibility", "hidden"); return; }
+      c.setAttribute("x1", svg._X(x)); c.setAttribute("x2", svg._X(x)); c.setAttribute("visibility", "visible");
+    });
+  }
+  function enganchar(svg) {
+    const tip = svg.parentElement.querySelector(".tip");
+    svg.addEventListener("mousemove", (ev) => {
+      if (!svg._X || !FILAS.length) return;
+      const box = svg.getBoundingClientRect(), px = (ev.clientX - box.left) * svg._w / box.width;
+      const x = Math.max(0, Math.min(36, (px - svg._ml) / (svg._w - svg._ml - svg._mr) * 36));
+      const f = filaCercana(x);
+      cruzEn(f.x);
+      tip.innerHTML = textoTip(f); tip.hidden = false;
+      const caja = svg.parentElement.getBoundingClientRect();
+      let left = ev.clientX - caja.left + 14;
+      if (left + 210 > caja.width) left = ev.clientX - caja.left - 220;
+      tip.style.left = left + "px"; tip.style.top = (ev.clientY - caja.top + 10) + "px";
+    });
+    svg.addEventListener("mouseleave", () => { tip.hidden = true; cruzEn(null); });
+  }
+  function pintarCapas(filas, objetivo) {
+    const cv = $("#g-capas"), dpr = window.devicePixelRatio || 1;
+    const w = Math.max(280, cv.parentElement.clientWidth - 24), h = 150;
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); cv.style.height = h + "px";
+    const c = cv.getContext("2d");
+    c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    c.clearRect(0, 0, w, h);
+    const ml = 42, mr = 10, mt = 16, mb = 22;
+    const X = ejeX(w, ml, mr);
+    const pts = filas.filter((f) => !f.borde && f.capas);
+    const nz = NZ, alto = (h - mt - mb) / nz;
+    pts.forEach((f, i) => {
+      const x0 = i > 0 && pts[i - 1].piso === f.piso ? X(pts[i - 1].x) : X(12 * f.piso);
+      const x1 = X(f.x);
+      f.capas.forEach((Xc, j) => {
+        c.fillStyle = colorDivergente(Xc / (1 + Xc), objetivo);
+        c.fillRect(x0, mt + (nz - 1 - j) * alto, x1 - x0 + 0.6, alto + 0.3);
+      });
+    });
+    c.fillStyle = css("--panel");
+    [12, 24].forEach((t) => c.fillRect(X(t) - 1, mt, 2, h - mt - mb));
+    c.fillStyle = css("--ink-3"); c.font = `11.5px ${css("--font-body")}`; c.textAlign = "center";
+    [0, 6, 12, 18, 24, 30, 36].forEach((t) => c.fillText(fmt(t), X(t), h - 6));
+    [0, 1, 2].forEach((k) => c.fillText(`piso ${k + 1}`, X(12 * k + 6), mt - 4));
+    c.textAlign = "right";
+    c.fillText("arriba", ml - 6, mt + alto / 2 + 4); c.fillText("abajo", ml - 6, h - mb - alto / 2 + 4);
+    const grad = [0, 0.03, 0.06, 0.09, 0.12, objetivo, 0.3, 0.45, 0.6, 0.72].map((v, i, a) => `${colorDivergente(v, objetivo)} ${(100 * v / 0.72).toFixed(1)}%`).join(",");
+    $("#escala-capas").style.background = `linear-gradient(90deg, ${grad})`;
+    $("#escala-centro").textContent = `gris = ${fmt(100 * objetivo, objetivo * 100 % 1 ? 1 : 0)} % (consigna)`;
+    cv._pts = pts; cv._X = X; cv._w = w; cv._ml = ml; cv._mr = mr; cv._mt = mt; cv._alto = alto;
+  }
+  (function engancharCapas() {
+    const cv = $("#g-capas"), tip = cv.parentElement.querySelector(".tip");
+    cv.addEventListener("mousemove", (ev) => {
+      if (!cv._pts) return;
+      const box = cv.getBoundingClientRect(), px = ev.clientX - box.left, py = ev.clientY - box.top;
+      const x = (px - cv._ml) / (cv._w - cv._ml - cv._mr) * 36;
+      const j = NZ - 1 - Math.floor((py - cv._mt) / cv._alto);
+      if (x < 0 || x > 36 || j < 0 || j >= NZ) { tip.hidden = true; return; }
+      let f = cv._pts[0]; cv._pts.forEach((q) => { if (Math.abs(q.x - x) < Math.abs(f.x - x)) f = q; });
+      const Xc = f.capas[j];
+      tip.innerHTML = `<b>${fmt(f.x, 1)} m · capa ${j + 1} de ${NZ}</b><div class="fila"><span>humedad</span><span>${fmt(100 * Xc / (1 + Xc), 1)} %</span></div><div class="fila"><span>media del lecho</span><span>${fmt(100 * f.h, 1)} %</span></div>`;
+      tip.hidden = false;
+      let left = px + 14; if (left + 180 > box.width) left = px - 190;
+      tip.style.left = left + "px"; tip.style.top = (py + 30) + "px";
+    });
+    cv.addEventListener("mouseleave", () => { tip.hidden = true; });
+  })();
+  function pintarTabla(filas) {
+    const f = filas.filter((q, i) => !q.borde && i % 2 === 0);
+    $("#tabla").innerHTML = `<thead><tr><th>Recorrido [m]</th><th>Piso</th><th>Tiempo [min]</th><th>Humedad media [%]</th><th>Capa más seca [%]</th><th>Capa más húmeda [%]</th><th>Guano [°C]</th><th>Aire que sale [°C]</th><th>Aire bajo la banda [°C]</th></tr></thead><tbody>` +
+      f.map((q) => `<tr><td>${fmt(q.x, 1)}</td><td>${q.piso + 1}</td><td>${fmt(q.t)}</td><td>${fmt(100 * q.h, 1)}</td><td>${fmt(100 * q.hmin, 1)}</td><td>${fmt(100 * q.hmax, 1)}</td><td>${fmt(q.T)}</td><td>${fmt(q.Ta)}</td><td>${fmt(q.Tin)}</td></tr>`).join("") + "</tbody>";
+  }
+  function pintarGraficos() {
+    if (!RES) return;
+    graficoPerfil($("#g-humedad"), FILAS, {
+      min: 0, max: 80, ticks: [0, 20, 40, 60, 80],
+      refs: [{ y: 100 * est.objetivo / 100, texto: `consigna ${fmt(est.objetivo, est.objetivo % 1 ? 1 : 0)} %` }],
+      bandas: [{ min: (q) => 100 * q.hmin, max: (q) => 100 * q.hmax, color: "var(--producto)" }],
+      series: [{ v: (q) => 100 * q.h, color: "var(--producto)" }],
+    });
+    graficoPerfil($("#g-temperatura"), FILAS, {
+      min: 0, max: 160, ticks: [0, 40, 80, 120, 160],
+      refs: [],
+      bandas: [{ min: (q) => q.Tmin, max: (q) => q.Tmax, color: "var(--producto)" }],
+      series: [{ v: (q) => q.Tin, color: "var(--ink-3)", ancho: 1.2 }, { v: (q) => q.Ta, color: "var(--aire)", sinBorde: true }, { v: (q) => q.T, color: "var(--producto)" }],
+    });
+    pintarCapas(FILAS, est.objetivo / 100);
+  }
+  enganchar($("#g-humedad")); enganchar($("#g-temperatura"));
+
+  function pintar(r, info) {
+    r.cfg_T_aire = est.T_aire; r.cfg_recirc = est.recirc / 100; r.cfg_alim = est.alimentacion;
+    RES = r;
+    FILAS = recorrido(r);
+    pintarKPIs(r);
+    if (V3) V3.actualizar(r, FILAS, { borde: est.borde / 100, uhmwFusion: D.uhmw_fusion, uhmwContinuo: D.uhmw_continuo,
+      alimentacion: est.alimentacion, T_aire: r.cfg_T_aire });
+    else pintarSinoptico(r, FILAS);
+    pintarEstado(r, info);
+    pintarGraficos();
+    pintarTabla(FILAS);
+  }
+  let ancho = 0;
+  new ResizeObserver(() => {
+    const w = $("#graficos").clientWidth;
+    if (Math.abs(w - ancho) > 4) { ancho = w; pintarGraficos(); }
+  }).observe($("#graficos"));
+  const tema = window.matchMedia("(prefers-color-scheme: dark)");
+  if (tema.addEventListener) tema.addEventListener("change", pintarGraficos);
+  new MutationObserver(pintarGraficos).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+  // ------------------------------------------------------------------ arranque
+  escribirControles();
+  if (INICIAL) {
+    ultimoEstado = INICIAL.r.estado;
+    pintar(INICIAL.r, { estado: "manual", valor: null, modo: "manual" });
+    $("#estado-calc").textContent = "Punto de diseño Rev. E";
+  } else calcular();
+})();
+</script>

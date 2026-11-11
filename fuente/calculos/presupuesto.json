@@ -1,0 +1,902 @@
+{
+ "dolar": 1550.0,
+ "fecha": "23/10/2026",
+ "fuentes": {
+  "BNA": "Banco Nación, cotización vendedor 23/10/2026: $ 1.550 (La Nación, El Destape, 23/10/2026)",
+  "H21": "Hormigón elaborado H-21: $ 174.000 a $ 222.000/m³ en planta (Mercado Libre, Hormigonline, ITAR, 10/2026); se toma $ 210.000",
+  "UPN": "Perfil UPN 120 × 12 m (161 kg): $ 400.000 a $ 505.000 (Ropelato, Norco, Tubocenter, 10/2026) → ≈ $ 2.900/kg",
+  "CEM": "Cemento portland 50 kg: $ 12.000 a $ 15.000 en corralón (servidos.ar, deladrillo.com, 10/2026)",
+  "CAB": "Cable subterráneo Cu 4 × 35 mm²: $ 29.500 a $ 32.800/m (Distrielectro, 10/2026); el resto por sección",
+  "INOX": "Chapa AISI 304 2 mm 1000 × 2000: $ 360.000 a $ 600.000 (Mercado Libre, Provecom, 10/2026)",
+  "MF": "Matafuego ABC 10 kg IRAM: $ 155.400 + IVA (Segucentro, 10/2026)",
+  "AIRTEC": "Campagnoni extractor industrial 1,4 m con persianas (AirTEC 1215): $ 1.690.400 (tienda oficial Campagnoni, Mercado Libre)",
+  "VM": "Campagnoni ventilador móvil 121,5 cm: $ 1.643.477 (Mercado Libre, 10/2026)",
+  "VFD": "Variadores WEG CFW500/CFW300: CFW300 1 HP $ 652.000; CFW500 7,5 HP $ 1.800.000 (Mercado Libre, Indusell)",
+  "REVC": "Memoria Rev. C, tabla 19 (consultas a fabricantes nacionales, USD 2026, ± 25 %)",
+  "EST": "Estimación de anteproyecto del grupo (costo de materiales + mano de obra de taller local)",
+  "TAR": "EPRE Entre Ríos, cuadro tarifario provincial 10/2026 (Res. EPRE 143/26); valores T3 a confirmar con LAR",
+  "LDR": "Lana de roca Acuflex 50 mm, rollo de 3 m²: $ 72.760 (Mercado Libre, 11/2026) → ≈ $ 24.250/m²",
+  "REVF": "Rev. F (11/2026), estimación con los precios de este presupuesto: chapa AISI 304 ≈ USD 9,8/kg (INOX), lana de roca (LDR), chapa de protección al precio del acero laminado (UPN), taller USD 11/h; PTFE ≈ USD 25/kg, perfil de silicona, ventilador centrífugo y sifones a cotizar (no se encontró precio público en Argentina)"
+ },
+ "secador": {
+  "filas": [
+   [
+    "Perfiles UPN 120, IPN 140, L 50×5 y placas base (bastidor)",
+    1620,
+    "kg",
+    1.87,
+    3029,
+    "LAR Corralón / distribuidor siderúrgico",
+    "UPN"
+   ],
+   [
+    "Paneles sándwich 80 mm lana de roca, cara interior AISI 304",
+    161,
+    "m²",
+    85,
+    13685,
+    "Fabricante de paneles",
+    "EST"
+   ],
+   [
+    "Malla transportadora AISI 304 Ø2 p5, 2.000 mm (3 bandas de 25 m)",
+    150,
+    "m²",
+    180,
+    27000,
+    "Fabricante de bandas de malla",
+    "EST"
+   ],
+   [
+    "Tambor motriz Ø300 × 2.100 con eje SAE 1045 Ø60 y engomado",
+    3,
+    "u",
+    1400,
+    4200,
+    "Taller local",
+    "EST"
+   ],
+   [
+    "Tambor de reenvío Ø250 × 2.100 con eje Ø60/Ø50 y tensores M20",
+    3,
+    "u",
+    1050,
+    3150,
+    "Taller local",
+    "EST"
+   ],
+   [
+    "Rodamientos UCF 212 con brida",
+    6,
+    "u",
+    95,
+    570,
+    "Casa de rodamientos",
+    "EST"
+   ],
+   [
+    "Unidades tensoras UCT 210",
+    6,
+    "u",
+    80,
+    480,
+    "Casa de rodamientos",
+    "EST"
+   ],
+   [
+    "Motorreductor 0,75 kW doble sinfín-corona 1:300",
+    3,
+    "u",
+    950,
+    2850,
+    "Fabricante nacional",
+    "EST"
+   ],
+   [
+    "Cadena ASA 60, piñón Z15, corona Z75 y protector",
+    3,
+    "jgo",
+    260,
+    780,
+    "Casa de transmisiones",
+    "EST"
+   ],
+   [
+    "Guías UHMW-PE 40×20, guías laterales inox, tolvas de caída",
+    1,
+    "gl",
+    4500,
+    4500,
+    "Taller local",
+    "INOX"
+   ],
+   [
+    "Guías de PTFE 40×20 de los pisos 2 y 3 (Rev. F, ≈ 202 kg; no se descuenta el UHMW-PE que reemplazan)",
+    202,
+    "kg",
+    25,
+    5050,
+    "Distribuidor de plásticos técnicos (a cotizar)",
+    "REVF"
+   ],
+   [
+    "Faldones de sellado de bordes (Rev. F): chapa AISI 304 1,5 mm (≈ 265 kg), labio de silicona 200 °C (70 m, ≈ USD 10/m a cotizar) y 40 h de taller",
+    1,
+    "gl",
+    3730.0,
+    3730,
+    "Taller local",
+    "REVF"
+   ],
+   [
+    "Plenum, campana de salida y bridas",
+    1,
+    "gl",
+    3800,
+    3800,
+    "Taller local",
+    "EST"
+   ],
+   [
+    "Pasarela superior con barandas, escalera con jaula",
+    1,
+    "gl",
+    3200,
+    3200,
+    "Taller local + LAR",
+    "EST"
+   ],
+   [
+    "Rodillos de retorno Ø89 (15)",
+    15,
+    "u",
+    45,
+    675,
+    "Casa de transmisiones",
+    "EST"
+   ],
+   [
+    "Bulonería 8.8 zincada e inoxidable A2, varillas M16 5.8 y resina (40 anclajes)",
+    1,
+    "gl",
+    650,
+    650,
+    "LAR Ferretería",
+    "EST"
+   ],
+   [
+    "Pintura epoxi y poliuretano (2 manos), electrodos, consumibles",
+    1,
+    "gl",
+    1300,
+    1300,
+    "LAR Ferretería",
+    "EST"
+   ],
+   [
+    "Mano de obra de taller: corte, soldadura, mecanizado, armado",
+    1900,
+    "h",
+    11,
+    20900,
+    "Taller metalúrgico de Crespo",
+    "EST"
+   ],
+   [
+    "Montaje en obra, alineación y puesta en marcha (2 técnicos × 15 días)",
+    240,
+    "h",
+    14,
+    3360,
+    "Taller metalúrgico de Crespo",
+    "EST"
+   ]
+  ],
+  "total": 102909
+ },
+ "inversion": {
+  "filas": [
+   [
+    "A1",
+    "Secador SC-4",
+    "Secador de cinta de 3 pisos completo (ver despiece, planilla «Secador»)",
+    1,
+    "gl",
+    102909,
+    102909,
+    "Taller metalúrgico local + LAR",
+    "EST"
+   ],
+   [
+    "A2",
+    "Generador",
+    "Generador de aire caliente a cáscara: hogar, refractario, parrilla, intercambiador, chimenea, ciclón de humos",
+    1,
+    "gl",
+    45000,
+    45000,
+    "Fabricante nacional",
+    "REVC"
+   ],
+   [
+    "A3",
+    "Aire",
+    "Ventiladores de impulsión M1-M2, ventilador del hogar M4, ductos aislados",
+    1,
+    "gl",
+    14000,
+    14000,
+    "Fabricante nacional",
+    "REVC"
+   ],
+   [
+    "A4",
+    "Gases",
+    "Ciclón, lavador PRFV, bomba M14, extractor M3 22 kW, chimenea",
+    1,
+    "gl",
+    25000,
+    25000,
+    "Fabricante nacional",
+    "REVC"
+   ],
+   [
+    "A5",
+    "Cáscara",
+    "Silo de cáscara 70 m³, sinfín M12, válvula cortafuego, tolva de cenizas",
+    1,
+    "gl",
+    12000,
+    12000,
+    "Fabricante nacional",
+    "REVC"
+   ],
+   [
+    "A6",
+    "Transporte",
+    "Tolva de recepción, cinta de alimentación (plano 12), esparcidor, sinfín de descarga, elevador",
+    1,
+    "gl",
+    10000,
+    10000,
+    "Taller metalúrgico local",
+    "REVC"
+   ],
+   [
+    "A7",
+    "Control",
+    "Tablero TGF, variadores, PLC S7-1200, HMI, instrumentación, TS-1",
+    1,
+    "gl",
+    28000,
+    28000,
+    "Integrador eléctrico",
+    "REVC"
+   ],
+   [
+    "A8",
+    "Eléctrica",
+    "Instalación eléctrica de planta Rev. C (acometida, bandejas, cables, iluminación)",
+    1,
+    "gl",
+    8000,
+    8000,
+    "LAR Electricidad + instalador",
+    "REVC"
+   ],
+   [
+    "A9",
+    "Obra civil",
+    "Nave de proceso 594 m² y anexo (estructura metálica, pisos, canaleta, locales) USD 330/m²",
+    594,
+    "m²",
+    330,
+    196020,
+    "Constructora + LAR (hormigón, hierro, cemento)",
+    "REVC"
+   ],
+   [
+    "B1",
+    "E1-E2 Limpieza",
+    "Vado sanitario H°A° 7 × 5 m, arco de 14 boquillas, bomba M17, tanque, hidrolavadora M16, pediluvio",
+    1,
+    "gl",
+    11200,
+    11200,
+    "LAR (hormigón) + proveedores",
+    "EST"
+   ],
+   [
+    "B2",
+    "E3 Recepción",
+    "Campana 5 × 4 m, ducto Ø600, extractor M23 4 kW con VFD, biofiltro 38 m²",
+    1,
+    "gl",
+    14000,
+    14000,
+    "Taller local",
+    "EST"
+   ],
+   [
+    "B3",
+    "E4 Zaranda",
+    "Trommel Ø0,9 × 3 m con M18, plataforma +3,0 m, desviadora M35, tolva pulmón",
+    1,
+    "gl",
+    9500,
+    9500,
+    "Taller local",
+    "EST"
+   ],
+   [
+    "B4",
+    "E5 Ensacadora",
+    "Ensacadora de boca abierta 25 kg con balanza, cosedora, cinta de salida",
+    1,
+    "gl",
+    16000,
+    16000,
+    "Fabricante nacional",
+    "EST"
+   ],
+   [
+    "B5",
+    "E6 Bolsas chicas",
+    "Envasadora vertical 1-2-5 kg con dosificador volumétrico y sellado",
+    1,
+    "gl",
+    18000,
+    18000,
+    "Fabricante nacional",
+    "EST"
+   ],
+   [
+    "B6",
+    "E7 Depósito",
+    "Depósito de expedición 20 × 12 m (ladrillo macizo F 120, techo de chapa, platea)",
+    240,
+    "m²",
+    300,
+    72000,
+    "Constructora + LAR",
+    "EST"
+   ],
+   [
+    "B7",
+    "E8 Biogás",
+    "Recepción y mezcla, 2 biodigestores 141 m³ con doble membrana, T3 201 m³, separador, tratamiento",
+    1,
+    "gl",
+    165000,
+    165000,
+    "Proveedor especializado",
+    "EST"
+   ],
+   [
+    "B8",
+    "E8 Cogeneración",
+    "Motogenerador a biogás 25 kWe / 40 kWt en contenedor, antorcha, línea al hogar",
+    1,
+    "gl",
+    52000,
+    52000,
+    "Proveedor especializado",
+    "EST"
+   ],
+   [
+    "B9",
+    "E9 Predio",
+    "Ampliación Sector Este: 808 m² de pavimento, cerco, portón R8, cortina forestal, farolas",
+    1,
+    "gl",
+    25000,
+    25000,
+    "Constructora + LAR",
+    "EST"
+   ],
+   [
+    "B10",
+    "E10 Ventilación",
+    "2 extractores Campagnoni AirTEC 1215 con persianas",
+    2,
+    "u",
+    1091,
+    2182,
+    "Campagnoni (Crespo)",
+    "AIRTEC"
+   ],
+   [
+    "B11",
+    "E10 Ventilación",
+    "2 ventiladores móviles Campagnoni 50\"",
+    2,
+    "u",
+    1060,
+    2120,
+    "Campagnoni (Crespo)",
+    "VM"
+   ],
+   [
+    "B12",
+    "Seguridad",
+    "Ítems D1-D24: puertas con enclavamiento, protecciones, pasarelas, hongos, sensores, compuertas, lubricación, placas",
+    1,
+    "gl",
+    28000,
+    28000,
+    "Taller local + integrador",
+    "EST"
+   ],
+   [
+    "B13",
+    "Incendio",
+    "15 matafuegos nuevos, 4 hidrantes, bomba M25 + jockey, central, detectores, rociadores del silo, señalización",
+    1,
+    "gl",
+    25000,
+    25000,
+    "Proveedor de incendio + LAR",
+    "EST"
+   ],
+   [
+    "B14",
+    "TG2",
+    "Tablero TG2, seccionales TS-ENS, TS-LAV, TS-BIO, TS-VEN, TL2, TBI, cables y bandejas (ver Pedido LAR)",
+    1,
+    "gl",
+    22000,
+    22000,
+    "LAR Electricidad + integrador",
+    "EST"
+   ],
+   [
+    "B15",
+    "Puesta a tierra",
+    "Anillo Cu 50 mm², 10 jabalinas, BEP, pararrayos con bajadas (D16)",
+    1,
+    "gl",
+    6000,
+    6000,
+    "LAR Electricidad + instalador",
+    "EST"
+   ],
+   [
+    "B16",
+    "Fatiga (Rev. E)",
+    "Eje de reenvío Ø60 en lugar de Ø50 (3 u), rectificado de asientos, ensayos de material",
+    1,
+    "gl",
+    2600,
+    2600,
+    "Taller local + laboratorio",
+    "EST"
+   ],
+   [
+    "B17",
+    "Descarga (Rev. F)",
+    "Tolva de retención aislada 0,7 m³ con TT-05, enfriador a contracorriente con ventilador M40 0,55 kW, conducto al escape",
+    1,
+    "gl",
+    2690.0,
+    2690,
+    "Taller local + integrador",
+    "REVF"
+   ],
+   [
+    "B18",
+    "Escape (Rev. F)",
+    "Aislación lana de roca 50 mm con chapa del ducto Ø800 (14 m) y del ciclón; purgas de condensado con sifón",
+    1,
+    "gl",
+    2210.0,
+    2210,
+    "Taller local + LAR",
+    "REVF"
+   ],
+   [
+    "C1",
+    "Ingeniería",
+    "Ingeniería de detalle, habilitaciones (municipio, EIA provincial, Bomberos, SENASA, LAR)",
+    1,
+    "gl",
+    18000,
+    18000,
+    "—",
+    "EST"
+   ]
+  ],
+  "sub_revC": 440929,
+  "sub_revD": 475502,
+  "sub_ing": 18000,
+  "imprevistos": 65410,
+  "total": 999841,
+  "total_ARS": 1549753814,
+  "sin_biogas": 767651
+ },
+ "lar": {
+  "filas": [
+   [
+    "Hormigón elaborado",
+    "Hormigón H-21 asentamiento 10 cm (platea depósito, vado, losas de digestores, bases, pavimentos)",
+    238,
+    "m³",
+    210000,
+    49980000,
+    "44 depósito + 12 vado + 57 biogás + 4 bases + 121 pavimento"
+   ],
+   [
+    "Corralón",
+    "Acero ADN 420 en barras Ø6 a Ø16",
+    14000,
+    "kg",
+    2300,
+    32200000,
+    "≈ 60 kg/m³ en losas y bases"
+   ],
+   [
+    "Corralón",
+    "Malla sima Q188 (2,15 × 6 m)",
+    83,
+    "u",
+    95000,
+    7885000,
+    "1.070 m² de pavimento y platea"
+   ],
+   [
+    "Corralón",
+    "Ladrillo macizo común (muros F 120 del depósito)",
+    23000,
+    "u",
+    260,
+    5980000,
+    "192 m² × 120 u/m²"
+   ],
+   [
+    "Corralón",
+    "Cemento portland 50 kg",
+    250,
+    "bolsa",
+    13000,
+    3250000,
+    "mampostería y revoques del depósito"
+   ],
+   [
+    "Corralón",
+    "Arena gruesa / cal hidratada",
+    30,
+    "m³",
+    38000,
+    1140000,
+    "morteros"
+   ],
+   [
+    "Corralón",
+    "Chapa galvanizada trapezoidal C25 (techo y cierres del depósito)",
+    465,
+    "m²",
+    18000,
+    8370000,
+    "273 m² techo + 192 m² cierres"
+   ],
+   [
+    "Corralón",
+    "Perfiles UPN 120 × 12 m (bastidor del secador)",
+    3,
+    "barra",
+    470000,
+    1410000,
+    "34 m de columnas"
+   ],
+   [
+    "Corralón",
+    "Perfiles IPN 140 × 12 m (vigas del secador)",
+    6,
+    "barra",
+    560000,
+    3360000,
+    "4 vigas de 13 m = tramo de 9,75 + tramo de 3,25 m, empalmados con cubrejuntas sobre la columna D"
+   ],
+   [
+    "Corralón",
+    "Ángulo L 50×50×5 × 6 m (travesaños)",
+    17,
+    "barra",
+    58000,
+    986000,
+    "101 m"
+   ],
+   [
+    "Ferretería",
+    "Varilla roscada M16 clase 5.8 × 190 mm con tuerca y arandela",
+    96,
+    "u",
+    6200,
+    595200,
+    "40 secador + 16 ventiladores + 40 depósito"
+   ],
+   [
+    "Ferretería",
+    "Resina epoxi para anclaje químico, cartucho 585 ml",
+    10,
+    "u",
+    70000,
+    700000,
+    "≈ 10 anclajes M16 por cartucho"
+   ],
+   [
+    "Ferretería",
+    "Bulonería 8.8 zincada y A2 surtida",
+    120,
+    "kg",
+    9300,
+    1116000,
+    "bridas, guías, protecciones"
+   ],
+   [
+    "Ferretería",
+    "Pintura epoxi antióxido + esmalte poliuretánico",
+    160,
+    "l",
+    18600,
+    2976000,
+    "650 m² a 2 manos"
+   ],
+   [
+    "Ferretería",
+    "Electrodos E7018 / E6013",
+    80,
+    "kg",
+    9300,
+    744000,
+    "soldadura en obra"
+   ],
+   [
+    "Electricidad",
+    "Cable subterráneo Cu 4 × 35 mm² IRAM 2178 (acometida TG2)",
+    45,
+    "m",
+    32800,
+    1476000,
+    "40 m + reserva"
+   ],
+   [
+    "Electricidad",
+    "Cable subterráneo Cu 4 × 16 mm² (Q23 TS-BIO)",
+    110,
+    "m",
+    16300,
+    1793000,
+    "105 m + reserva"
+   ],
+   [
+    "Electricidad",
+    "Cable Cu 4 × 6 mm² (TBI bombas de incendio)",
+    58,
+    "m",
+    7100,
+    411800,
+    "55 m + reserva"
+   ],
+   [
+    "Electricidad",
+    "Cable Cu 4 × 4 mm² (Q21, Q22, Q25)",
+    130,
+    "m",
+    5100,
+    663000,
+    "25 + 50 + 45 m + reserva"
+   ],
+   [
+    "Electricidad",
+    "Cable Cu 4 × 2,5 mm² (Q24, Q27 y motores)",
+    260,
+    "m",
+    3600,
+    936000,
+    "58 m de circuitos + bajadas a motores"
+   ],
+   [
+    "Electricidad",
+    "Cable Cu desnudo 50 mm² (anillo de puesta a tierra y bajadas)",
+    180,
+    "m",
+    9300,
+    1674000,
+    "D16, plano 17"
+   ],
+   [
+    "Electricidad",
+    "Jabalina Cu-Ac 5/8\" × 3 m con cámara de inspección",
+    10,
+    "u",
+    62000,
+    620000,
+    "PAT-1 a PAT-10"
+   ],
+   [
+    "Electricidad",
+    "Bandeja perforada galvanizada 300 mm con accesorios",
+    80,
+    "m",
+    28000,
+    2240000,
+    "recorridos de fuerza"
+   ],
+   [
+    "Electricidad",
+    "Bandeja perforada galvanizada 150 mm (instrumentación)",
+    90,
+    "m",
+    17000,
+    1530000,
+    "D15"
+   ],
+   [
+    "Electricidad",
+    "Campana LED industrial 150 W (depósito)",
+    6,
+    "u",
+    217000,
+    1302000,
+    "cálculo luminotécnico Q25"
+   ],
+   [
+    "Electricidad",
+    "Farola LED 100 W con columna de 7 m",
+    5,
+    "u",
+    713000,
+    3565000,
+    "Sector Este"
+   ],
+   [
+    "Electricidad",
+    "Reflector LED 100 W / proyector Ex 60 W",
+    6,
+    "u",
+    93000,
+    558000,
+    "dársena y zona de biogás"
+   ],
+   [
+    "Electricidad",
+    "Luz de emergencia autónoma 3 h con cartel SALIDA",
+    8,
+    "u",
+    54000,
+    432000,
+    "plano 15"
+   ],
+   [
+    "Electricidad",
+    "Interruptores termomagnéticos 4P y diferenciales 30 mA (TG2 y seccionales)",
+    1,
+    "gl",
+    2900000,
+    2900000,
+    "plano 23"
+   ],
+   [
+    "Electricidad",
+    "Gabinetes IP65 para TS-LAV, TS-VEN, TL2 y TS-ENS",
+    4,
+    "u",
+    420000,
+    1680000,
+    "plano 23"
+   ],
+   [
+    "Electricidad",
+    "Caño corrugado/PVC Ø50 para tendidos enterrados",
+    220,
+    "m",
+    3800,
+    836000,
+    "Q22, Q23, Q25, TBI"
+   ]
+  ],
+  "total_ARS": 143309000,
+  "total_USD": 92457
+ },
+ "energia": {
+  "E_TGF_kWh": 108000,
+  "E_TG2_kWh": 58478,
+  "E_total_kWh": 166478,
+  "E_G1_kWh": 116070,
+  "autoconsumo_kWh": 63839,
+  "inyectada_kWh": 52231,
+  "potencia_kW": 100,
+  "tarifa": {
+   "cargo_fijo_mes": 85000.0,
+   "potencia_kw_mes": 14500.0,
+   "energia_kwh": 185.0,
+   "inyeccion_kwh": 95.0
+  },
+  "costo_sin_G1_ARS": 49218467,
+  "costo_con_G1_ARS": 32446352,
+  "costo_sin_G1_USD": 31754,
+  "costo_con_G1_USD": 20933,
+  "ahorro_G1_USD": 10821,
+  "precio_medio_ARS_kWh": 295.6
+ },
+ "evaluacion": {
+  "ventas": 177125,
+  "mix": {
+   "bolsas 25 kg": [
+    0.6,
+    250.0
+   ],
+   "bolsas chicas 1-2-5 kg": [
+    0.15,
+    600.0
+   ],
+   "granel": [
+    0.25,
+    130.0
+   ]
+  },
+  "digestato": 13140,
+  "sulfato": 5000,
+  "ahorro_gestion": 18500,
+  "ingresos": 213765,
+  "costos": {
+   "Cáscara de arroz (419 t/año por turno con el aire ajustado al 15 %, modelo térmico Rev. F; USD 25/t)": 10475,
+   "Energía eléctrica con LAR": 20933,
+   "Mano de obra (3 operarios por turno × USD 1.000 × 13 meses)": 39000,
+   "Bolsas, rótulos y pallets (envasado)": 12320,
+   "Mantenimiento y repuestos (3 % de equipos)": 16497,
+   "Operación y mantenimiento del biogás (USD 0,03/kWh generado)": 3482,
+   "Ácido, agua, combustible de la pala, monitoreos, H&S": 8800,
+   "Seguros e impuestos (1 % de la inversión)": 9998
+  },
+  "costo": 121506,
+  "neto": 92259,
+  "VAN": -298115,
+  "TIR": 4.4,
+  "repago": 10.8,
+  "tasa": 0.1,
+  "anios": 15,
+  "escenarios": [
+   {
+    "nombre": "A – Planta completa, 1 turno (8 t/día)",
+    "inversion": 999841,
+    "neto": 92259,
+    "VAN": -298115,
+    "TIR": 4.4,
+    "repago": 10.8,
+    "ingresos": 213765,
+    "costo": 121506
+   },
+   {
+    "nombre": "B – Sin biogás, 1 turno",
+    "inversion": 767651,
+    "neto": 77933,
+    "VAN": -174888,
+    "TIR": 5.8,
+    "repago": 9.9,
+    "ingresos": 200625,
+    "costo": 122692
+   },
+   {
+    "nombre": "C – Planta completa, 2 turnos (16 t/día)",
+    "inversion": 1029841,
+    "neto": 199792,
+    "VAN": 489795,
+    "TIR": 17.7,
+    "repago": 5.2,
+    "ingresos": 414390,
+    "costo": 214598
+   },
+   {
+    "nombre": "D – Sin biogás, 2 turnos",
+    "inversion": 797651,
+    "neto": 186616,
+    "VAN": 621763,
+    "TIR": 22.2,
+    "repago": 4.3,
+    "ingresos": 401250,
+    "costo": 214634
+   }
+  ]
+ }
+}

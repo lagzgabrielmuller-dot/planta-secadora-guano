@@ -1,0 +1,7 @@
+{
+  "name": "pruebas-sitio-secadora",
+  "private": true,
+  "description": "Prueba funcional del sitio (portada, visores 3D, simulador) con Chromium sin ventana",
+  "scripts": { "test": "node probar_sitio.js" },
+  "devDependencies": { "playwright": "1.63.0" }
+}

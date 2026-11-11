@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Secadora de guano – video de presentación</title>
+<style>
+__FUENTES__
+  :root { --tinta:#10161d; --panel:rgba(12,18,26,.80); --texto:#f2f5f8; --sub:#b9c6d3; --acento:#f0b429; --azul:#5aa0d8;
+    --verde:#6cc28a; }
+  html, body { margin:0; width:1920px; height:1080px; overflow:hidden; background:#000; }
+  body { font-family:"Barlow", "Liberation Sans", Arial, sans-serif; color:var(--texto); }
+  #lienzo { position:absolute; inset:0; width:1920px; height:1080px; }
+  #guias, #trazos { position:absolute; inset:0; width:1920px; height:1080px; pointer-events:none; }
+  #trazos * { fill:none; stroke-linejoin:round; stroke-linecap:round; }
+  #trazos .ruta-borde { stroke:rgba(20,16,4,.55); stroke-width:13; }
+  #trazos .ruta { stroke:#ffd25a; stroke-width:6; filter:drop-shadow(0 0 6px rgba(255,200,60,.8)); }
+  #trazos .dist { stroke:#fff; stroke-width:3.5; stroke-dasharray:14 10; filter:drop-shadow(0 1px 3px rgba(0,0,0,.8)); }
+  #trazos .pic { fill:rgba(90,160,216,.20); stroke:#7db8e6; stroke-width:3.5; }
+  #trazos .lote { fill:rgba(255,90,60,.30); stroke:#ff6a4a; stroke-width:4.5; filter:drop-shadow(0 0 8px rgba(255,90,60,.9)); }
+  #trazos .lote-borde { stroke:#ffb35a; stroke-width:4; filter:drop-shadow(0 0 10px rgba(255,170,60,1)); }
+  #trazos .biogas { fill:rgba(108,194,138,.20); stroke:#7fd39b; stroke-width:3.5; stroke-dasharray:12 8; }
+  #trazos .replanteo { stroke:#f0b429; stroke-width:3; stroke-dasharray:10 8; }
+  #guias polyline { fill:none; stroke:#fff; stroke-width:2; filter:drop-shadow(0 1px 2px rgba(0,0,0,.7)); }
+  #guias circle { fill:var(--acento); stroke:#fff; stroke-width:2; }
+  #capa { position:absolute; inset:0; pointer-events:none; }
+  .cartel { position:absolute; left:0; top:0; background:var(--panel); border-left:4px solid var(--acento);
+    padding:9px 16px 10px 14px; border-radius:3px; white-space:nowrap; box-shadow:0 4px 18px rgba(0,0,0,.35); }
+  .cartel b { display:block; font-family:"Barlow Condensed", "Liberation Sans Narrow", Arial, sans-serif; font-weight:600;
+    font-size:27px; letter-spacing:.02em; line-height:1.15; }
+  .cartel span { display:block; color:var(--sub); font-size:19px; line-height:1.3; margin-top:2px; }
+  .cartel.grande b { font-size:34px; } .cartel.grande span { font-size:22px; }
+  .cartel.azul { border-left-color:var(--azul); } .cartel.verde { border-left-color:var(--verde); }
+  .cartel.dist { border-left:none; background:rgba(240,180,41,.95); color:#14181d; padding:6px 12px; }
+  .cartel.dist b { font-size:25px; } .cartel.dist span { color:#2a2f36; font-size:17px; }
+
+  #titulo { position:absolute; left:0; right:0; top:31%; padding:60px 0 64px; text-align:center; opacity:0;
+    background:radial-gradient(ellipse 52% 50% at 50% 50%, rgba(6,10,16,.62), rgba(6,10,16,0)); }
+  #titulo .sobre { font-family:"Barlow Condensed", sans-serif; font-weight:600; letter-spacing:.32em; text-transform:uppercase;
+    font-size:26px; color:var(--acento); }
+  #titulo h1 { margin:.18em 0 .12em; font-family:"Barlow Condensed", sans-serif; font-weight:700; font-size:104px;
+    letter-spacing:.03em; text-transform:uppercase; line-height:1; text-shadow:0 6px 30px rgba(0,0,0,.55); }
+  #titulo .bajo { font-size:30px; color:#e6edf3; letter-spacing:.04em; text-shadow:0 2px 12px rgba(0,0,0,.6); }
+  #titulo .raya { width:0; height:4px; background:var(--acento); margin:22px auto 0; }
+
+  #placa { position:absolute; left:96px; bottom:92px; display:flex; align-items:stretch; opacity:0; max-width:1180px; }
+  #placa .paso { background:var(--acento); color:#14181d; font-family:"Barlow Condensed", sans-serif; font-weight:700;
+    font-size:44px; padding:0 22px; display:flex; flex-direction:column; justify-content:center; text-align:center; min-width:96px; }
+  #placa .paso small { font-size:19px; font-weight:600; letter-spacing:.12em; }
+  #placa .cuerpo { background:var(--panel); padding:16px 28px 18px 24px; }
+  #placa .tit { font-family:"Barlow Condensed", sans-serif; font-weight:700; font-size:44px; text-transform:uppercase;
+    letter-spacing:.03em; line-height:1.05; }
+  #placa .txt { font-size:25px; color:#d7e0e8; margin-top:6px; line-height:1.3; white-space:normal; }
+
+  #cifras { position:absolute; right:96px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:18px; }
+  .cifra { background:var(--panel); border-right:5px solid var(--acento); padding:14px 26px 16px; text-align:right; opacity:0;
+    min-width:420px; }
+  .cifra b { display:block; font-family:"Barlow Condensed", sans-serif; font-weight:700; font-size:68px; line-height:1; }
+  .cifra span { display:block; font-size:22px; color:var(--sub); margin-top:6px; }
+
+  #grandes { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; gap:70px; opacity:0;
+    background:radial-gradient(ellipse at center, rgba(8,12,18,.55), rgba(8,12,18,.88)); }
+  #grandes .g { text-align:center; } #grandes .g b { display:block; font-family:"Barlow Condensed", sans-serif; font-weight:700;
+    font-size:170px; line-height:.95; } #grandes .g span { font-size:32px; color:var(--sub); }
+  #grandes .flecha { font-size:110px; color:var(--acento); font-family:"Barlow Condensed", sans-serif; }
+
+  #creditos { position:absolute; left:0; right:0; top:22%; text-align:center; opacity:0; }
+  #creditos .sobre { font-family:"Barlow Condensed", sans-serif; letter-spacing:.3em; text-transform:uppercase; font-size:24px; color:var(--acento); }
+  #creditos .nombres { font-family:"Barlow Condensed", sans-serif; font-weight:600; font-size:50px; line-height:1.35; margin:18px 0 26px;
+    text-shadow:0 3px 18px rgba(0,0,0,.6); }
+  #creditos .esc { font-size:28px; color:#dde5ec; line-height:1.45; text-shadow:0 2px 12px rgba(0,0,0,.6); }
+
+  #pie { position:absolute; left:96px; right:96px; bottom:30px; font-size:17px; color:rgba(255,255,255,.82); opacity:0;
+    text-shadow:0 1px 4px rgba(0,0,0,.8); display:flex; justify-content:space-between; gap:40px; }
+  #marca { position:absolute; right:96px; top:64px; font-family:"Barlow Condensed", sans-serif; font-weight:600; font-size:22px;
+    letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.85); opacity:0; text-shadow:0 1px 6px rgba(0,0,0,.7);
+    border-right:4px solid var(--acento); padding-right:14px; text-align:right; line-height:1.25; }
+  #negro { position:absolute; inset:0; background:#000; opacity:1; }
+  #blanco { position:absolute; inset:0; background:#fff; opacity:0; }
+</style>
+</head>
+<body>
+<canvas id="lienzo" width="1920" height="1080"></canvas>
+<svg id="trazos" viewBox="0 0 1920 1080"></svg>
+<svg id="guias" viewBox="0 0 1920 1080"></svg>
+<div id="capa"></div>
+<div id="marca">Secadora de guano<br>8 t/día · Crespo</div>
+<div id="titulo"><div class="sobre"></div><h1></h1><div class="bajo"></div><div class="raya"></div></div>
+<div id="placa"><div class="paso"></div><div class="cuerpo"><div class="tit"></div><div class="txt"></div></div></div>
+<div id="cifras"></div>
+<div id="grandes"></div>
+<div id="creditos"></div>
+<div id="pie"><span id="pie-izq"></span><span id="pie-der"></span></div>
+<div id="blanco"></div>
+<div id="negro"></div>
+<script>__APP__</script>
+</body>
+</html>

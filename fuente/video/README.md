@@ -31,8 +31,9 @@ node video/capturar.js ../video/_cuadros/final 0.016 "" 60 1920 1080 92 4 & node
 # GitHub acepta archivos de hasta 100 MB: 1080p60 a 3000 kbit/s en dos pasadas (≈ 93 MB)
 python video/montar.py ../video/_cuadros/final 60 ../video/Secadora_guano_presentacion_1080p60.mp4 --kbps 3000 --pasadas 2
 python video/montar.py ../video/_cuadros/final 60 ../video/Secadora_guano_presentacion_720p.mp4 --cada 2 --ancho 1280 --kbps 1600
-# versión liviana para la página de entrega publicada (archivos de hasta 15 MB)
-python video/montar.py ../video/_cuadros/final 60 ../video/_cuadros/Secadora_guano_web.mp4 --cada 2 --ancho 960 --kbps 380 --audio 96 --pasadas 2
+# versión liviana para la portada (archivos de hasta 15 MB)
+python video/montar.py ../video/_cuadros/final 60 ../video/Secadora_guano_presentacion_web.mp4 --cada 2 --ancho 960 --kbps 380 --pasadas 2 --sin-audio
+# las versiones del repositorio público van con --sin-audio: la música no es libre de derechos
 ```
 
 `capturar.js` numera los cuadros por su tiempo y saltea los que ya existen: se puede cortar y retomar, o
@@ -42,6 +43,17 @@ cuadro y la planta a ≈ 2,5 s. `montar.py --cada 2` arma una versión a 30 fps 
 
 **Con la placa de video de la PC** (RTX): `set VIDEO_GPU=1` antes de `node capturar.js` usa ANGLE con Direct3D
 en lugar de SwiftShader (dibujo por procesador) y el render final baja de horas a minutos.
+
+## Rehacer solo algunos tramos (corrección de un texto)
+
+Si cambia un texto del guion (por ejemplo, los créditos o una cifra), no hace falta volver a dibujar los 13.880
+cuadros. Se toma el video original de máxima calidad y se extraen sus cuadros (`ffmpeg -i alta.mp4 -q:v 2
+f_%06d.jpg`). Después se dibujan de nuevo solo los cuadros de los tramos cambiados, con `capturar.js <carpeta>
+<desde> <hasta> 60 1920 1080 92`, usando el mismo visor, el mismo GLB del secador, el mismo mapa y el mismo ritmo que
+el original. Por último se reemplazan esos cuadros y se monta con `montar.py`. Antes de reemplazar, conviene comparar
+un cuadro nuevo con el original en el mismo instante: el 11/11/2026 dieron 36,8 dB de PSNR, que es solo la diferencia
+de compresión. Así se corrigieron, el 11/11/2026, el apellido Hofstetter en los créditos, la masa del secador
+(9.538 kg), la potencia instalada (117,0 kW) y la nave (33 × 18 m).
 
 ## Archivos
 

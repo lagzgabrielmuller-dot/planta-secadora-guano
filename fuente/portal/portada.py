@@ -5,7 +5,8 @@
 - Los números marcados {{clave}} salen de calculos/resultados.json, presupuesto.json y del modelo del secador
   (piezas.json): si cambia un cálculo, la portada cambia sola.
 - La lista de descargas se arma con el tamaño real de cada archivo (y las páginas de cada PDF).
-- Arma las miniaturas de las 30 láminas (portal/img/planos/) desde los PNG de los planos.
+- Arma las miniaturas de las 30 láminas (portal/img/planos/) y las fotos del secador (portal/img/sc_*.jpg) desde
+  los PNG de los planos y los renders del visor del secador.
 - Arma los ZIP de los DXF (P01-P24 y SC-01 a SC-06) con fecha fija, para que no cambien si no cambian los DXF.
 - Controla que no quede ninguna clave sin reemplazar y que exista cada archivo enlazado.
 - Escribe también `entrega.html`, que redirige a la portada (la dirección vieja sigue andando).
@@ -148,6 +149,11 @@ def miniaturas():
         im = Image.open(png).convert("RGB")
         im.thumbnail((1800, 1800), Image.LANCZOS)
         im.save(os.path.join(salida, jpg), "JPEG", quality=84, optimize=True, progressive=True)
+    # fotos del secador SC-4 en la portada: salen de los renders del visor del secador (modelo CadQuery vigente)
+    for nombre in ("general", "interior", "despiece", "accionamiento"):
+        im = Image.open(os.path.join(RAIZ, "secadora", "renders", f"SC_{nombre}.png")).convert("RGB")
+        im.thumbnail((1600, 1600), Image.LANCZOS)
+        im.save(os.path.join(RAIZ, "portal", "img", f"sc_{nombre}.jpg"), "JPEG", quality=86, optimize=True, progressive=True)
 
 
 REDIRECCION = """<!DOCTYPE html>

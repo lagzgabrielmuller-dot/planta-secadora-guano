@@ -31,6 +31,7 @@ def main():
     a.add_argument("--cada", type=int, default=1, help="usar un cuadro de cada n (fps de salida = fps / n)")
     a.add_argument("--pasadas", type=int, default=1, help="2 = dos pasadas con --kbps (mejor calidad al mismo tamaño)")
     a.add_argument("--audio", type=int, default=192, help="tasa del audio AAC en kbit/s")
+    a.add_argument("--sin-audio", action="store_true", help="video mudo (versión pública: la música no es libre de derechos)")
     x = a.parse_args()
     # por número de cuadro (no por posición): sirve aunque falten los intermedios de un render a medias
     cuadros = [c for c in sorted(glob.glob(os.path.join(x.cuadros, "f_*.jpg")))
@@ -53,9 +54,12 @@ def main():
         log = ["-passlogfile", os.path.join(tmp.name, "x264")]
         subprocess.run(entrada + video + log + ["-pass", "1", "-an", "-f", "mp4", os.devnull], check=True)
         video += log + ["-pass", "2"]
-    cmd = entrada + ["-i", x.musica, "-map", "0:v", "-map", "1:a", "-t", f"{dur:.3f}"] + video + [
-        "-c:a", "aac", "-b:a", f"{x.audio}k", "-af", f"afade=t=out:st={max(0, dur - 2.5):.2f}:d=2.5",
-        "-movflags", "+faststart", x.salida]
+    if x.sin_audio:
+        cmd = entrada + ["-map", "0:v", "-t", f"{dur:.3f}"] + video + ["-an", "-movflags", "+faststart", x.salida]
+    else:
+        cmd = entrada + ["-i", x.musica, "-map", "0:v", "-map", "1:a", "-t", f"{dur:.3f}"] + video + [
+            "-c:a", "aac", "-b:a", f"{x.audio}k", "-af", f"afade=t=out:st={max(0, dur - 2.5):.2f}:d=2.5",
+            "-movflags", "+faststart", x.salida]
     subprocess.run(cmd, check=True)
     tmp.cleanup()
     print(f"{x.salida}: {n} cuadros, {dur:.1f} s, {os.path.getsize(x.salida) / 1e6:.1f} MB")

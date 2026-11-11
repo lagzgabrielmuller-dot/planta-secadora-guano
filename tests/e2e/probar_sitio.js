@@ -92,8 +92,15 @@ async function vigilar(pagina, nombre) {
     ok(visible, `página del equipo «${id}» se abre con #equipo-${id}`);
   }
   await p.evaluate(() => (location.hash = "#inicio")); await p.waitForTimeout(500);
-  const sinTexto = await p.evaluate(() => [...document.querySelectorAll("img")].filter((i) => !i.getAttribute("alt")).length);
-  ok(sinTexto === 0, "todas las imágenes tienen texto alternativo");
+  // todas las imágenes llevan atributo alt; las visibles, con texto (la del visor ampliado recibe el suyo al abrirse)
+  const sinTexto = await p.evaluate(() => [...document.querySelectorAll("img")].filter((i) =>
+    !i.hasAttribute("alt") || (!i.getAttribute("alt") && i.offsetParent !== null)).length);
+  ok(sinTexto === 0, "todas las imágenes tienen texto alternativo" + (sinTexto ? ` (faltan ${sinTexto})` : ""));
+  await p.evaluate(() => document.querySelector("#planos").scrollIntoView());
+  await p.click("[data-ampliar-plano]"); await p.waitForTimeout(600);
+  const altLuz = await p.evaluate(() => { const l = document.querySelector(".luz"); return l && !l.hidden ? l.querySelector("img").alt : ""; });
+  ok(altLuz.length > 5, `el visor ampliado se abre y describe la imagen («${altLuz.slice(0, 50)}»)`);
+  await p.keyboard.press("Escape");
   if (capturas) await p.screenshot({ path: path.join(capturas, "portada_pc.png") });
   ok(err.length === 0, "portada sin errores" + (err.length ? ": " + err.join(" | ") : ""));
 

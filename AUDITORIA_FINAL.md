@@ -17,7 +17,7 @@ las cuentas:
 - La página pública tenía números escritos a mano y descargas por una carpeta privada de Drive.
 
 Todo quedó corregido. Las propuestas del estudio quedaron incorporadas como **Rev. F** ([`docs/REV_F.md`](docs/REV_F.md)).
-Pasan las **202 pruebas automáticas** de datos y archivos y los **24 controles del sitio**, también sobre el sitio
+Pasan las **203 pruebas automáticas** de datos y archivos y los **24 controles del sitio**, también sobre el sitio
 publicado en https://lagzgabrielmuller-dot.github.io/planta-secadora-guano/ (sección 6).
 
 ## 2. Método y qué se leyó
@@ -62,6 +62,7 @@ el aspecto de las que cambiaron.
 | 23 | CI | Media | La prueba del sitio instalaba fuentes del sistema con `apt` (`--with-deps`). En la primera corrida los espejos de Ubuntu no resolvían y el paso quedó colgado hasta que se canceló | Sin `--with-deps` (las fuentes no hacen falta), imagen `ubuntu-24.04`, tiempo máximo por trabajo y acciones que corren en Node 24 |
 | 24 | Datos | Media | Lámina SC-01, tabla de datos: guano «60 % → 15 %» y aire «≤ 120 °C». El resto del proyecto usa 72 % de humedad de entrada, 135 °C de diseño y ≈ 100 °C de trabajo | Corregida (72 % → 15 %; ≈ 100 °C, máx. 135), dentro de la Rev. B del juego SC |
 | 25 | Pruebas | Baja | La prueba del sitio esperaba 700 ms fijos el cambio a la página de un equipo, que tiene una transición de 400 ms: con la máquina cargada fallaba sin que la portada tuviera un error | Espera la condición (hasta 15 s) y el fin de la transición |
+| 26 | UX | Media | La portada no enlazaba el simulador térmico: estaba publicado, pero solo se llegaba escribiendo la dirección | Enlaces en Descargas y en la página del secador; una prueba controla que la portada enlace los dos visores y el simulador |
 
 ## 4. Datos verificados y no verificables
 
@@ -119,7 +120,7 @@ el aspecto de las que cambiaron.
 | Prueba | Herramienta | Resultado |
 |---|---|---|
 | Regenerar toda la entrega desde el entorno nuevo (venv con Python 3.12, `npm ci`, fuentes Liberation): CadQuery, 30 láminas, memoria, informe, manual, visores, renders y portada | `fuente/regenerar.py` | ✔ Sin errores; DXF con 0 errores de auditoría de ezdxf |
-| Cálculos, datos cruzados entre documentos, archivos de la entrega, integrantes en DXF, PDF y DOCX, Rev. F | pytest (`tests/`) | ✔ **202 pasaron**, 0 fallaron |
+| Cálculos, datos cruzados entre documentos, archivos de la entrega, integrantes en DXF, PDF y DOCX, Rev. F, enlaces de la portada | pytest (`tests/`) | ✔ **203 pasaron**, 0 fallaron |
 | Clon limpio del repositorio, entorno virtual nuevo con **Python 3.11.18** y solo `tests/requirements.txt` | git clone + venv + pytest | ✔ **202 pasaron** (otra versión de Python que la de los generadores) |
 | Lint | ruff (E9, F, B) en `fuente/` y `simulacion_termica/` | ✔ 0 avisos |
 | Sintaxis JavaScript | `node --check` en todos los .js y .mjs | ✔ |

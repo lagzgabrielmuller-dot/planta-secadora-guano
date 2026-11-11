@@ -113,6 +113,14 @@ def test_portada_sin_claves_y_con_numeros_de_los_calculos(R, P):
     assert f"TIR del {ar(c['TIR'], 1)} %" in t
 
 
+def test_portada_enlaza_visores_y_simulador():
+    # todo lo que se presenta como parte del sitio tiene que poder abrirse desde la portada
+    t = (RAIZ / "index.html").read_text(encoding="utf-8")
+    for rel in ("visor.html", "secadora/Visor_Secador_SC4.html", "simulacion_termica/simulador.html"):
+        assert f'href="{rel}"' in t, rel
+        assert (RAIZ / rel).exists(), rel
+
+
 # ------------------------------------------------------------------ integrantes bien escritos en todo
 @pytest.mark.parametrize("rel", ["informe/Informe_Final_Secadora_Guano.pdf", "memoria/Memoria_de_calculo_RevD.pdf",
                                  "secadora/Manual_de_armado_SC4.pdf"])

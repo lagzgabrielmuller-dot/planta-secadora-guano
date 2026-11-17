@@ -1,5 +1,29 @@
 # Registro de cambios
 
+## Análisis económico · 17/11/2026: rentabilidad y recuperación de la inversión
+
+Sección nueva en [`analisis_economico/`](analisis_economico/), que no cambia ningún dato del proyecto:
+- informe en Word y PDF (42 páginas);
+- planilla Excel con fórmulas, que replica el modelo y lo controla contra Python;
+- ocho gráficos y el modelo en `fuente/economia/`.
+
+**Base del cálculo:** planta sin biogás, pesos de noviembre de 2026, dólar BNA $ 1.575. Se usan:
+- precios verificados con fuente y fecha;
+- hipótesis marcadas como tales;
+- 17 inconsistencias del proyecto, cada una con su criterio.
+
+**Contenido:**
+- flujo de caja mensual a 15 años con puesta en marcha, capital de trabajo e impuestos (ganancias 2026, IIBB,
+  débitos y créditos);
+- payback exacto, ROI, VAN, TIR y punto de equilibrio;
+- tres escenarios, el puente contra la evaluación del proyecto, sensibilidad y desfase de costos;
+- análisis inverso de capacidad para recuperar la inversión en 2 a 5 años, con las alternativas A a D.
+
+**Resultado:** con un turno, la planta no recupera la inversión en ningún escenario. Con los precios del proyecto la
+recupera en 60 meses con 2 turnos a 1.224 kg/h, y en 48 meses a 1.440 kg/h.
+
+**Integración:** paso `economia` en `regenerar.py`, fila en las Descargas de la portada, `tests/test_economia.py`.
+
 ## Rev. F · 11/11/2026: auditoría integral, estudio térmico y repositorio nuevo
 
 **Estudio térmico del secador SC-4** ([`docs/REV_F.md`](docs/REV_F.md)):

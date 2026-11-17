@@ -74,7 +74,8 @@ def valores():
 def filas():
     pag = {k: paginas(v) for k, v in (("informe", "informe/Informe_Final_Secadora_Guano.pdf"),
                                        ("memoria", "memoria/Memoria_de_calculo_RevD.pdf"),
-                                       ("manual", "secadora/Manual_de_armado_SC4.pdf"))}
+                                       ("manual", "secadora/Manual_de_armado_SC4.pdf"),
+                                       ("economia", "analisis_economico/Analisis_economico_Secadora_Guano.pdf"))}
     n = lambda k, txt: f"{pag[k]} páginas, {txt}" if pag[k] else txt[0].upper() + txt[1:]   # noqa: E731
     return [
         ("Informe final", n("informe", "con los planos en anexo"),
@@ -89,6 +90,11 @@ def filas():
          [("PDF", "secadora/planos/pdf/Planos_Secador_SC4.pdf", True), ("DXF", "secadora/planos/dxf/Planos_DXF_SC-01-SC-06.zip", False)]),
         ("Presupuesto", "Inversión, pedido a la Cooperativa LAR, energía y evaluación económica",
          [("Excel", "presupuesto/Presupuesto_Secadora_Guano.xlsx", False)]),
+        ("Análisis económico", n("economia", "inversión, costos, payback, ROI, escenarios y capacidad necesaria para "
+                                 "recuperar la inversión"),
+         [("PDF", "analisis_economico/Analisis_economico_Secadora_Guano.pdf", True),
+          ("Word", "analisis_economico/Analisis_economico_Secadora_Guano.docx", False),
+          ("Excel", "analisis_economico/Modelo_economico_Secadora_Guano.xlsx", False)]),
         ("Modelos 3D", "Secador SC-4 en STEP (SolidWorks, Fusion 360) y GLB (Blender); planta completa en STEP",
          [("STEP secador", "secadora/modelo_3d/Secador_SC4.step", False), ("GLB", "secadora/modelo_3d/Secador_SC4.glb", False),
           ("STEP planta", "modelo_3d/Secadora_guano_RevD_step.zip", False)]),

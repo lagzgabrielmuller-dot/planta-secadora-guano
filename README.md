@@ -19,6 +19,7 @@ informe, memoria, presupuesto, simulador y video.
 | Informe final (Word y PDF) | [`informe/`](informe/) |
 | Memoria de cálculo: TG2, iluminación, ventilación, biogás y carga de fuego | [`memoria/`](memoria/) |
 | Presupuesto: inversión, pedido a la Cooperativa LAR, energía y evaluación económica | [`presupuesto/`](presupuesto/) |
+| Análisis de rentabilidad y recuperación de la inversión: escenarios, sensibilidad y capacidad mínima para recuperar en 5 años (Word, PDF y Excel con fórmulas) | [`analisis_economico/`](analisis_economico/) |
 | 24 láminas A3 IRAM: PDF, DXF para AutoCAD y PNG | [`planos/`](planos/) |
 | Visor 3D de la planta completa, sin internet | [`visor.html`](visor.html) |
 | Secador SC-4 aparte: visor con despiece, corte y montaje en 13 pasos; manual de armado; STEP y GLB; láminas SC-01 a SC-06 | [`secadora/`](secadora/) |
@@ -84,6 +85,7 @@ Los cambios por versión están en [`CHANGELOG.md`](CHANGELOG.md).
 ```
 index.html  visor.html  entrega.html     portada, visor 3D de la planta, redirección
 informe/  memoria/  presupuesto/          documentos
+analisis_economico/                       rentabilidad y recuperación de la inversión
 planos/  modelo_3d/  secadora/            planos, modelos 3D y el secador SC-4
 simulacion_termica/  video/               estudio térmico y video (sin música)
 portal/img/                               imágenes de la portada

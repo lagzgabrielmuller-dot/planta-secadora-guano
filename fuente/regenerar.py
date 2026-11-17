@@ -39,6 +39,9 @@ PASOS = [
      [[PY, "calculos/memoria_docx.py"]]),
     ("informe", "Informe final y manual de armado (Word y PDF)",
      [[PY, "informe/informe_final.py"]]),
+    ("economia", "Análisis económico: modelo, gráficos, planilla Excel e informe (Word y PDF)",
+     [[PY, "economia/modelo_economico.py"], [PY, "economia/figuras_economia.py"],
+      [PY, "economia/planilla_economica.py"], [PY, "economia/informe_economico.py"]]),
     ("portal", "Página principal (index.html) con los números de los cálculos",
      [[PY, "portal/portada.py"]]),
 ]

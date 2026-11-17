@@ -30,3 +30,6 @@ _registro/
 Thumbs.db
 .vscode/
 .idea/
+
+# Texto del análisis económico para el documento en línea (se rehace solo)
+analisis_economico/_informe.md

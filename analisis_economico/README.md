@@ -20,23 +20,25 @@ la primera etapa que recomienda el proyecto.
 | Producto seco vendido | 386 t/año | 535 t/año | 666 t/año |
 | Precio medio ex planta | USD 38,5/t | USD 130,1/t | USD 272,5/t |
 | Ventas | $ 1,9 M/mes | $ 9,1 M/mes | $ 23,8 M/mes |
-| Costos operativos | $ 21,9 M/mes | $ 20,0 M/mes | $ 16,7 M/mes |
-| Flujo de caja neto | $ −240 M/año | $ −130 M/año | $ 86 M/año |
+| Costos operativos | $ 21,9 M/mes | $ 19,9 M/mes | $ 16,6 M/mes |
+| Flujo de caja neto de régimen | $ −239 M/año | $ −130 M/año | $ 87 M/año |
 | Recuperación de la inversión | no recupera | no recupera | no recupera |
-| ROI anual (año 2) | −21,8 % | −16,7 % | −0,6 % |
+| ROI anual (año 2) | −21,7 % | −16,7 % | −0,5 % |
 
 **Con un turno la planta no recupera la inversión en ningún escenario.** El costo operativo de un kilogramo vendido es
-de $ 449 (realista), más que el precio que se puede respaldar hoy: el único precio de granel
+de $ 447 (realista), más que el precio que se puede respaldar hoy: el único precio de granel
 encontrado es de USD 30/t para guano semiseco (2024) y el valor de los nutrientes del producto es de
 USD 83,5/t; el proyecto supuso USD 272,5/t sin cotizaciones.
 
 ## Capacidad mínima para recuperar la inversión en 5 años
 
-Con los precios del proyecto alcanza con **2 turnos a 1.224 kg/h** (409 t/mes de guano
-húmedo y 1.630 t/año de producto vendido), con la misma máquina: con el aire hasta 135 °C seca hasta
-1.440 kg/h. Cuesta USD 32.000 (segundo turno y tolva de retención mayor). A 1.440 kg/h recupera en
-47,7 meses. Con el precio realista no hay configuración que recupere en 5 años: con dos turnos a 1.440 kg/h
-haría falta vender a unos USD 368/t.
+Con los precios y demás supuestos del escenario optimista alcanza con **2 turnos a 1.213 kg/h**
+(406 t/mes de guano húmedo y 1.615 t/año de producto vendido), con la misma
+máquina: con el aire hasta 135 °C seca hasta 1.440 kg/h. Cuesta USD 32.000 (segundo turno y tolva de retención mayor). A
+1.440 kg/h recupera en 47,2 meses. Tres turnos también alcanzan (919 kg/h), con más
+guano por día. Con los precios del proyecto pero los demás supuestos del escenario realista, dos turnos a 1.440 kg/h tardan
+121 meses; con el precio realista haría falta vender a unos
+USD 366/t.
 
 ![Curva de recuperación de la inversión](figuras/f3_recuperacion_referencia.png)
 

@@ -213,12 +213,13 @@ constantes = [
      "Modelo térmico, apartado 6.7"),
     ("Q_CASC", "Cáscara por kg de agua evaporada (419 t/año para 1.341 t de agua)", "kg/kg", "R", M.Q_CASCARA,
      '0.0000', "Modelo térmico Rev. F, aire ajustado al 15 %"),
-    ("H_ARR", "Horas de arranque y vaciado por turno (ventiladores y bandas sin carga)", "h", "R", M.H_ARRANQUE,
+    ("H_ARR", "Horas de arranque y vaciado por día (una vez, aunque haya varios turnos seguidos)", "h", "R", M.H_ARRANQUE,
      F_DEC, "Estudio de fatiga: 9 h de servicio por día"),
     ("P_TGF", "Demanda del TGF (66,9 kW instalados × 0,8)", "kW", "R", M.P_TGF, F_DEC, "Informe, apartado 11"),
-    ("P_TG2", "Demanda del TG2 sin las cargas del biogás", "kW", "E", M.P_TG2, F_DEC,
-     "resultados.json: 25,1 kW − 0,55 × 22,85 kW del TS-BIO"),
-    ("KWH_ILUM", "Iluminación exterior (12 h/día, 365 días)", "kWh/año", "R", M.KWH_ILUM, F_NUM, "resultados.json"),
+    ("P_TG2", "Demanda de los motores del TG2 sin el TS-BIO", "kW", "E", M.P_TG2, F_DEC,
+     "resultados.json: 0,55 × (41,84 − 22,85) kW; la iluminación va aparte"),
+    ("KWH_ILUM", "Iluminación exterior sin la zona de biogás (12 h/día) y central de incendio (24 h)", "kWh/año", "E",
+     M.KWH_ILUM, F_NUM, "resultados.json: (1,89 − 0,24) kW × 12 h + 0,15 kW × 24 h, 365 días"),
     ("P_CONTR", "Potencia contratada (sin biogás)", "kW", "E", M.P_CONTRATADA, F_NUM,
      "Balance del proyecto sin G1 (91,6 kW) menos el TS-BIO"),
     ("T_FIJO", "Cargo fijo T3 BT", "$/mes", "R", M.TARIFA["cargo_fijo_mes"], F_ARS, "Proyecto (estimado, a confirmar)"),
@@ -400,7 +401,7 @@ mt = [
     ("MT_COMERC", "Producto comerciable (descontadas las mermas)", "=MT_SECO*(1-p_merma)", "t/mes", F_DEC, ""),
     ("MT_VEND", "Producto vendido", "=MT_COMERC*p_vendido", "t/mes", F_DEC, "comerciable × fracción vendida"),
     ("MT_VENTAS", "Ventas", "=MT_VEND*PRECIO_USD*DOLAR", "$/mes", F_ARS, "vendido × precio medio × dólar"),
-    ("MT_HMARCHA", "Horas de marcha (carga + arranque y vaciado)", "=(p_h_dia*p_disp+H_ARR*p_turnos)*MT_DIAS", "h/mes",
+    ("MT_HMARCHA", "Horas de marcha (carga + arranque y vaciado)", "=(p_h_dia*p_disp+H_ARR)*MT_DIAS", "h/mes",
      F_DEC, ""),
     ("MT_KW", "Potencia media demandada", "=P_TGF*p_lineas*p_f_tgf+P_TG2", "kW", F_DEC, "TGF + TG2 (sin biogás)"),
     ("MT_KWH", "Energía eléctrica", "=MT_KW*MT_HMARCHA+KWH_ILUM/12", "kWh/mes", F_NUM, "kW × h + iluminación"),
@@ -595,8 +596,8 @@ ind = [
      F_ARS, "ventas − costos operativos"),
     ("Beneficio neto (año 2)", "='Flujo anual'!K6", "$/año", ("anio2", "beneficio_neto"), F_ARS,
      "EBITDA − amortizaciones − ganancias"),
-    ("Flujo de caja neto (año 2)", "='Flujo anual'!N6", "$/año", ("anio2", "flujo"), F_ARS,
-     "EBITDA − ganancias pagado − Δ capital de trabajo"),
+    ("Flujo de caja neto de régimen (año 3)", "='Flujo anual'!N7", "$/año", ("anio3", "flujo"), F_ARS,
+     "EBITDA − ganancias pagado − Δ capital de trabajo; año 3: ya se paga el impuesto de un año entero"),
     ("Payback: mes en que el acumulado llega a cero",
      f"=IF(COUNT('{FM}'!Z{R0 + 1}:Z{RF})=0,\"no recupera\",MIN('{FM}'!Z{R0 + 1}:Z{RF}))", "mes", "payback_meses",
      F_MES, "primer mes con acumulado ≥ 0, interpolado (sin valor residual)"),
@@ -604,7 +605,7 @@ ind = [
      f"=IF(COUNT('{FM}'!AA{R0 + 1}:AA{RF})=0,\"no recupera\",MIN('{FM}'!AA{R0 + 1}:AA{RF}))", "mes",
      "payback_descontado", F_MES, ""),
     ("Payback con la fórmula Inversión / flujo mensual de régimen",
-     "=IF('Flujo anual'!N6>0,INV_ARS/('Flujo anual'!N6/12),\"flujo ≤ 0\")", "mes", "payback_formula", F_MES,
+     "=IF('Flujo anual'!N7>0,INV_ARS/('Flujo anual'!N7/12),\"flujo ≤ 0\")", "mes", "payback_formula", F_MES,
      "sólo orientativo: no cuenta la puesta en marcha"),
     ("VAN a 15 años (10 % real)", "=SUMPRODUCT(FM_FLUJO,(1+TASA_REAL)^(-FM_MES/12))", "$", "van", F_ARS,
      "Σ flujo / (1 + 0,10)^(mes/12), con valor residual"),
@@ -680,18 +681,19 @@ for n in ("conservador", "realista", "optimista"):
     pb = e["payback_meses"]
     filas.append([n.capitalize(), e["inv_total"] / M.DOLAR, e["inv_total"] / Mi, a["humedo_t"], a["seco_t"],
                   a["vendido_t"], e["precio_t"] / M.DOLAR, a["ventas"] / 12 / Mi, a["costo_total"] / 12 / Mi,
-                  a["beneficio_neto"] / 12 / Mi, a["beneficio_neto"] / Mi, a["flujo"] / Mi,
+                  a["beneficio_neto"] / 12 / Mi, a["beneficio_neto"] / Mi, e["anio3"]["flujo"] / Mi,
                   "no recupera" if pb is None else pb, e["roi_anual"] / 100, e["van"] / Mi])
 r = E["referencia"]
 a = r["anio2"]
 filas.append(["Referencia: optimista con 2 turnos a 1.440 kg/h", r["inv_total"] / M.DOLAR, r["inv_total"] / Mi,
               a["humedo_t"], a["seco_t"], a["vendido_t"], r["precio_t"] / M.DOLAR, a["ventas"] / 12 / Mi,
-              a["costo_total"] / 12 / Mi, a["beneficio_neto"] / 12 / Mi, a["beneficio_neto"] / Mi, a["flujo"] / Mi,
+              a["costo_total"] / 12 / Mi, a["beneficio_neto"] / 12 / Mi, a["beneficio_neto"] / Mi, r["anio3"]["flujo"] / Mi,
               r["payback_meses"], r["roi_anual"] / 100, r["van"] / Mi])
-hoja_valores("Escenarios", "Comparación de escenarios (año 2, de régimen)",
+hoja_valores("Escenarios", "Comparación de escenarios (año 2; el flujo, del año 3)",
              ["Escenario", "Inversión (USD)", "Inversión ($ M)", "Guano húmedo (t/año)", "Producto seco (t/año)",
               "Vendido (t/año)", "Precio medio (USD/t)", "Ventas ($ M/mes)", "Costos ($ M/mes)",
-              "Beneficio neto ($ M/mes)", "Beneficio neto ($ M/año)", "Flujo de caja ($ M/año)", "Payback (meses)",
+              "Beneficio neto ($ M/mes)", "Beneficio neto ($ M/año)", "Flujo de caja de régimen, año 3 ($ M/año)",
+              "Payback (meses)",
               "ROI anual", "VAN ($ M)"],
              filas, [40, 13, 12, 12, 12, 11, 11, 11, 11, 12, 12, 12, 11, 9, 11],
              [None, F_NUM, F_DEC, F_NUM, F_NUM, F_NUM, F_DEC, F_DEC, F_DEC, F_DEC, F_DEC, F_DEC, F_MES, F_PCT, F_DEC])
@@ -708,7 +710,7 @@ for caso, rot in (("realista", "Realista"), ("optimista", "Optimista"), ("refere
         filas.append([rot, d["desc"], "5 años", d["flujo_anio5"] / Mi,
                       "no recupera" if d["payback"] is None else d["payback"], d["van"] / Mi])
 hoja_valores("Sensibilidad", "Sensibilidad: una variable por vez",
-             ["Caso base", "Variable", "Valor", "Flujo de caja anual ($ M)", "Payback (meses)", "VAN ($ M)"],
+             ["Caso base", "Variable", "Valor", "Flujo de caja de régimen, año 3 ($ M)", "Payback (meses)", "VAN ($ M)"],
              filas, [30, 60, 12, 16, 14, 12], [None, None, None, F_DEC, F_MES, F_DEC])
 
 filas = []

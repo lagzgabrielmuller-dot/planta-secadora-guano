@@ -138,7 +138,24 @@ def alt(nombre_esc, cod):
 
 
 MIN60 = INV_["optimista"]["minimos"]["2T_60"]                     # capacidad mínima (precios del proyecto)
+MIN60_3T = INV_["optimista"]["minimos"]["3T_60"]
 A1B_R, A1B_O = alt("realista", "A1+B"), alt("optimista", "A1+B")
+VAR = E["variantes_referencia"]
+
+
+def a3(e, k):
+    """Flujo de régimen: año 3, el primero en que se paga el impuesto de un año entero."""
+    return e["anio3"][k]
+
+
+def por_t_vendida_usd(e, *claves):
+    """USD por tonelada vendida de un grupo de costos del mes de régimen."""
+    return sum(e["mes"]["costos"][k] for k in claves) / e["mes"]["vendido_t"] / D
+
+
+def parte(e, *claves):
+    """Porcentaje del costo operativo total que representa un grupo de costos."""
+    return sum(e["mes"]["costos"][k] for k in claves) / e["mes"]["total"] * 100
 
 
 # =============================================================================== portada
@@ -206,7 +223,7 @@ def tabla_escenarios(d, titulo):
     fila("Costos operativos ($ millones por mes)", lambda e: mill(a2(e, "costo_total") / 12, 2))
     fila("Beneficio neto ($ millones por mes)", lambda e: mill(a2(e, "beneficio_neto") / 12, 2))
     fila("Beneficio neto ($ millones por año)", lambda e: mill(a2(e, "beneficio_neto"), 1))
-    fila("Flujo de caja neto ($ millones por año)", lambda e: mill(a2(e, "flujo"), 1))
+    fila("Flujo de caja neto de régimen, año 3 ($ millones por año)", lambda e: mill(a3(e, "flujo"), 1))
     fila("Recuperación de la inversión", lambda e: mes_txt(e["payback_meses"]))
     fila("ROI anual (año 2)", lambda e: pc(e["roi_anual"]))
     fila("VAN a 15 años, 10 % real ($ millones)", lambda e: mill(e["van"], 0))
@@ -229,10 +246,14 @@ def resumen(d):
                f"producto seco; factura {pm(a2(R_, 'ventas') / 12, 1)} por mes pero gasta "
                f"{pm(a2(R_, 'costo_total') / 12, 1)}, de modo que no cubre sus costos y no recupera la inversión. "
                f"Ni siquiera con los precios que supuso el proyecto (USD {n(DAT['PRECIO_PROY'], 1)}/t, escenario "
-               "optimista) recupera la inversión en 15 años con un turno. La inversión se recupera en menos de 5 años "
-               f"sólo si se trabajan dos turnos a {n(MIN60['m_in'])} kg/h o más ({n(MIN60['humedo_mes_t'])} t/mes de "
-               f"guano húmedo) y se vende a precios del orden de los del proyecto; con 1.440 kg/h, la capacidad máxima "
-               f"del secador, se recupera en el {anio_mes(A1B_O['payback'])}.")
+               "optimista) recupera la inversión en 15 años con un turno. Para recuperarla en menos de 5 años hace falta "
+               "trabajar más de un turno y que se den todos los supuestos del escenario optimista: precios del proyecto, "
+               "guano al 70 %, sin flete del guano, 95 % de disponibilidad y 2 operarios por turno. Con dos turnos, el "
+               f"caudal tiene que ser de {n(MIN60['m_in'])} kg/h o más ({n(MIN60['humedo_mes_t'])} t/mes de guano "
+               f"húmedo); con tres turnos alcanza con {n(MIN60_3T['m_in'])} kg/h. Con dos turnos a 1.440 kg/h, la "
+               f"capacidad máxima del secador, se recupera en el {anio_mes(A1B_O['payback'])}; con los precios del "
+               f"proyecto pero los demás supuestos del escenario realista, la misma configuración tarda "
+               f"{mes_txt(VAR['supuestos_realistas_precio_proyecto']['payback'], 0)}.")
     d.p("Las conclusiones principales son:", negrita=True)
     d.lista([
         f"El precio de venta es la variable que decide el proyecto. El único precio de granel encontrado es de USD 30/t "
@@ -241,13 +262,16 @@ def resumen(d):
         f"El proyecto supuso USD {n(DAT['PRECIO_PROY'], 1)}/t sin cotizaciones que lo respalden. Es el dato pendiente "
         "más importante.",
         f"El costo total de producir y vender un kilogramo es de $ {n(R_['costo_total_kg'], 0)} sin amortizaciones "
-        f"(≈ USD {n(R_['costo_total_kg'] * 1000 / D, 0)}/t), más que el precio realista. El flete del guano húmedo, la "
-        "cáscara de arroz y la energía eléctrica casi igualan, por sí solos, el valor del producto a granel.",
-        f"Con el precio del proyecto, la capacidad mínima para recuperar la inversión en 60 meses es de "
-        f"{n(MIN60['m_in'])} kg/h durante 16 h por día: {n(MIN60['humedo_dia_kg'] / 1000, 1)} t/día y "
+        f"(≈ USD {n(R_['costo_total_kg'] * 1000 / D, 0)}/t), más que el precio realista. Sólo el flete del guano "
+        f"húmedo, la cáscara de arroz y la energía eléctrica suman USD "
+        f"{n(por_t_vendida_usd(R_, 'flete_guano', 'cascara', 'energia_var', 'energia_fija'), 0)} por tonelada vendida, "
+        f"más que el valor de los nutrientes del producto (USD {n(DAT['VALOR_NPK'], 1)}/t).",
+        f"Con los precios y demás supuestos del escenario optimista, la capacidad mínima para recuperar la inversión "
+        f"en 60 meses es de {n(MIN60['m_in'])} kg/h durante 16 h por día: {n(MIN60['humedo_dia_kg'] / 1000, 1)} t/día y "
         f"{n(MIN60['humedo_mes_t'])} t/mes de guano húmedo, y {n(MIN60['vendido_anio_t'])} t/año de producto vendido. "
         "Se logra con la misma máquina (a 135 °C seca hasta 1.440 kg/h), con un segundo turno y una tolva de retención "
-        "mayor: USD 32.000 de inversión adicional.",
+        f"mayor: USD 32.000 de inversión adicional. Tres turnos también alcanzan ({n(MIN60_3T['m_in'])} kg/h), pero "
+        "necesitan más guano por día.",
         f"Con el precio realista no hay ampliación razonable que recupere la inversión en 5 años: con dos turnos a "
         f"1.440 kg/h haría falta vender a unos USD {n(A1B_R['precio_60'], 0)}/t.",
         "El beneficio económico que sí es seguro es el ambiental y sanitario para las granjas (fin de los acopios, olores "
@@ -362,18 +386,21 @@ INCONSISTENCIAS = [
     ("Sulfato de amonio del lavador (USD 5.000/año)", "Sin comprador ni registro como fertilizante.", "USD 5.000/año",
      "No se cuenta como ingreso."),
     ("Energía de la variante sin biogás", "presupuesto.py usa las cargas del TS-BIO (22,85 kW) y 100 kW contratados "
-     "también para la variante sin biogás.", "≈ USD 4.400/año", "TG2 sin TS-BIO (12,5 kW) y 85 kW contratados."),
+     "también para la variante sin biogás, y cuenta la iluminación dos veces (dentro de la demanda del TG2 y aparte).",
+     "≈ USD 4.900/año", "Motores del TG2 sin TS-BIO (10,4 kW), iluminación una sola vez y 85 kW contratados."),
     ("Horas de marcha", "Balance y energía con 8 h/día; el estudio de fatiga usa 9 h/día de servicio (arranque y "
      "vaciado).", "+12 % de energía", "Energía con 1 h diaria de arranque y vaciado por turno."),
-    ("Consumo eléctrico específico", "Indicador del plan de mantenimiento: menos de 170 kWh/t de producto. La "
-     f"estimación de energía del proyecto da ≈ {n(R_['mes']['kwh'] / R_['mes']['seco_t'], 0)} kWh/t.",
+    ("Consumo eléctrico específico", "Indicador del plan de mantenimiento: menos de 170 kWh/t de producto. El "
+     f"presupuesto del proyecto equivale a ≈ {n(ME.PRES['energia']['E_total_kWh'] / (ME.M_IN * (1 - ME.X_IN) / (1 - ME.X_OUT) * ME.H_TURNO * ME.DIAS_ANIO / 1000), 0)} kWh/t "
+     f"y la estimación de este análisis, con los mismos datos, ≈ {n(R_['mes']['kwh'] / R_['mes']['seco_t'], 0)} kWh/t.",
      "El costo de energía podría ser menor", "Se mantiene la estimación del proyecto (lado seguro) y se estudia ±."),
     ("Consumo específico de cáscara", "Indicador del plan: 470 kg por t de agua evaporada (método de diseño, 314 kg/h). "
      f"Modelo térmico Rev. F: {n(DAT['Q_CASCARA'] * 1000, 0)} kg/t (419 t/año).", "−33 % de cáscara",
      "Se usa el modelo térmico (Rev. F). El indicador del plan quedó con el valor viejo."),
     ("Producción anual", "650 t/año (memoria Rev. C) contra 659 t/año del balance a 8 h × 250 días con 100 % de "
      "disponibilidad; el plan de mantenimiento fija una disponibilidad objetivo del 92 %.", "−8 % de producción",
-     f"Realista: 92 % de disponibilidad y 2 % de mermas: {n(a2(R_, 'seco_t'))} t/año."),
+     f"Realista: 92 % de disponibilidad: {n(a2(R_, 'seco_t'))} t/año de producto seco y "
+     f"{n(a2(R_, 'comerciable_t'))} t comerciables (2 % de mermas)."),
     ("Precio de la cáscara", "Informe: 20 a 30 USD/t «a menos de 100 km», sin aclarar el flete. A 110 kg/m³ un camión "
      "lleva ≈ 10 t, un tercio que con granos.", "USD 25 → 47/t", "Flete estimado por volumen a 50 km (realista) y "
      "100 km (conservador)."),
@@ -387,33 +414,42 @@ INCONSISTENCIAS = [
      "(apartado 5.3)."),
 ]
 
-PENDIENTES = [
-    ("Precio mayorista y volumen que compra el mercado (granel, big bag y bolsa de 25 kg)",
-     "Decide si el proyecto es rentable", "Cartas de intención o cotizaciones de 3 a 5 compradores (horticultores, "
-     "viveros, cooperativas, distribuidores)", "Hipótesis por escenario"),
-    ("Tarifa T3 real de la LAR (cargo fijo, potencia y energía)", "≈ 15 % de los costos",
-     "Pedido de factibilidad y cuadro tarifario a la LAR", "Estimación del proyecto (10/2026)"),
-    ("Cáscara de arroz puesta en planta", "≈ 12 % de los costos", "Cotización de molinos y de un fletero",
-     "Flete estimado por volumen"),
-    ("Quién paga el flete del guano y a qué distancia están las granjas", "≈ 12 % de los costos",
-     "Acuerdo con las granjas proveedoras", "20 km pagado por la planta (realista)"),
-    ("Precio del terreno", "≈ 5 % de la inversión", "Municipalidad de Crespo / dirección del Parque Industrial",
-     "USD 5/m² (hipótesis)"),
-    ("Convenio colectivo aplicable y cargas sociales", "≈ 30 % de los costos", "Contador / sindicato",
-     "UOM rama 17 y 30 % de cargas"),
-    ("Alícuota de ingresos brutos, tasas municipales y beneficios del Parque Industrial", "Pocos puntos de los costos",
-     "ATER, Municipalidad", "1,5 % y 1 % de la inversión (proyecto)"),
-    ("Cotización de los equipos A2 a A7 (consultas de la Rev. C, ± 25 %)", "≈ 20 % de la inversión",
-     "Pedido de cotización a fabricantes", "Valores del proyecto"),
-    ("Capacidad real medida", "No hay ningún equipo construido: todo es de diseño", "Módulo piloto previsto en la Rev. F",
-     "Capacidad de diseño y del modelo térmico"),
-    ("Análisis químico del producto (N, P₂O₅, K₂O, humedad, patógenos)", "Define el valor agronómico y el registro",
-     "Laboratorio, con muestras del módulo piloto", "3 % / 2,8 % / 2,2 % en base seca (bibliografía)"),
-    ("Registro del producto en SENASA (costo y plazo)", "Condición para vender", "Consulta al SENASA",
-     "Incluido en ingeniería y habilitaciones (C1)"),
-    ("Régimen de IVA y recupero del crédito fiscal de la inversión", "Costo financiero",
-     "Contador", "Se supone recuperado (sin costo)"),
-]
+def pendientes():
+    """Datos faltantes, con el peso de cada uno calculado con el escenario realista."""
+    e = R_
+    inv = e["inversion"]
+    eq = sum(ME.FILAS[c][6] for c in ("A2", "A3", "A4", "A5", "A6", "A7")) * (1 + ME.IMPREV)
+    return [
+        ("Precio mayorista y volumen que compra el mercado (granel, big bag y bolsa de 25 kg)",
+         "Decide si el proyecto es rentable", "Cartas de intención o cotizaciones de 3 a 5 compradores (horticultores, "
+         "viveros, cooperativas, distribuidores)", "Hipótesis por escenario"),
+        ("Tarifa T3 real de la LAR (cargo fijo, potencia y energía)",
+         f"≈ {n(parte(e, 'energia_var', 'energia_fija'), 0)} % de los costos",
+         "Pedido de factibilidad y cuadro tarifario a la LAR", "Estimación del proyecto (10/2026)"),
+        ("Cáscara de arroz puesta en planta", f"≈ {n(parte(e, 'cascara'), 0)} % de los costos",
+         "Cotización de molinos y de un fletero", "Flete estimado por volumen y USD 5/t en el molino (hipótesis)"),
+        ("Quién paga el flete del guano y a qué distancia están las granjas",
+         f"≈ {n(parte(e, 'flete_guano'), 0)} % de los costos", "Acuerdo con las granjas proveedoras",
+         "20 km pagado por la planta (realista)"),
+        ("Precio del terreno", f"≈ {n(inv['extra']['Terreno (lote de 9.120 m²)'] / inv['total'] * 100, 0)} % de la "
+         "inversión", "Municipalidad de Crespo / dirección del Parque Industrial", "USD 5/m² (hipótesis)"),
+        ("Convenio colectivo aplicable y cargas sociales", f"≈ {n(parte(e, 'mano_obra', 'administracion'), 0)} % de "
+         "los costos", "Contador / sindicato", "UOM rama 17 y 30 % de cargas"),
+        ("Alícuota de ingresos brutos, tasas municipales y beneficios del Parque Industrial",
+         f"≈ {n(parte(e, 'iibb', 'seguros_tasas'), 0)} % de los costos", "ATER, Municipalidad",
+         "1,5 % y 1 % de la inversión (proyecto)"),
+        ("Cotización de los equipos A2 a A7 (consultas de la Rev. C, ± 25 %)",
+         f"≈ {n(eq / inv['total'] * 100, 0)} % de la inversión", "Pedido de cotización a fabricantes",
+         "Valores del proyecto"),
+        ("Capacidad real medida", "No hay ningún equipo construido: todo es de diseño",
+         "Módulo piloto previsto en la Rev. F", "Capacidad de diseño y del modelo térmico"),
+        ("Análisis químico del producto (N, P₂O₅, K₂O, humedad, patógenos)", "Define el valor agronómico y el registro",
+         "Laboratorio, con muestras del módulo piloto", "3 % / 2,8 % / 2,2 % en base seca (bibliografía)"),
+        ("Registro del producto en SENASA (costo y plazo)", "Condición para vender", "Consulta al SENASA",
+         "Incluido en ingeniería y habilitaciones (C1)"),
+        ("Régimen de IVA y recupero del crédito fiscal de la inversión", "Costo financiero",
+         "Contador", "Se supone recuperado (sin costo)"),
+    ]
 
 
 def revision(d):
@@ -436,7 +472,7 @@ def revision(d):
     d.p("Los datos que siguen no están disponibles. No se ocultan: el análisis usa una hipótesis para cada uno y la "
         "sensibilidad muestra cuánto pesa. Antes de invertir hay que conseguirlos en este orden:")
     filas = [["Dato pendiente", "Por qué importa", "Cómo conseguirlo", "Qué se usó"]]
-    filas += [list(p) for p in PENDIENTES]
+    filas += [list(p) for p in pendientes()]
     d.tabla("Datos pendientes", filas, anchos=[5.0, 3.4, 4.4, 3.4], alin=["L", "L", "L", "L"])
 
 
@@ -459,13 +495,13 @@ def tecnica(d):
              ["Tiempo de residencia (un «ciclo» de una partícula)", "97 min", "R"],
              ["Combustible", f"cáscara de arroz, {n(DAT['Q_CASCARA'] * 1000, 0)} kg por t de agua evaporada (≈ 210 kg/h)", "R"],
              ["Potencia eléctrica instalada", "66,9 kW en el TGF + 27,2 kW en el TG2 sin biogás", "R/E"],
-             ["Demanda eléctrica en marcha", f"{n(DAT['P_TGF'], 1)} kW (TGF) + {n(DAT['P_TG2'], 1)} kW (TG2) = "
-              f"{n(DAT['P_TGF'] + DAT['P_TG2'], 1)} kW", "R/E"],
+             ["Demanda eléctrica en marcha", f"{n(DAT['P_TGF'], 1)} kW (TGF) + {n(DAT['P_TG2'], 1)} kW (motores del "
+              f"TG2) = {n(DAT['P_TGF'] + DAT['P_TG2'], 1)} kW, más la iluminación exterior", "R/E"],
              ["Operación", "1 turno de 8 h de carga + 1 h de arranque y vaciado; 250 días por año", "R"],
              ["Personal", "2 operarios por turno según el informe, 3 según el presupuesto", "R"],
              ["Mantenimiento", "preventivo programado (tabla 18 del informe); disponibilidad objetivo > 92 %", "R"],
-             ["Energía por tonelada de producto", f"{n(m_['kwh'] / m_['seco_t'], 0)} kWh/t (estimación del proyecto; el "
-              "plan pide menos de 170)", "R/E"]]
+             ["Energía por tonelada de producto", f"{n(m_['kwh'] / m_['seco_t'], 0)} kWh/t (estimación de este "
+              "análisis con los datos del proyecto; el plan pide menos de 170)", "E"]]
     d.tabla("Datos técnicos que usa el análisis económico", filas, anchos=[5.6, 9.2, 1.2], alin=["L", "L", "C"])
 
 
@@ -542,7 +578,9 @@ def inversion(d):
         "se recupera recién con el IVA de las ventas; con ventas de unos $ 110 millones por año, recuperar un crédito "
         "fiscal del orden de $ 200 millones llevaría muchos años, así que conviene estudiar con un contador el régimen "
         "de devolución anticipada para bienes de capital; (b) el financiamiento: todo se supone con capital propio; "
-        "(c) un vehículo de reparto, porque las ventas se suponen ex planta.")
+        "(c) un vehículo de reparto, porque las ventas se suponen ex planta; (d) la reposición de la pala o de "
+        "equipos dentro de los 15 años: se supone que el mantenimiento los conserva. Esto no cambia el payback de la "
+        "referencia (llega antes del año 5), pero hace optimista su VAN.")
     d.h("5.4. Inversión inicial consolidada", 2)
     filas = [["Concepto", "Conservador", "Realista", "Optimista"]]
     filas.append(["Factor sobre el presupuesto del proyecto (± 25 %)"] + [n(PARAMS[e]["f_inv"], 2) for e in ESCS])
@@ -568,8 +606,9 @@ def capacidad(d):
     d.calculo("m_s = 1.000 · (1 − 0,72)", "280,0 kg/h de sólido seco")
     d.calculo("m_out = 280 / (1 − 0,15)", "329,4 kg/h de producto seco")
     d.calculo("W = 1.000 − 329,4", "670,6 kg/h de agua evaporada")
-    d.p("Por cada tonelada de guano húmedo salen 329 kg de producto comerciable: casi dos tercios de la masa son agua "
-        "que se evapora. Por eso el guano húmedo procesado y el producto seco se informan siempre por separado.")
+    d.p("Por cada tonelada de guano húmedo salen 329 kg de producto seco al 15 % (323 kg comerciables, descontado un "
+        "2 % de mermas): casi dos tercios de la masa son agua que se evapora. Por eso el guano húmedo procesado y el "
+        "producto seco se informan siempre por separado.")
     d.h("6.2. Ciclo de trabajo", 2)
     d.p("La secadora es continua: no trabaja por tandas. Cada partícula tarda unos 97 minutos en recorrer los tres pisos; "
         "ese es el «tiempo por ciclo» del material. Para la operación se toma como ciclo un turno: arranque del hogar y "
@@ -581,7 +620,7 @@ def capacidad(d):
     disp = PARAMS["realista"]["disp"]
     filas = [["Período", "Guano húmedo (t)", "Producto seco (t)", "Comerciable (t)", "Vendido (t)"]]
     hora = m_["humedo_t"] / m_["h_carga"]
-    escalas = [("Por hora de marcha", 1 / m_["h_carga"]), ("Por ciclo (1 turno, con 92 % de disponibilidad)",
+    escalas = [("Por hora de carga (alimentación)", 1 / m_["h_carga"]), ("Por ciclo (1 turno, con 92 % de disponibilidad)",
                                                           1 / dias),
                ("Por día", 1 / dias), ("Por semana (5 días)", 5 / dias), ("Por mes", 1.0), ("Por año", 12.0)]
     for rot, f in escalas:
@@ -589,7 +628,7 @@ def capacidad(d):
                                                                            "vendido_t")])
     d.tabla(f"Producción del escenario realista (1 turno, {n(dias, 1)} días por mes, disponibilidad del "
             f"{n(disp * 100)} %)", filas, anchos=[6.0, 2.6, 2.6, 2.6, 2.4], alin=["L", "R", "R", "R", "R"])
-    d.p(f"Por hora de marcha entra {n(hora, 2)} t de guano húmedo (el caudal de diseño) y sale "
+    d.p(f"Por hora de carga entra {n(hora, 2)} t de guano húmedo (el caudal de diseño) y sale "
         f"{n(m_['seco_t'] / m_['h_carga'] * 1000, 1)} kg de producto. En un año se procesan "
         f"{n(m_['humedo_t'] * 12)} t de guano húmedo, de las que quedan {n(m_['seco_t'] * 12)} t de producto seco; "
         f"descontadas las mermas ({n(PARAMS['realista']['merma'] * 100)} %) y suponiendo que se vende el "
@@ -629,8 +668,10 @@ def costos(d):
     kwh_h = DAT["P_TGF"] + DAT["P_TG2"]
     d.p(f"Potencia instalada: 66,9 kW en el tablero general de fuerza (TGF) y 27,2 kW en el TG2 sin las cargas del "
         f"biogás. La demanda en marcha es de {n(DAT['P_TGF'], 1)} kW del TGF (66,9 kW × 0,8) más "
-        f"{n(DAT['P_TG2'], 1)} kW del TG2: {n(kwh_h, 1)} kWh por hora de marcha. La planta marcha 9 h por turno (8 h "
-        f"de carga y 1 h de arranque y vaciado). Se contratan {n(DAT['P_CONTRATADA'])} kW a la LAR con la tarifa T3 "
+        f"{n(DAT['P_TG2'], 1)} kW de los motores del TG2: {n(kwh_h, 1)} kWh por hora de marcha; la iluminación "
+        f"exterior y la central de incendio suman {n(DAT['KWH_ILUM'], 0)} kWh por año aparte. La planta marcha 9 h por "
+        f"día con un turno (8 h de carga y 1 h de arranque y vaciado; con turnos seguidos, el arranque y el vaciado se "
+        f"hacen una sola vez). Se contratan {n(DAT['P_CONTRATADA'])} kW a la LAR con la tarifa T3 "
         "de grandes demandas en baja tensión estimada por el proyecto (cargo fijo $ 85.000/mes, potencia "
         "$ 14.500/kW·mes y energía $ 185/kWh; valores de octubre de 2026 a confirmar con la LAR).")
     filas = [["Concepto", "Valor"],
@@ -648,7 +689,8 @@ def costos(d):
     d.p(f"El consumo sale del modelo térmico de la Rev. F: 419 t por año para un turno, es decir "
         f"{n(DAT['Q_CASCARA'] * 1000, 0)} kg de cáscara por tonelada de agua evaporada (incluye las estaciones del año). "
         f"En el escenario realista se queman {n(hora, 0)} kg/h. El precio puesto en planta (USD "
-        f"{n(PARAMS['realista']['cascara'], 1)}/t) suma USD 5/t en el molino y el flete: la cáscara pesa 110 kg/m³ y un "
+        f"{n(PARAMS['realista']['cascara'], 1)}/t) suma una hipótesis de USD 5/t en el molino (no hay precio publicado) "
+        f"y el flete: la cáscara pesa 110 kg/m³ y un "
         f"camión lleva unas 10 t, un tercio que con granos, así que el flete por tonelada es el triple que la tarifa de "
         f"referencia de granos (≈ USD {n(DAT['FLETE_CASCARA_50'], 1)}/t a 50 km).")
     filas = [["Concepto", "Valor"],
@@ -758,7 +800,8 @@ def ingresos(d):
              ["Guano en Salta", "USD 20/m³", "10/2024 (25 meses)", "Granel"],
              ["Fertilizante guano gallinaza, bolsa de 25 kg (al público, con IVA)", "$ 75.000 la bolsa",
               "relevado 11/2026", "Precio minorista: no es precio de planta"],
-             ["Guano de gallina, 1 kg (al público)", "$ 18.500", "relevado 11/2026", "Minorista, envase chico"],
+             ["Guano de gallina, 1 kg (al público; Caravanas, Mercado Libre)", "$ 18.500", "relevado 11/2026",
+              "Minorista, envase chico"],
              ["Urea (mayorista)", "USD 595 a 605/t", "7/11/2026", "Base del valor del nitrógeno"],
              ["Fosfato monoamónico MAP (mayorista)", "USD 965 a 995/t", "7/11/2026", "Base del valor del fósforo"],
              ["Cloruro de potasio (promedio mundial)", "USD 383/t", "2026 (Banco Mundial)", "Base del valor del potasio"],
@@ -808,7 +851,7 @@ def ingresos(d):
 def rentabilidad(d):
     d.h("9. Rentabilidad y recuperación de la inversión", 1)
     d.h("9.1. Beneficio bruto, beneficio operativo y flujo de caja", 2)
-    filas = [["$ millones por año (año 2, de régimen)", "Conservador", "Realista", "Optimista"]]
+    filas = [["$ millones por año (año de régimen)", "Conservador", "Realista", "Optimista"]]
     def f(e, k):
         return mill(a2(ESC[e], k), 1)
     filas.append(["Ventas"] + [f(e, "ventas") for e in ESCS])
@@ -821,7 +864,8 @@ def rentabilidad(d):
     filas.append(["Beneficio operativo (EBIT)"] + [f(e, "ebit") for e in ESCS])
     filas.append(["Impuesto a las ganancias devengado"] + [f(e, "ganancias_devengado") for e in ESCS])
     filas.append(["Beneficio neto"] + [f(e, "beneficio_neto") for e in ESCS])
-    filas.append(["Flujo de caja neto (EBITDA − ganancias pagado − Δ capital de trabajo)"] + [f(e, "flujo") for e in ESCS])
+    filas.append(["Flujo de caja neto (EBITDA − ganancias pagado − Δ capital de trabajo; año 3)"] +
+                 [mill(a3(ESC[e], "flujo"), 1) for e in ESCS])
     d.tabla("Estado de resultados y flujo de caja de un año de régimen", filas, anchos=[8.2, 2.6, 2.6, 2.6],
             alin=["L", "R", "R", "R"], resaltar=[9, 10])
     d.p(f"En el escenario realista las ventas ({pm(a2(R_, 'ventas'), 1)} por año) no alcanzan a pagar ni el costo de "
@@ -831,8 +875,9 @@ def rentabilidad(d):
     d.h("9.2. Período de recuperación de la inversión", 2)
     d.p("Con la fórmula de flujo constante, Payback = Inversión / Flujo de caja mensual, el escenario realista no tiene "
         "payback porque su flujo es negativo. En el optimista, con un flujo de "
-        f"{pm(a2(O_, 'flujo') / 12, 2)} por mes, daría {n(O_['payback_formula'], 0)} meses; pero el cálculo mes a mes, que "
-        "cuenta la puesta en marcha y el capital de trabajo, muestra que en 180 meses el flujo acumulado no llega a cero: "
+        f"{pm(a3(O_, 'flujo') / 12, 2)} por mes, daría {n(O_['payback_formula'], 0)} meses; pero el cálculo mes a mes, que "
+        "cuenta la puesta en marcha, el capital de trabajo y el impuesto a las ganancias que aparece cuando terminan "
+        "las amortizaciones de la pala y de los equipos, muestra que en 180 meses el flujo acumulado no llega a cero: "
         "con un turno la inversión no se recupera en la vida del proyecto en ningún escenario.")
     d.figura("f4_recuperacion_escenarios.png", "Flujo de caja acumulado de los tres escenarios y de la configuración de "
              "referencia (sin valor residual)")
@@ -855,7 +900,7 @@ def rentabilidad(d):
     filas = [["ROI", "Conservador", "Realista", "Optimista", "Referencia"]]
     filas.append(["Anual, año 2: beneficio neto / (inversión + capital de trabajo)"] +
                  [pc(ESC[e]["roi_anual"]) for e in ESCS] + [pc(REF["roi_anual"])])
-    filas.append(["Acumulado a 5 años: Σ beneficio neto de los años 1 a 5 / inversión"] +
+    filas.append(["Acumulado a 5 años: Σ beneficio neto de los años 1 a 5 / (inversión + capital de trabajo)"] +
                  [pc(ESC[e]["roi_5"]) for e in ESCS] + [pc(REF["roi_5"])])
     d.tabla("Retorno sobre la inversión", filas, anchos=[6.4, 2.4, 2.4, 2.4, 2.4], alin=["L", "R", "R", "R", "R"])
     d.p(f"El ROI se calcula con el beneficio neto contable (después de amortizaciones e impuestos). La referencia rinde "
@@ -871,6 +916,8 @@ def rentabilidad(d):
     filas.append(["Equilibrio contable, con amortizaciones (t/año)"] +
                  [("no existe" if ESC[e]["pe_contable_t"] is None else n(ESC[e]["pe_contable_t"], 0)) for e in ESCS])
     filas.append(["Producto vendido en el escenario (t/año)"] + [n(a2(ESC[e], "vendido_t"), 0) for e in ESCS])
+    filas.append(["Precio de equilibrio operativo, EBITDA = 0 (USD/t)"] +
+                 [("no existe" if ESC[e]["precio_eq_t"] is None else n(ESC[e]["precio_eq_t"] / D, 0)) for e in ESCS])
     d.tabla("Punto de equilibrio en toneladas de producto seco vendido por año", filas, anchos=[7.0, 3.0, 3.0, 3.0],
             alin=["L", "R", "R", "R"])
     d.p(f"En el escenario conservador cada tonelada vendida pierde plata aun antes de los costos fijos (contribución "
@@ -881,8 +928,10 @@ def rentabilidad(d):
         f"{n(O_['pe_operativo_t'], 0)} t/año para cubrir los costos de caja, pero para cubrir también las amortizaciones "
         f"hacen falta {n(O_['pe_contable_t'], 0)} t/año, más de lo que se vende con un turno "
         f"({n(a2(O_, 'vendido_t'), 0)} t).")
-    d.p(f"Visto por el precio, el precio de equilibrio operativo es el costo operativo por kilogramo vendido: "
-        f"$ {n(R_['costo_total_kg'], 0)}/kg (≈ USD {n(R_['costo_total_kg'] * 1000 / D, 0)}/t) en el escenario realista.")
+    d.p(f"Visto por el precio, el EBITDA del escenario realista se anula con un precio medio de "
+        f"$ {n(R_['precio_eq_t'] / 1000, 0)}/kg (USD {n(R_['precio_eq_t'] / D, 0)}/t): algo más que el costo operativo "
+        f"por kilogramo vendido ($ {n(R_['costo_total_kg'], 0)}), porque la comercialización, ingresos brutos y el "
+        "impuesto a los débitos y créditos crecen con el precio.")
     d.h("9.5. Rentabilidad por kilogramo", 2)
     filas = [["$ por kg vendido", "Conservador", "Realista", "Optimista", "Referencia"]]
     filas.append(["Precio de venta"] + [n(ESC[e]["precio_t"] / 1000, 0) for e in ESCS] + [n(REF["precio_t"] / 1000, 0)])
@@ -899,7 +948,8 @@ def rentabilidad(d):
     d.tabla("Valor actual neto y tasa interna de retorno", filas, anchos=[6.6, 2.3, 2.3, 2.3, 2.5],
             alin=["L", "R", "R", "R", "R"])
     d.p("El VAN incluye el valor residual del terreno, de la obra civil y del capital de trabajo al cabo de 15 años. "
-        "Una TIR menor que el 10 % real (o negativa) significa que el dinero rinde menos que la tasa exigida.")
+        "Una TIR menor que el 10 % real significa que el dinero rinde menos que la tasa exigida; las TIR negativas del "
+        "conservador y del realista existen sólo por ese valor residual del final.")
 
 
 # =============================================================================== 10. escenarios
@@ -1007,10 +1057,13 @@ def sensibilidad(d):
             filas.append([dd["desc"], rot, mill(dd["flujo_anio5"], 1), mes_txt(dd["payback"]), mill(dd["van"], 0)])
     d.tabla("Efecto de que costos y precios no acompañen a la inflación", filas, anchos=[6.6, 2.2, 2.4, 2.4, 2.4],
             alin=["L", "L", "R", "R", "R"])
-    d.p("En moneda constante la inflación general no cambia los resultados. Si la energía sube 3 % por año y los "
-        "sueldos 1 % por año por encima de la inflación, la recuperación de la referencia se atrasa menos de un mes; si el "
-        "precio del guano pierde 2 % por año contra la inflación (por ejemplo, porque sigue al dólar y el tipo de cambio "
-        "real baja), se atrasa unos 4 meses.")
+    sref = E["sensibilidad"]["referencia"]
+    da = sref["derivas"][0]["payback"] - sref["base"]["payback"]
+    db = sref["derivas"][1]["payback"] - sref["base"]["payback"]
+    d.p(f"En moneda constante la inflación general no cambia los resultados. Si durante 5 años la energía sube 3 % por "
+        f"año y los sueldos 1 % por año por encima de la inflación, la recuperación de la referencia se atrasa "
+        f"{n(da, 1)} meses; si el precio del guano pierde 2 % por año contra la inflación (por ejemplo, porque sigue al "
+        f"dólar y el tipo de cambio real baja), se atrasa {n(db, 1)} meses.")
 
 
 # =============================================================================== 12. análisis inverso
@@ -1071,12 +1124,14 @@ def inverso(d):
               pc((mins["2T_60"]["vendido_anio_t"] / a2(O_, "vendido_t") - 1) * 100, 0)]]
     d.tabla("Capacidad actual y capacidad objetivo (precios del proyecto)", filas, anchos=[5.6, 2.6, 2.4, 2.4, 2.4],
             alin=["L", "R", "R", "R", "R"])
-    d.p(f"Sólo con más horas no alcanza: dos turnos a 1.000 kg/h recuperan la inversión en "
+    d.p(f"Con dos turnos, más horas solas no alcanzan: a 1.000 kg/h se recupera la inversión en "
         f"{mes_txt(alt('optimista', 'A1')['payback'], 0)}. Hace falta, además, subir el caudal por encima de los "
         f"1.000 kg/h de diseño, cosa que la máquina permite sin modificarla: con el aire hasta 135 °C seca 1.440 kg/h "
         "(apartado 6.5). Lo único que hay que agrandar es la tolva de retención (de 0,7 a ≈ 1 m³, para mantener la "
-        "hora a 70 °C con más producto) y verificar el enfriador. La tercera opción, tres turnos a 1.000 kg/h, recupera "
-        f"en {mes_txt(alt('optimista', 'A2')['payback'], 0)} sin tocar el caudal.")
+        "hora a 70 °C con más producto) y verificar el enfriador. Con tres turnos, en cambio, alcanza con más horas: "
+        f"a 1.000 kg/h recupera en {mes_txt(alt('optimista', 'A2')['payback'], 0)}, pero necesita "
+        f"{n(alt('optimista', 'A2')['t_dia'], 0)} t/día de guano y vender {n(alt('optimista', 'A2')['vendido_anio'], 0)} "
+        "t/año, más que la configuración de dos turnos.")
     d.figura("f7_capacidad_necesaria.png", "Caudal de guano húmedo necesario para recuperar la inversión en 2 a 5 años "
              "según las horas de trabajo (precios del proyecto)")
     d.h("12.4. Alternativas de ampliación", 2)
@@ -1097,7 +1152,7 @@ def inverso(d):
         alts = INV_[nombre_esc]["alternativas"]
         base = alts[0]
         filas = [["Alt.", "Descripción", "Inversión adicional (USD)", "Guano húmedo (t/año)", "Vendido (t/año)",
-                  "Costos adicionales ($ M/año)", "Beneficio adicional ($ M/año)", "Payback", "Precio para 60 meses"]]
+                  "Costos adicionales ($ M/año)", "Flujo adicional, año 3 ($ M/año)", "Payback", "Precio para 60 meses"]]
         for a in alts:
             filas.append([a["cod"], a["desc"], n(a["inv_extra_usd"], 0), n(a["humedo_anio"], 0), n(a["vendido_anio"], 0),
                           mill(a["costos"] - base["costos"], 1), mill(a["flujo_anual"] - base["flujo_anual"], 1),
@@ -1114,7 +1169,10 @@ def inverso(d):
         "aire hasta 135 °C aprovecha el intercambiador y los ventiladores que ya existen; no hace falta cambiar la "
         "circulación de aire ni la alimentación (la cinta llega con el variador al 56 %), sólo la tolva de retención. "
         "Alternativa C (máquina más grande): exige rediseñar el secador, el generador, los ventiladores y el lavador; "
-        "cuesta unos USD 200.000 (regla de los seis décimos) y no mejora a la B. Alternativa D (segunda secadora): "
+        f"cuesta unos USD 200.000 (regla de los seis décimos) y, con un turno, recupera algo antes que la B "
+        f"({mes_txt(alt('optimista', 'C')['payback'], 0)} contra {mes_txt(alt('optimista', 'B')['payback'], 0)}), "
+        "pero cuesta cien veces más; con dos turnos la B ya cumple el objetivo sin rediseñar. Alternativa D (segunda "
+        "secadora): "
         "duplica la producción con USD 353.000 más; con un turno recupera peor que la B, y con dos turnos recupera en "
         f"{mes_txt(alt('optimista', 'D+A1')['payback'], 0)}, pero necesita el doble de guano y de mercado.")
     d.h("12.5. Objetivos de recuperación de 2 a 5 años", 2)
@@ -1162,7 +1220,10 @@ def inverso(d):
         "producción a dos turnos) y el depósito de 240 m² guarda del orden de 200 t embolsadas (estimación: 1 t por "
         "pallet en dos alturas sobre la mitad de la superficie), algo más de un mes de ventas. Como la demanda de "
         "abonos es estacional, hará falta vender a granel en temporada o ampliar el depósito.",
-        "Personal: 6 operarios en dos turnos más administración; disponibles en Crespo.",
+        f"Personal: con los supuestos del escenario optimista, 4 operarios (2 por turno, como dice el informe) más "
+        f"administración. Con 3 por turno, como el presupuesto, la recuperación de la referencia pasa de "
+        f"{mes_txt(REF['payback_meses'])} a {mes_txt(VAR['tres_operarios']['payback'])}. Hay personal disponible en "
+        "Crespo.",
         "Energía eléctrica: con una sola línea la demanda no cambia al agregar turnos (85 kW contratados alcanzan); sí "
         "aumenta la energía consumida. La alternativa D necesita unos 55 kW más y revisar la acometida.",
         "Capacidad térmica: a 1.440 kg/h el generador de 880 kW trabaja a pleno (885 kW): no queda margen; por eso el "
@@ -1175,7 +1236,7 @@ def inverso(d):
     ])
     d.h("12.7. Resultado final", 2)
     filas = [["Concepto", "Capacidad actual", "Capacidad objetivo", "Incremento", "Recuperación"],
-             ["Precios del proyecto (USD 272,5/t)", "1.000 kg/h × 8 h = 8 t/día",
+             ["Precios y demás supuestos del escenario optimista (USD 272,5/t)", "1.000 kg/h × 8 h = 8 t/día",
               f"{n(m2['m_in'], 0)} kg/h × 16 h = {n(m2['m_in'] * 16 / 1000, 1)} t/día",
               f"+{n((m2['m_in'] / 1000 - 1) * 100, 1)} % por hora; +{n((m2['m_in'] * 16 / 8000 - 1) * 100, 0)} % por día",
               f"60 meses (actual: {mes_txt(O_['payback_meses'], 0)})"],
@@ -1197,14 +1258,20 @@ def inverso(d):
         f"{n(m2['m_in'] * 16 / 1000, 1)} t de guano por día.",
         f"5. Porcentaje: +{n((m2['m_in'] / 1000 - 1) * 100, 1)} % de caudal y +{n((m2['m_in'] * 16 / 8000 - 1) * 100, 0)} % "
         "de producción diaria.",
-        "6. Más horas solas no alcanzan; hace falta un segundo turno y subir el caudal con el aire hasta 135 °C, que la "
-        "máquina actual permite. No hace falta una máquina más grande.",
+        "6. Con dos turnos no alcanza sólo con más horas: hay que subir además el caudal con el aire hasta 135 °C, que "
+        f"la máquina actual permite. Con tres turnos alcanza con más horas solas "
+        f"({mes_txt(alt('optimista', 'A2')['payback'], 0)} a 1.000 kg/h), a costa de más guano y más mercado. En ningún "
+        "caso hace falta una máquina más grande.",
         f"7. Costo de la ampliación: USD {n(inv_amp, 0)} ($ {mill(inv_amp * D, 1)} millones): USD 30.000 del segundo turno "
         "(estimación del proyecto) y USD 2.000 de la tolva de retención mayor, más el capital de trabajo adicional.",
-        f"8. Alternativa más conveniente: la A1+B (dos turnos con el aire hasta 135 °C), que es la más barata y la que "
-        f"recupera más rápido ({mes_txt(A1B_O['payback'], 0)} a 1.440 kg/h). Es económicamente rentable sólo si el precio "
-        f"medio supera unos USD {n(A1B_O['precio_60'], 0)}/t con los costos del escenario optimista, o USD "
-        f"{n(A1B_R['precio_60'], 0)}/t con los del realista.",
+        f"8. Para el objetivo de 60 meses, la alternativa más conveniente es la A1+B (dos turnos con el aire hasta "
+        f"135 °C): es la que menos guano y menos mercado necesita ({n(MIN60['humedo_dia_kg'] / 1000, 1)} t/día a "
+        f"{n(MIN60['m_in'], 0)} kg/h), cuesta USD 32.000 y a 1.440 kg/h recupera en {mes_txt(A1B_O['payback'], 0)}. La "
+        f"que recupera más rápido es la A2+B (tres turnos a 1.440 kg/h: {mes_txt(alt('optimista', 'A2+B')['payback'], 0)}), "
+        f"pero necesita {n(alt('optimista', 'A2+B')['t_dia'], 1)} t/día de guano y vender "
+        f"{n(alt('optimista', 'A2+B')['vendido_anio'], 0)} t/año. La A1+B recupera en 5 años con un precio medio desde "
+        f"unos USD {n(A1B_O['precio_60'], 0)}/t con los costos del escenario optimista, o USD {n(A1B_R['precio_60'], 0)}/t "
+        "con los del realista; con precios algo menores su VAN sigue siendo positivo, pero tarda más de 5 años.",
     ])
 
 
@@ -1215,17 +1282,18 @@ def viabilidad(d):
     resp = [
         ("¿Es rentable construir y operar esta secadora?",
          f"Con la información que se puede verificar hoy, no. Con un turno no recupera la inversión en 15 años en ningún "
-         f"escenario (VAN entre {pm(O_['van'], 0)} y {pm(C_['van'], 0)}). Sólo es rentable trabajando dos turnos a casi "
-         f"plena capacidad y vendiendo a precios del orden de los del proyecto (al menos USD {n(A1B_O['precio_60'], 0)}/t "
-         "para recuperar en 5 años), que todavía no están respaldados por compradores."),
+         f"escenario (VAN entre {pm(O_['van'], 0)} y {pm(C_['van'], 0)}). Recupera la inversión en 5 años sólo "
+         "trabajando más de un turno (dos turnos con el caudal subido, o tres turnos), con todos los supuestos del "
+         f"escenario optimista y precios del orden de los del proyecto (al menos USD {n(A1B_O['precio_60'], 0)}/t con dos "
+         "turnos a 1.440 kg/h), que todavía no están respaldados por compradores."),
         ("¿Cuánto dinero se necesita invertir en total?",
          f"{pm(R_['inv_con_ct'])} en el escenario realista ({us(R_['inv_total'] / D)} de inversión fija más el capital "
          f"de trabajo); entre {pm(O_['inv_total'], 0)} y {pm(C_['inv_total'], 0)} según el escenario."),
         ("¿Cuánto dinero genera mensualmente?",
          f"Factura {pm(a2(R_, 'ventas') / 12, 1)} por mes en el escenario realista y {pm(a2(O_, 'ventas') / 12, 1)} en el "
          f"optimista. El flujo de caja es de {pm(a2(R_, 'flujo') / 12, 1)} por mes (realista) y "
-         f"{pm(a2(O_, 'flujo') / 12, 1)} (optimista); con dos turnos a 1.440 kg/h y precios del proyecto, "
-         f"{pm(REF['anio2']['flujo'] / 12, 1)} por mes."),
+         f"{pm(a3(O_, 'flujo') / 12, 1)} (optimista); con dos turnos a 1.440 kg/h y precios del proyecto, "
+         f"{pm(REF['anio3']['flujo'] / 12, 1)} por mes de régimen."),
         ("¿Cuánto cuesta producir un kilogramo de guano seco?",
          f"$ {n(R_['costo_prod_kg'], 0)} de costo de producción por kg obtenido y $ {n(R_['costo_total_kg'], 0)} de costo "
          f"operativo total por kg vendido (≈ USD {n(R_['costo_total_kg'] * 1000 / D, 0)}/t); $ "
@@ -1237,7 +1305,8 @@ def viabilidad(d):
          f"{pm(REF['anio2']['beneficio_neto'] / 12, 1)} por mes después de impuestos."),
         ("¿En cuánto tiempo se recupera la inversión?",
          f"Con un turno, nunca dentro de los 15 años. Con dos turnos a 1.440 kg/h y precios del proyecto, en el "
-         f"{anio_mes(rp)} ({mes_txt(rp)}); con dos turnos a {n(MIN60['m_in'], 0)} kg/h, en 60 meses."),
+         f"{anio_mes(rp)} ({mes_txt(rp)}); con dos turnos a {n(MIN60['m_in'], 0)} kg/h, en 60 meses. Las dos cifras "
+         "suponen todos los supuestos del escenario optimista."),
         ("¿Qué producción mínima necesitamos para que el proyecto sea rentable?",
          f"Para cubrir los costos de caja con los precios del proyecto, {n(O_['pe_operativo_t'], 0)} t/año vendidas; para "
          f"recuperar la inversión en 5 años, {n(MIN60['vendido_anio_t'], 0)} t/año vendidas, procesando "
@@ -1251,11 +1320,13 @@ def viabilidad(d):
          "Operar con el aire hasta 135 °C para llegar a 1.440 kg/h (tolva de retención de 1 m³); trabajar en dos turnos; "
          "recibir guano más seco (cintas de secado en los galpones), que da más producto por tonelada y menos cáscara; "
          "instalar la planta en la granja o cerca, para no pagar flete de guano; reducir el consumo eléctrico de los "
-         "ventiladores (el plan pide menos de 170 kWh/t y la estimación da más de 240); y producir un producto de mayor "
+         f"ventiladores (el plan pide menos de 170 kWh/t y la estimación da {n(R_['mes']['kwh'] / R_['mes']['seco_t'], 0)}); "
+         "y producir un producto de mayor "
          "valor (peletizado o envasado) si hay mercado."),
         ("¿Qué tan conveniente sería ampliar la capacidad productiva?",
-         "Conviene ampliar las horas y el caudal de la máquina existente (alternativa A1+B): cuesta USD 32.000 y es lo "
-         "único que permite recuperar en menos de 5 años. No conviene una máquina más grande ni una segunda secadora "
+         "Conviene ampliar las horas y el caudal de la máquina existente (alternativa A1+B): cuesta USD 32.000 y es la "
+         "forma de recuperar en menos de 5 años con menos guano y menos mercado (tres turnos también recuperan, con más "
+         "guano). No conviene una máquina más grande ni una segunda secadora "
          "mientras no haya materia prima (≈ 100.000 a 140.000 gallinas) y compradores para 1.600 t/año o más."),
     ]
     for i, (q, a) in enumerate(resp, 1):
@@ -1263,8 +1334,10 @@ def viabilidad(d):
         d.p(a)
     d.recuadro("Conclusión", "La secadora es técnicamente sólida y le resuelve a las granjas un problema ambiental real, "
                "pero como negocio independiente, con un turno, no se paga. Es viable sólo si se dan juntas tres "
-               "condiciones: trabajar dos turnos cerca de la capacidad máxima del secador, conseguir unas 19 t/día de "
-               "guano sin pagar su flete y vender el producto a más de USD 240/t. La primera depende del proyecto; las "
+               f"condiciones: trabajar más de un turno con el caudal subido (dos turnos a {n(MIN60['m_in'], 0)} kg/h o "
+               f"más, unas {n(MIN60['humedo_dia_kg'] / 1000, 0)} t/día de guano), conseguir ese guano sin pagar su flete y "
+               f"vender a precios como los del proyecto (USD {n(DAT['PRECIO_PROY'], 1)}/t; a la capacidad máxima de "
+               f"1.440 kg/h alcanza con unos USD {n(A1B_O['precio_60'], 0)}/t). La primera depende del proyecto; las "
                "otras dos hay que demostrarlas con contratos antes de invertir.")
 
 
@@ -1281,7 +1354,7 @@ def recomendaciones(d):
         "4. Asociarse con las granjas: que entreguen el guano en la planta (se ahorran su gestión) o instalar la planta en "
         "la granja más grande; pedir guano de cinta de secado, con menos humedad.",
         "5. Invertir por etapas: sin biogás; si el canal principal resulta ser el granel, postergar la ensacadora, la "
-        "envasadora de bolsas chicas y parte del depósito (≈ USD 113.000 con imprevistos).",
+        "envasadora de bolsas chicas y el depósito (≈ USD 113.000 con imprevistos).",
         "6. Buscar un canal de mayor valor para una parte de la producción (horticultura, viveros, bolsas) con registro en "
         "el SENASA y marca propia, sin suponer que se vende todo.",
         "7. Revisar con un contador el IVA de la inversión (devolución anticipada), los beneficios del Parque Industrial y "
@@ -1356,7 +1429,7 @@ def readme():
     fila("Precio medio ex planta", lambda e: f"USD {n(e['precio_t'] / D, 1)}/t")
     fila("Ventas", lambda e: f"$ {mill(a2(e, 'ventas') / 12, 1)} M/mes")
     fila("Costos operativos", lambda e: f"$ {mill(a2(e, 'costo_total') / 12, 1)} M/mes")
-    fila("Flujo de caja neto", lambda e: f"$ {mill(a2(e, 'flujo'), 0)} M/año")
+    fila("Flujo de caja neto de régimen", lambda e: f"$ {mill(a3(e, 'flujo'), 0)} M/año")
     fila("Recuperación de la inversión", lambda e: mes_txt(e["payback_meses"]))
     fila("ROI anual (año 2)", lambda e: pc(e["roi_anual"]))
     texto = f"""# Análisis de rentabilidad y recuperación de la inversión
@@ -1383,11 +1456,13 @@ USD {n(DAT['VALOR_NPK'], 1)}/t; el proyecto supuso USD {n(DAT['PRECIO_PROY'], 1)
 
 ## Capacidad mínima para recuperar la inversión en 5 años
 
-Con los precios del proyecto alcanza con **2 turnos a {n(m2['m_in'], 0)} kg/h** ({n(m2['humedo_mes_t'], 0)} t/mes de guano
-húmedo y {n(m2['vendido_anio_t'], 0)} t/año de producto vendido), con la misma máquina: con el aire hasta 135 °C seca hasta
-1.440 kg/h. Cuesta USD 32.000 (segundo turno y tolva de retención mayor). A 1.440 kg/h recupera en
-{mes_txt(A1B_O['payback'])}. Con el precio realista no hay configuración que recupere en 5 años: con dos turnos a 1.440 kg/h
-haría falta vender a unos USD {n(A1B_R['precio_60'], 0)}/t.
+Con los precios y demás supuestos del escenario optimista alcanza con **2 turnos a {n(m2['m_in'], 0)} kg/h**
+({n(m2['humedo_mes_t'], 0)} t/mes de guano húmedo y {n(m2['vendido_anio_t'], 0)} t/año de producto vendido), con la misma
+máquina: con el aire hasta 135 °C seca hasta 1.440 kg/h. Cuesta USD 32.000 (segundo turno y tolva de retención mayor). A
+1.440 kg/h recupera en {mes_txt(A1B_O['payback'])}. Tres turnos también alcanzan ({n(MIN60_3T['m_in'], 0)} kg/h), con más
+guano por día. Con los precios del proyecto pero los demás supuestos del escenario realista, dos turnos a 1.440 kg/h tardan
+{mes_txt(VAR['supuestos_realistas_precio_proyecto']['payback'], 0)}; con el precio realista haría falta vender a unos
+USD {n(A1B_R['precio_60'], 0)}/t.
 
 ![Curva de recuperación de la inversión](figuras/f3_recuperacion_referencia.png)
 

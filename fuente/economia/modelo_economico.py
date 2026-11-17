@@ -50,8 +50,9 @@ FUENTES = {
                     "a unos USD 30/t puesto en el campo de destino (granjas de Bahía Blanca); en Salta, USD 20/m³. "
                     "Antigüedad: 25 meses. No se encontró un precio de granel de 2026 para Entre Ríos.",
     "GUANO_BOLSA": "Mercado Libre / Caravanas, «Fertilizante guano gallinaza × 25 kg» (compost base guano de gallina, "
-                   "polvo): $ 75.000 por bolsa al público, con IVA (relevado 11/2026, publicación sin fecha). Es "
-                   "precio minorista, no de planta.",
+                   "polvo): $ 75.000 por bolsa al público, con IVA; «Fertilizante orgánico guano gallina × 1 kg»: "
+                   "$ 18.500 (Caravanas, Mercado Libre). Relevado 11/2026, publicaciones sin fecha. Son precios "
+                   "minoristas, no de planta.",
     "FERT": "Bichos de Campo, informe de fertilizantes del 7/11/2026: urea USD 595 a 605/t y MAP USD 965 a 995/t en el "
             "mercado mayorista argentino. Cloruro de potasio: USD 383/t, promedio mundial 2026 del Banco Mundial "
             "(que.es, 8/11/2026); no se encontró precio local.",
@@ -105,8 +106,10 @@ P_TGF = 54.0           # R  kW, demanda del TGF (66,9 kW instalados × 0,8)
 _tg = RES["tg2"]
 _fs = _tg["fs"]
 P_TG2_BIO = 22.85      # R  kW del TS-BIO (circuito Q23), que no existe en la planta sin biogás
-P_TG2 = _tg["demanda_tg2_kW"] - _fs * P_TG2_BIO          # E  demanda del TG2 sin las cargas del biogás
-KWH_ILUM = RES["iluminacion"]["P_Q25_kW"] * 12 * 365     # R  kWh/año de la iluminación exterior (12 h todos los días)
+P_TG2 = _fs * (_tg["base_fs_kW"] - P_TG2_BIO)             # E  motores del TG2 sin el TS-BIO (la iluminación va aparte)
+_P_BIO_ILUM = sum(c * w for nom, c, w in RES["iluminacion"]["cargas"] if "biogás" in nom) / 1000   # kW de la zona de biogás
+KWH_ILUM = ((RES["iluminacion"]["P_Q25_kW"] - _P_BIO_ILUM) * 12 * 365     # E  iluminación exterior sin la zona de biogás
+            + RES["iluminacion"]["P_Q26_kW"] * 24 * 365)                  #    y central de incendio todo el día
 P_CONTRATADA = 85.0    # E  kW: balance del proyecto sin G1 (91,6 kW) menos las cargas del TS-BIO, redondeado
 TARIFA = PRES["energia"]["tarifa"]                       # R  T3 estimada por el proyecto (10/2026), a confirmar
 DISP_OBJETIVO = 0.92   # R  disponibilidad objetivo del plan de mantenimiento (informe, indicadores)
@@ -176,7 +179,7 @@ def escenarios():
          {"granel": (1.0, GRANEL_MERCADO)},
          {"granel": (0.60, VALOR_NPK), "bolsas 25 kg": (0.40, 200.0)},
          {k: tuple(v) for k, v in MIX_PROY.items()}),
-        ("cascara", "Cáscara de arroz puesta en planta", "USD/t", "R/E", FLETE_CASCARA_100 + PRECIO_MOLINO,
+        ("cascara", "Cáscara de arroz puesta en planta", "USD/t", "R/E/H", FLETE_CASCARA_100 + PRECIO_MOLINO,
          FLETE_CASCARA_50 + PRECIO_MOLINO, 25.0),
         ("flete_guano", "Flete del guano húmedo desde la granja", "USD/t", "E/H",
          flete_granos(40) / DOLAR, flete_granos(20) / DOLAR, 0.0),
@@ -257,7 +260,7 @@ def mes(p, inv, f_rampa=1.0, k=1):
     """Producción, ventas y costos de un mes (en pesos). f_rampa reduce el caudal durante la puesta en marcha.
     p["deriva"] (opcional) = variación real anual de precios y costos respecto de la inflación general."""
     der = p.get("deriva") or {}
-    g = lambda clave: (1 + der.get(clave, 0.0)) ** ((k - 1) / 12)          # noqa: E731
+    g = lambda clave: (1 + der.get(clave, 0.0)) ** (min(k - 1, 60) / 12)   # noqa: E731  (el desfase dura 5 años)
     dias = p["dias_anio"] / 12
     h_carga = p["h_dia"] * dias * p["disp"]                 # h de alimentación efectivas en el mes
     m_in = p["m_in"] * p["lineas"]
@@ -272,8 +275,9 @@ def mes(p, inv, f_rampa=1.0, k=1):
     vendido = comerciable * p["vendido"]
     pm = precio_medio(p["mix"]) * DOLAR * g("precio")       # $/t
     ventas = vendido * pm + p.get("ingresos_extra", 0.0) * DOLAR / 12
-    # energía: la planta marcha las horas de carga más 1 h por turno de arranque y vaciado (estudio de fatiga)
-    h_marcha = (p["h_dia"] * p["disp"] + H_ARRANQUE * p["turnos"]) * dias
+    # energía: la planta marcha las horas de carga más 1 h por día de arranque y vaciado (estudio de fatiga); con
+    # turnos seguidos el hogar no se apaga entre turnos, así que el arranque y el vaciado se hacen una sola vez
+    h_marcha = (p["h_dia"] * p["disp"] + H_ARRANQUE) * dias
     kw = P_TGF * p["lineas"] * p["f_tgf"] + P_TG2
     kwh = kw * h_marcha + KWH_ILUM / 12
     t = TARIFA
@@ -311,6 +315,25 @@ def mes(p, inv, f_rampa=1.0, k=1):
         "compras": c_cascara + c_envases + c_energia_var + c_energia_fija + c_otros,
         "costo_var_produccion": c_cascara + c_energia_var + c_flete + c_envases,
     }
+
+
+def precio_equilibrio(p, inv):
+    """Precio medio ex planta ($/t) con el que el EBITDA de un mes de régimen es cero. No es igual al costo por kg,
+    porque la comercialización, ingresos brutos y el impuesto a los débitos y créditos crecen con el precio."""
+    def ebitda(f):
+        q = dict(copy.deepcopy(p), mix={k: (fr, pr * f) for k, (fr, pr) in p["mix"].items()})
+        m = mes(q, inv)
+        return m["ventas"] - m["total"]
+    lo, hi = 0.0, 50.0
+    if ebitda(hi) < 0:
+        return None
+    for _ in range(60):
+        mid = (lo + hi) / 2
+        if ebitda(mid) >= 0:
+            hi = mid
+        else:
+            lo = mid
+    return hi * precio_medio(p["mix"]) * DOLAR
 
 
 def ganancias(base):
@@ -447,6 +470,7 @@ def anio(filas, n):
 def indicadores(p, meses=MESES):
     inv, filas = flujo(p, meses)
     a2 = anio(filas, 2)                                    # año de régimen (sin puesta en marcha)
+    a3 = anio(filas, 3)                                    # flujo de régimen: ya se paga el impuesto de un año entero
     inv_total = inv["total"] * DOLAR
     ct_regimen = filas[24]["capital_trabajo"]
     inv_con_ct = inv_total + max(ct_regimen, 0.0)
@@ -463,10 +487,11 @@ def indicadores(p, meses=MESES):
     pe_op = fijos * 12 / cu if cu > 0 else None              # t/año vendidas para cubrir los costos de caja
     pe_cont = (fijos + am_mes) * 12 / cu if cu > 0 else None
     pb = payback(filas)
-    fc_reg = a2["flujo"] / 12
+    fc_reg = a3["flujo"] / 12
     return {
         "nombre": p["nombre"], "inversion": inv, "inv_total": inv_total, "ct_regimen": ct_regimen,
-        "inv_con_ct": inv_con_ct, "anio1": anio(filas, 1), "anio2": a2,
+        "inv_con_ct": inv_con_ct, "anio1": anio(filas, 1), "anio2": a2, "anio3": a3,
+        "precio_eq_t": precio_equilibrio(p, inv),
         "mes_regimen": m, "precio_t": m["precio_t"], "payback_meses": pb,
         "payback_descontado": payback(filas, TASA_REAL),
         "payback_formula": inv_total / fc_reg if fc_reg > 0 else None,
@@ -504,8 +529,9 @@ def puente():
     _t, esc = escenarios()
     r = esc["realista"]
     ind = indicadores(r)
-    a2 = ind["anio2"]
+    a2 = ind["anio3"]                                      # un año de régimen con el impuesto de un año entero
     usd = lambda x: x / DOLAR                                # noqa: E731
+    ar = lambda x, d=1: f"{x:,.{d}f}".replace(",", "X").replace(".", ",").replace("X", ".")   # noqa: E731
     c = {k: usd(v) for k, v in a2["costos"].items()}
     v_real = usd(a2["ventas"])
     # pasos (en el orden en que se explican en el informe)
@@ -514,14 +540,15 @@ def puente():
                   "ingresos de caja de la planta", -18500.0))
     pasos.append(("Se quita la venta del sulfato de amonio del lavador: no hay mercado ni registro verificados", -5000.0))
     pasos.append((f"Producción con disponibilidad del {r['disp'] * 100:.0f} %, mermas del {r['merma'] * 100:.0f} % y "
-                  f"venta del {r['vendido'] * 100:.0f} % ({a2['vendido_t']:.0f} t vendidas en lugar de 650 t)",
+                  f"venta del {r['vendido'] * 100:.0f} % ({ar(a2['vendido_t'], 0)} t vendidas en lugar de 650 t)",
                   (a2["vendido_t"] - prod) * PRECIO_PROY))
-    pasos.append((f"Precio medio realista (USD {precio_medio(r['mix']):.1f}/t en lugar de USD {PRECIO_PROY:.1f}/t)",
+    pasos.append((f"Precio medio realista (USD {ar(precio_medio(r['mix']))}/t en lugar de USD {ar(PRECIO_PROY)}/t)",
                   v_real - a2["vendido_t"] * PRECIO_PROY))
-    pasos.append((f"Cáscara puesta en planta a USD {r['cascara']:.0f}/t (flete por volumen) y consumo según la "
+    pasos.append((f"Cáscara puesta en planta a USD {ar(r['cascara'], 0)}/t (flete por volumen) y consumo según la "
                   "producción real", -(c["cascara"] - c_proy["cascara"])))
-    pasos.append((f"Flete del guano húmedo desde la granja ({r['flete_guano']:.1f} USD/t, 20 km)", -c["flete_guano"]))
-    pasos.append(("Energía sin las cargas del biogás, 85 kW contratados y 1 h diaria de arranque y vaciado",
+    pasos.append((f"Flete del guano húmedo desde la granja (USD {ar(r['flete_guano'])}/t, 20 km)", -c["flete_guano"]))
+    pasos.append(("Energía sin las cargas del biogás, iluminación contada una vez, 85 kW contratados y 1 h diaria de "
+                  "arranque y vaciado",
                   -(c["energia_var"] + c["energia_fija"] - c_proy["energia"])))
     pasos.append(("Mano de obra con el sueldo UOM de noviembre de 2026 y cargas sociales del 30 %",
                   -(c["mano_obra"] - c_proy["mo"])))
@@ -536,7 +563,7 @@ def puente():
     ebitda = usd(a2["ebitda"])
     suma = sum(v for _t2, v in pasos)
     assert abs(suma - ebitda) < 5, (suma, ebitda)
-    pasos.append(("Impuesto a las ganancias y variación del capital de trabajo del año 2",
+    pasos.append(("Impuesto a las ganancias y variación del capital de trabajo (año de régimen)",
                   usd(a2["flujo"]) - ebitda))
     return {"pasos": pasos, "ebitda_realista_usd": ebitda, "flujo_realista_usd": usd(a2["flujo"]),
             "prod_real_seco": prod_real_seco}
@@ -597,7 +624,7 @@ def sensibilidad(p, rangos=None):
             if clave == "h_dia" and v > H_TURNO:
                 q["inv_extra_usd"] = max(q.get("inv_extra_usd", 0.0), INV_2T_USD)
             ind = indicadores(q)
-            fila[nom] = {"valor": v, "flujo_anual": ind["anio2"]["flujo"], "payback": ind["payback_meses"],
+            fila[nom] = {"valor": v, "flujo_anual": ind["anio3"]["flujo"], "payback": ind["payback_meses"],
                          "van": ind["van"]}
         out.append(fila)
     der = []
@@ -605,7 +632,7 @@ def sensibilidad(p, rangos=None):
         ind = indicadores(dict(copy.deepcopy(p), deriva=d))
         der.append({"desc": desc, "flujo_anio5": anio(ind["filas"], 5)["flujo"], "payback": ind["payback_meses"],
                     "van": ind["van"]})
-    return {"base": {"flujo_anual": base["anio2"]["flujo"], "payback": base["payback_meses"], "van": base["van"],
+    return {"base": {"flujo_anual": base["anio3"]["flujo"], "payback": base["payback_meses"], "van": base["van"],
                      "flujo_anio5": anio(base["filas"], 5)["flujo"]}, "filas": out, "derivas": der}
 
 
@@ -683,13 +710,13 @@ def detalle_capacidad(p, cfg, m_in):
     q = dict(copy.deepcopy(p), m_in=m_in, h_dia=h, turnos=turnos, tope_termico=False,
              inv_extra_usd=inv_x + (INV_B if m_in > M_IN else 0.0))
     ind = indicadores(q)
-    a2, m = ind["anio2"], ind["mes_regimen"]
+    a2, a3, m = ind["anio2"], ind["anio3"], ind["mes_regimen"]
     dias_mes = q["dias_anio"] / 12
     return {"m_in": m_in, "h_dia": h, "turnos": turnos, "dias_mes": dias_mes,
             "humedo_dia_kg": m["humedo_t"] / dias_mes * 1000, "humedo_mes_t": m["humedo_t"],
             "humedo_anio_t": a2["humedo_t"], "seco_anio_t": a2["seco_t"], "vendido_anio_t": a2["vendido_t"],
             "seco_mes_t": m["seco_t"], "vendido_mes_t": m["vendido_t"], "inv_total": ind["inv_total"],
-            "flujo_anual": a2["flujo"], "payback": ind["payback_meses"], "van": ind["van"],
+            "flujo_anual": a3["flujo"], "payback": ind["payback_meses"], "van": ind["van"],
             "lineas_necesarias": math.ceil(m_in / M_IN_MAX - 1e-9)}
 
 
@@ -728,7 +755,7 @@ def alternativas(p):
     for cod, desc, cambios in alts:
         q = dict(copy.deepcopy(p), **cambios)
         ind = indicadores(q)
-        a2 = ind["anio2"]
+        a2, a3 = ind["anio2"], ind["anio3"]
         w = q["m_in"] * q["lineas"] * (1 - (1 - q["X_in"]) / (1 - q["X_out"]))
         fp = precio_necesario(q, 60)
         out.append({"cod": cod, "desc": desc, "inv_extra_usd": q.get("inv_extra_usd", 0.0) + q.get("inv_extra_obra_usd", 0.0),
@@ -736,7 +763,8 @@ def alternativas(p):
                     "costos_var": a2["costos"], "operarios": ind["mes_regimen"]["operarios"],
                     "inv_total": ind["inv_total"], "humedo_anio": a2["humedo_t"], "seco_anio": a2["seco_t"],
                     "vendido_anio": a2["vendido_t"], "ventas": a2["ventas"], "costos": a2["costo_total"],
-                    "flujo_anual": a2["flujo"], "payback": ind["payback_meses"], "van": ind["van"],
+                    "flujo_anual": a3["flujo"], "neto_anual": a2["beneficio_neto"], "payback": ind["payback_meses"],
+                    "van": ind["van"],
                     "kg_h": q["m_in"] * q["lineas"], "h_dia": q["h_dia"], "t_dia": q["m_in"] * q["lineas"] * q["h_dia"] / 1000,
                     "agua_kg_h": w, "limite_termico": w <= W_MAX * q["lineas"] * (1.0 if cod != "C" else 2.0) + 1})
     return out
@@ -750,7 +778,8 @@ def resumen(ind):
                                 "pe_operativo_t", "pe_contable_t", "pe_operativo_prod_t", "contribucion_t",
                                 "fijos_mes", "costo_prod_kg", "costo_total_kg", "costo_total_kg_amort", "neto_kg",
                                 "flujo_regimen_mes")} | {
-        "anio2": {k: v for k, v in a2.items()}, "anio1": ind["anio1"],
+        "anio2": {k: v for k, v in a2.items()}, "anio1": ind["anio1"], "anio3": ind["anio3"],
+        "precio_eq_t": ind["precio_eq_t"],
         "mes": {k: m[k] for k in ("h_carga", "h_marcha", "humedo_t", "seco_t", "agua_t", "comerciable_t",
                                   "vendido_t", "ventas", "kwh", "cascara_t", "operarios", "produccion",
                                   "estructura", "comerciales", "total")} | {"costos": m["costos"]},
@@ -777,6 +806,11 @@ def curva_precio(p, cambios, precios):
         q = aplicar(q, "precio", f, "factor")
         out.append(indicadores(q)["payback_meses"])
     return out
+
+
+def _pb_van(p):
+    ind = indicadores(p)
+    return {"payback": ind["payback_meses"], "van": ind["van"], "flujo_anual": ind["anio3"]["flujo"]}
 
 
 def calcular():
@@ -812,6 +846,12 @@ def calcular():
         "supuestos": [list(f[:4]) + [f[4], f[5], f[6]] for f in tabla],
         "escenarios": {n: resumen(i) for n, i in inds.items()},
         "referencia": resumen(indicadores(dict(copy.deepcopy(esc["optimista"]), **REFERENCIA))),
+        "variantes_referencia": {
+            "tres_operarios": _pb_van(dict(copy.deepcopy(esc["optimista"]), **REFERENCIA, op_turno=3)),
+            "supuestos_realistas_precio_proyecto": _pb_van(aplicar(dict(copy.deepcopy(esc["realista"]), **REFERENCIA),
+                                                                   "precio", PRECIO_PROY / precio_medio(
+                                                                       esc["realista"]["mix"]), "factor")),
+        },
         "puente": puente(), "sensibilidad": sens, "inverso": inverso,
         "curva_precio": {"precios_usd_t": precios, "payback": curvas},
     }

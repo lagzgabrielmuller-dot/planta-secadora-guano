@@ -19,8 +19,20 @@ Sección nueva en [`analisis_economico/`](analisis_economico/), que no cambia ni
 - tres escenarios, el puente contra la evaluación del proyecto, sensibilidad y desfase de costos;
 - análisis inverso de capacidad para recuperar la inversión en 2 a 5 años, con las alternativas A a D.
 
-**Resultado:** con un turno, la planta no recupera la inversión en ningún escenario. Con los precios del proyecto la
-recupera en 60 meses con 2 turnos a 1.224 kg/h, y en 48 meses a 1.440 kg/h.
+**Resultado:** con un turno, la planta no recupera la inversión en ningún escenario. Con los precios y demás supuestos
+del escenario optimista la recupera en 60 meses con 2 turnos a 1.213 kg/h (o 3 turnos a 919 kg/h), y en 47 meses con 2
+turnos a 1.440 kg/h. Con el precio realista hace falta vender a unos USD 366/t.
+
+**Control independiente:** un revisor rehízo las cuentas sin usar el modelo y coincidieron al centavo. Se corrigieron:
+- textos que decían que «sólo» dos turnos recuperan la inversión;
+- textos que no aclaraban que esos resultados suponen todos los supuestos del optimista;
+- los operarios de la referencia (4 y no 6);
+- el flujo de régimen, que pasa al año 3, cuando ya se paga el impuesto de un año entero;
+- la iluminación, que estaba contada dos veces;
+- el arranque, que va una vez por día y no por turno;
+- el precio de equilibrio, que no es el costo por kg;
+- el desfase de costos, limitado a 5 años;
+- detalles de formato y fuentes.
 
 **Integración:** paso `economia` en `regenerar.py`, fila en las Descargas de la portada, `tests/test_economia.py`.
 

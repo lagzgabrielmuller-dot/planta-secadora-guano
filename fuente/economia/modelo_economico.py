@@ -765,7 +765,8 @@ def alternativas(p):
                     "vendido_anio": a2["vendido_t"], "ventas": a2["ventas"], "costos": a2["costo_total"],
                     "flujo_anual": a3["flujo"], "neto_anual": a2["beneficio_neto"], "payback": ind["payback_meses"],
                     "van": ind["van"],
-                    "kg_h": q["m_in"] * q["lineas"], "h_dia": q["h_dia"], "t_dia": q["m_in"] * q["lineas"] * q["h_dia"] / 1000,
+                    "kg_h": q["m_in"] * q["lineas"], "h_dia": q["h_dia"],
+                    "t_dia": q["m_in"] * q["lineas"] * q["h_dia"] * q["disp"] / 1000,   # por día de trabajo, con la disponibilidad
                     "agua_kg_h": w, "limite_termico": w <= W_MAX * q["lineas"] * (1.0 if cod != "C" else 2.0) + 1})
     return out
 

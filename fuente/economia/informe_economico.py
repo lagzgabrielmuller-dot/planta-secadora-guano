@@ -1143,10 +1143,10 @@ def inverso(d):
         "B": "Viable según el modelo térmico: generador a pleno (885 kW); tolva de retención de 1 m³; sin margen si el "
              "guano viene más húmedo; validar con el módulo piloto.",
         "A1+B": "Viable con las condiciones de A1 y B.",
-        "A2+B": "Viable con las condiciones de A2 y B; necesita 35 t/día de guano.",
+        "A2+B": f"Viable con las condiciones de A2 y B; necesita {n(alt('optimista', 'A2+B')['t_dia'], 0)} t/día de guano.",
         "C": "Es una planta nueva: secador, generador, ventiladores y lavador el doble de grandes; estimación ± 40 %.",
         "D": "Viable: segunda línea igual; ampliar la nave, la acometida (+55 kW) y el personal.",
-        "D+A1": "Viable con las condiciones de A1 y D; necesita 32 t/día de guano.",
+        "D+A1": f"Viable con las condiciones de A1 y D; necesita {n(alt('optimista', 'D+A1')['t_dia'], 0)} t/día de guano.",
     }
     for nombre_esc, rot in (("optimista", "los supuestos del escenario optimista"), ("realista", "los supuestos del escenario realista")):
         alts = INV_[nombre_esc]["alternativas"]
@@ -1208,14 +1208,17 @@ def inverso(d):
     m2 = mins["2T_60"]
     gall_dia = m2["humedo_dia_kg"] / hen
     gall_anio = m2["humedo_anio_t"] * 1000 / (hen * 365)
+    fx = next(f for f in E["sensibilidad"]["referencia"]["filas"] if f["clave"] == "X_in")
+    pb78 = (fx["bajo"] if fx["txt_bajo"] == "78 %" else fx["alto"])["payback"]
     d.lista([
         f"Materia prima: {n(m2['humedo_dia_kg'] / 1000, 1)} t/día de guano en los días de trabajo equivalen a "
         f"{n(gall_dia / 1000, 0)} mil gallinas; si el guano de los fines de semana se acopia y se procesa en la semana, "
         f"alcanza con {n(gall_anio / 1000, 0)} mil (a 133 g por gallina y día, el dato del proyecto: 8 t/día para 60.000 "
         "aves). Son dos granjas como la del proyecto. En Entre Ríos hay 201 granjas de ponedoras (22 % del país, Anuario "
         "Avícola 2025); la materia prima existe, pero hay que asegurarla con contratos.",
-        "Humedad y variabilidad: con guano al 78 % el caudal máximo baja a 1.303 kg/h y la recuperación de la referencia "
-        "se atrasa a 96 meses (apartado 11.2). Hay que pedir a las granjas guano de cinta de secado, más seco.",
+        f"Humedad y variabilidad: con guano al 78 % el caudal máximo baja a {n(DAT['W_MAX'] / (1 - 0.22 / 0.85), 0)} kg/h y "
+        f"la recuperación de la referencia se atrasa a {mes_txt(pb78, 0)} (apartado 11.2). Hay que pedir a las granjas "
+        "guano de cinta de secado, más seco.",
         "Almacenamiento: el acopio de producto a granel del proyecto es de unos 22 m³ (≈ 11 t, un día y medio de "
         "producción a dos turnos) y el depósito de 240 m² guarda del orden de 200 t embolsadas (estimación: 1 t por "
         "pallet en dos alturas sobre la mitad de la superficie), algo más de un mes de ventas. Como la demanda de "
@@ -1227,7 +1230,7 @@ def inverso(d):
         "Energía eléctrica: con una sola línea la demanda no cambia al agregar turnos (85 kW contratados alcanzan); sí "
         "aumenta la energía consumida. La alternativa D necesita unos 55 kW más y revisar la acometida.",
         "Capacidad térmica: a 1.440 kg/h el generador de 880 kW trabaja a pleno (885 kW): no queda margen; por eso el "
-        "objetivo mínimo (1.224 kg/h) es mejor que operar siempre en el máximo.",
+        f"objetivo mínimo ({n(m2['m_in'], 0)} kg/h) es mejor que operar siempre en el máximo.",
         f"Mercado: {n(m2['vendido_anio_t'], 0)} t/año de producto equivalen, a la dosis de 3 t/ha que usan los "
         f"horticultores (La Nación, 2024), a unas {n(m2['vendido_anio_t'] / 3, 0)} ha por año. No se encontró un estudio "
         "de la demanda regional: no se puede dar por viable la ampliación hasta tener compradores para ese volumen.",
@@ -1350,8 +1353,8 @@ def recomendaciones(d):
         "precio y volumen, la tarifa real de la LAR y la cáscara puesta en planta.",
         "2. Construir y probar el módulo piloto de la Rev. F: medir la capacidad real, el consumo de cáscara y de "
         "electricidad, la higienización y el análisis químico del producto, y usar sus muestras para abrir el mercado.",
-        "3. Diseñar la operación para dos turnos desde el inicio y trabajar con el aire hasta 135 °C (1.224 a 1.440 kg/h), "
-        "con la tolva de retención de 1 m³.",
+        "3. Diseñar la operación para dos turnos desde el inicio y trabajar con el aire hasta 135 °C "
+        f"({n(MIN60['m_in'], 0)} a 1.440 kg/h), con la tolva de retención de 1 m³.",
         "4. Asociarse con las granjas: que entreguen el guano en la planta (se ahorran su gestión) o instalar la planta en "
         "la granja más grande; pedir guano de cinta de secado, con menos humedad.",
         "5. Invertir por etapas: sin biogás; si el canal principal resulta ser el granel, postergar la ensacadora, la "

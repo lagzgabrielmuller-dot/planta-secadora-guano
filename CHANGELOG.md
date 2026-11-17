@@ -3,7 +3,7 @@
 ## Análisis económico · 17/11/2026: rentabilidad y recuperación de la inversión
 
 Sección nueva en [`analisis_economico/`](analisis_economico/), que no cambia ningún dato del proyecto:
-- informe en Word y PDF (42 páginas);
+- informe en Word y PDF (43 páginas);
 - planilla Excel con fórmulas, que replica el modelo y lo controla contra Python;
 - ocho gráficos y el modelo en `fuente/economia/`.
 
@@ -32,6 +32,7 @@ turnos a 1.440 kg/h. Con el precio realista hace falta vender a unos USD 366/t.
 - el arranque, que va una vez por día y no por turno;
 - el precio de equilibrio, que no es el costo por kg;
 - el desfase de costos, limitado a 5 años;
+- el guano por día, que distingue las toneladas programadas de las que se procesan con la disponibilidad;
 - detalles de formato y fuentes.
 
 **Integración:** paso `economia` en `regenerar.py`, fila en las Descargas de la portada, `tests/test_economia.py`.

@@ -1255,7 +1255,8 @@ def inverso(d):
         f"{n(m2['vendido_anio_t'], 0)} t/año ({n(m2['vendido_mes_t'], 0)} t/mes).",
         f"3. Caudal: {n(m2['m_in'], 0)} kg/h de guano húmedo durante 16 h por día.",
         f"4. Aumento: {n(m2['m_in'] - 1000, 0)} kg/h más por hora y 8 h más por día: de 8 t a "
-        f"{n(m2['m_in'] * 16 / 1000, 1)} t de guano por día.",
+        f"{n(m2['m_in'] * 16 / 1000, 1)} t de guano programadas por día ({n(m2['humedo_dia_kg'] / 1000, 1)} t con la "
+        f"disponibilidad del {n(PARAMS['optimista']['disp'] * 100, 0)} %).",
         f"5. Porcentaje: +{n((m2['m_in'] / 1000 - 1) * 100, 1)} % de caudal y +{n((m2['m_in'] * 16 / 8000 - 1) * 100, 0)} % "
         "de producción diaria.",
         "6. Con dos turnos no alcanza sólo con más horas: hay que subir además el caudal con el aire hasta 135 °C, que "

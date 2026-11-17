@@ -137,7 +137,7 @@ def alt(nombre_esc, cod):
     return next(a for a in INV_[nombre_esc]["alternativas"] if a["cod"] == cod)
 
 
-MIN60 = INV_["optimista"]["minimos"]["2T_60"]                     # capacidad mínima (precios del proyecto)
+MIN60 = INV_["optimista"]["minimos"]["2T_60"]                     # capacidad mínima (supuestos del optimista)
 MIN60_3T = INV_["optimista"]["minimos"]["3T_60"]
 A1B_R, A1B_O = alt("realista", "A1+B"), alt("optimista", "A1+B")
 VAR = E["variantes_referencia"]
@@ -889,7 +889,7 @@ def rentabilidad(d):
         f"durante la puesta en marcha (capital de trabajo) y se hace cero en el {anio_mes(rp)}: {mes_txt(rp)} exactos. "
         f"Descontado al 10 % real, la recuperación llega en {mes_txt(REF['payback_descontado'])}.")
     d.figura("f3_recuperacion_referencia.png", "Curva de recuperación mes a mes de la referencia (2 turnos a 1.440 kg/h, "
-             "precios del proyecto): inversión acumulada, flujo mensual, flujo acumulado y mes de recuperación")
+             "supuestos del optimista): inversión acumulada, flujo mensual, flujo acumulado y mes de recuperación")
     filas = [["Mes", "Flujo del mes ($ M)", "Acumulado ($ M)"]]
     fm = REF["flujo_mensual"]
     for k in (0, 1, 3, 6, 12, 24, 36, 47, 48, 60):
@@ -1018,7 +1018,7 @@ def sensibilidad(d):
         "variantes. Las que más lo mueven son el precio, la humedad del guano, el flete del guano, la fracción vendida y "
         "la cáscara. Trabajar más horas o más días casi no cambia el resultado (incluso lo empeora con un segundo turno), "
         "porque con el precio realista cada tonelada adicional apenas paga sus costos variables.")
-    d.h("11.2. Configuración de referencia (2 turnos a 1.440 kg/h, precios del proyecto)", 2)
+    d.h("11.2. Configuración de referencia (2 turnos a 1.440 kg/h, supuestos del optimista)", 2)
     d.p(f"Para medir cuánto mueve cada variable el período de recuperación hace falta un caso que recupere la inversión. "
         f"Se usa la configuración de referencia, que recupera en {mes_txt(REF['payback_meses'])}:")
     s = E["sensibilidad"]["referencia"]
@@ -1122,7 +1122,7 @@ def inverso(d):
              ["Producto vendido por año (t)", n(a2(O_, "vendido_t"), 0), n(mins["2T_60"]["vendido_anio_t"], 0),
               n(mins["2T_60"]["vendido_anio_t"] - a2(O_, "vendido_t"), 0),
               pc((mins["2T_60"]["vendido_anio_t"] / a2(O_, "vendido_t") - 1) * 100, 0)]]
-    d.tabla("Capacidad actual y capacidad objetivo (precios del proyecto)", filas, anchos=[5.6, 2.6, 2.4, 2.4, 2.4],
+    d.tabla("Capacidad actual y capacidad objetivo (supuestos del optimista)", filas, anchos=[5.6, 2.6, 2.4, 2.4, 2.4],
             alin=["L", "R", "R", "R", "R"])
     d.p(f"Con dos turnos, más horas solas no alcanzan: a 1.000 kg/h se recupera la inversión en "
         f"{mes_txt(alt('optimista', 'A1')['payback'], 0)}. Hace falta, además, subir el caudal por encima de los "
@@ -1133,7 +1133,7 @@ def inverso(d):
         f"{n(alt('optimista', 'A2')['t_dia'], 0)} t/día de guano y vender {n(alt('optimista', 'A2')['vendido_anio'], 0)} "
         "t/año, más que la configuración de dos turnos.")
     d.figura("f7_capacidad_necesaria.png", "Caudal de guano húmedo necesario para recuperar la inversión en 2 a 5 años "
-             "según las horas de trabajo (precios del proyecto)")
+             "según las horas de trabajo (supuestos del optimista)")
     d.h("12.4. Alternativas de ampliación", 2)
     notas = {
         "Actual": "Diseño del proyecto.",
@@ -1148,7 +1148,7 @@ def inverso(d):
         "D": "Viable: segunda línea igual; ampliar la nave, la acometida (+55 kW) y el personal.",
         "D+A1": "Viable con las condiciones de A1 y D; necesita 32 t/día de guano.",
     }
-    for nombre_esc, rot in (("optimista", "precios del proyecto"), ("realista", "precio realista")):
+    for nombre_esc, rot in (("optimista", "los supuestos del escenario optimista"), ("realista", "los supuestos del escenario realista")):
         alts = INV_[nombre_esc]["alternativas"]
         base = alts[0]
         filas = [["Alt.", "Descripción", "Inversión adicional (USD)", "Guano húmedo (t/año)", "Vendido (t/año)",
@@ -1195,7 +1195,7 @@ def inverso(d):
         txt = {"1T": "1 turno", "2T": "2 turnos", "3T": "3 turnos"}[cfg] + ", 1 secadora"
         filas.append([rot, f"{N // 12} años", txt, n(dd["m_in"], 0), n(dd["humedo_anio_t"], 0), n(dd["seco_anio_t"], 0),
                       n(dd["vendido_anio_t"], 0)])
-    d.tabla("Producción necesaria para cada objetivo de recuperación (precios del proyecto)", filas,
+    d.tabla("Producción necesaria para cada objetivo de recuperación (supuestos del optimista)", filas,
             anchos=[3.2, 1.4, 3.0, 1.8, 2.2, 2.3, 2.1], alin=["L", "C", "L", "R", "R", "R", "R"], resaltar=[4])
     d.p(f"Para recuperar en 2 años, aun con tres turnos, haría falta {n(mins['3T_24']['m_in'], 0)} kg/h, por encima del "
         f"máximo de 1.440 kg/h de una secadora; con dos secadoras en dos turnos (alternativa D+A1) la recuperación es de "
@@ -1249,7 +1249,7 @@ def inverso(d):
             resaltar=[1])
     inv_amp = 32000.0
     d.lista([
-        f"1. Guano húmedo por mes: {n(m2['humedo_mes_t'], 0)} t (con los precios del proyecto, en 2 turnos y "
+        f"1. Guano húmedo por mes: {n(m2['humedo_mes_t'], 0)} t (con los supuestos del optimista, en 2 turnos y "
         f"{n(m2['dias_mes'], 0)} días por mes). Con el precio realista no hay cantidad que alcance.",
         f"2. Producto seco: producir {n(m2['seco_anio_t'], 0)} t/año ({n(m2['seco_mes_t'], 0)} t/mes) y vender "
         f"{n(m2['vendido_anio_t'], 0)} t/año ({n(m2['vendido_mes_t'], 0)} t/mes).",
@@ -1292,8 +1292,8 @@ def viabilidad(d):
          f"de trabajo); entre {pm(O_['inv_total'], 0)} y {pm(C_['inv_total'], 0)} según el escenario."),
         ("¿Cuánto dinero genera mensualmente?",
          f"Factura {pm(a2(R_, 'ventas') / 12, 1)} por mes en el escenario realista y {pm(a2(O_, 'ventas') / 12, 1)} en el "
-         f"optimista. El flujo de caja es de {pm(a2(R_, 'flujo') / 12, 1)} por mes (realista) y "
-         f"{pm(a3(O_, 'flujo') / 12, 1)} (optimista); con dos turnos a 1.440 kg/h y precios del proyecto, "
+         f"optimista. El flujo de caja es de {pm(a3(R_, 'flujo') / 12, 1)} por mes (realista) y "
+         f"{pm(a3(O_, 'flujo') / 12, 1)} (optimista); con dos turnos a 1.440 kg/h y los supuestos del optimista, "
          f"{pm(REF['anio3']['flujo'] / 12, 1)} por mes de régimen."),
         ("¿Cuánto cuesta producir un kilogramo de guano seco?",
          f"$ {n(R_['costo_prod_kg'], 0)} de costo de producción por kg obtenido y $ {n(R_['costo_total_kg'], 0)} de costo "
@@ -1309,7 +1309,7 @@ def viabilidad(d):
          f"{anio_mes(rp)} ({mes_txt(rp)}); con dos turnos a {n(MIN60['m_in'], 0)} kg/h, en 60 meses. Las dos cifras "
          "suponen todos los supuestos del escenario optimista."),
         ("¿Qué producción mínima necesitamos para que el proyecto sea rentable?",
-         f"Para cubrir los costos de caja con los precios del proyecto, {n(O_['pe_operativo_t'], 0)} t/año vendidas; para "
+         f"Para cubrir los costos de caja en el escenario optimista, {n(O_['pe_operativo_t'], 0)} t/año vendidas; para "
          f"recuperar la inversión en 5 años, {n(MIN60['vendido_anio_t'], 0)} t/año vendidas, procesando "
          f"{n(MIN60['humedo_mes_t'], 0)} t/mes de guano húmedo. Con el precio realista no hay producción alcanzable que "
          "la haga rentable."),
@@ -1387,7 +1387,7 @@ def anexos(d):
             anchos=[5.6, 1.4, 1.2, 2.6, 2.6, 2.6], alin=["L", "C", "C", "R", "R", "R"])
     d.h("Anexo B. Flujo de caja anual", 1)
     for _nombre, e, rot in (("realista", R_, "escenario realista"), ("referencia", REF,
-                                                                      "referencia: 2 turnos a 1.440 kg/h, precios del proyecto")):
+                                                                      "referencia: 2 turnos a 1.440 kg/h, supuestos del optimista")):
         filas = [["Año", "Ventas", "Costos", "EBITDA", "Amortiz.", "Ganancias pagado", "Δ capital de trabajo",
                   "Flujo de caja", "Acumulado"]]
         fm = e["flujo_mensual"]

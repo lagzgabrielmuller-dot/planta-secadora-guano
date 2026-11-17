@@ -123,7 +123,7 @@ def ingresos_costos():
 
 
 def curva_referencia():
-    """Curva de recuperación mes a mes del caso que recupera: 2 turnos a 1.440 kg/h con precios del proyecto."""
+    """Curva de recuperación mes a mes del caso que recupera: 2 turnos a 1.440 kg/h con los supuestos del optimista."""
     ref = E["referencia"]
     fm = ref["flujo_mensual"]
     meses = [f["mes"] for f in fm][:73]
@@ -142,7 +142,7 @@ def curva_referencia():
                 arrowprops={"arrowstyle": "-", "color": MUDA, "lw": 0.8})
     a1.yaxis.set_major_formatter(FMT)
     a1.set_ylabel("millones de $")
-    a1.set_title("Recuperación de la inversión: 2 turnos a 1.440 kg/h, precios del proyecto")
+    a1.set_title("Recuperación de la inversión: 2 turnos a 1.440 kg/h, supuestos del optimista")
     a1.legend(loc="upper left", fontsize=8)
     a2.bar(meses[1:], flujo, 0.7, color=SERIE[0], zorder=2)
     a2.axhline(0, color=BASE, lw=1)
@@ -168,7 +168,7 @@ def curva_escenarios():
         ax.text(xs[-1] + 2, ys[-1], rot, va="center", fontsize=8, color=TINTA2)
     fm = E["referencia"]["flujo_mensual"][:180]
     xs, ys = [f["mes"] for f in fm], [f["acumulado"] / M for f in fm]
-    ax.plot(xs, ys, color=SERIE[3], lw=2, label="Referencia: 2 turnos a 1.440 kg/h, precios del proyecto")
+    ax.plot(xs, ys, color=SERIE[3], lw=2, label="Referencia: 2 turnos a 1.440 kg/h, supuestos del optimista")
     ax.text(xs[-1] + 2, ys[-1], "Referencia", va="center", fontsize=8, color=TINTA2)
     ax.axhline(0, color=BASE, lw=1)
     ax.yaxis.set_major_formatter(FMT)
@@ -243,7 +243,7 @@ def precio_payback():
 
 
 def capacidad_necesaria():
-    """Caudal de guano húmedo necesario para recuperar en 24 a 60 meses (precios del proyecto)."""
+    """Caudal de guano húmedo necesario para recuperar en 24 a 60 meses (supuestos del optimista)."""
     mins = E["inverso"]["optimista"]["minimos"]
     fig, ax = plt.subplots(figsize=(7.4, 4.0))
     plazos = [24, 36, 48, 60]
@@ -260,7 +260,7 @@ def capacidad_necesaria():
     ax.yaxis.set_major_formatter(FMT)
     ax.set_xlim(23, 66)
     ax.set_ylabel("guano húmedo por secadora (kg/h)")
-    ax.set_title("Caudal necesario para recuperar la inversión (precios del proyecto)")
+    ax.set_title("Caudal necesario para recuperar la inversión (supuestos del optimista)")
     ax.legend(loc="upper right", fontsize=8)
     return guardar(fig, "f7_capacidad_necesaria.png")
 

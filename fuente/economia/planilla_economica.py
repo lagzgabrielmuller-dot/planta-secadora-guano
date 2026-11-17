@@ -96,7 +96,8 @@ lineas = [
     "supuesto clave (precio, fracción vendida, flete, cáscara).",
     "Tipo de dato: R = del proyecto (diseño, no medido) · V = verificado con fuente y fecha · E = estimación propia "
     "con datos R o V · H = hipótesis (no hay dato publicado).",
-    "Para ver la referencia que recupera la inversión en 48 meses (2 turnos a 1.440 kg/h con los precios del proyecto): "
+    f"Para ver la referencia, que recupera la inversión en el mes {int(E['referencia']['payback_meses']) + 1} (2 turnos a "
+    "1.440 kg/h con los supuestos del optimista): "
     "elegir el escenario 3 y, en la columna Optimista, poner alimentación 1.440 kg/h, 16 h/día, 2 turnos e inversión "
     "adicional USD 32.000.",
     "La hoja «Indicadores» compara cada resultado con el del modelo en Python (fuente/economia/modelo_economico.py); "

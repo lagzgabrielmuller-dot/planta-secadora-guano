@@ -124,6 +124,11 @@ def alinear(p0, p1, up=(0, 0, 1)):
     return m
 
 
+def _lineal(c):
+    """sRGB (0-1) a lineal."""
+    return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+
+
 def _trsf(m):
     t = gp_Trsf()
     t.SetValues(*[float(m[i, j]) for i in range(3) for j in range(4)])
@@ -397,6 +402,7 @@ class Escena:
                 v = np.array([(p.x, p.y, p.z) for p in vs]) * 0.001
                 m = trimesh.Trimesh(vertices=v, faces=np.array(fs), process=False)
                 r, g_, b, met, rug, a = MAT[i["mat"]]
+                r, g_, b = (_lineal(c) for c in (r, g_, b))       # glTF guarda el color base en espacio lineal
                 pbr = trimesh.visual.material.PBRMaterial(
                     name=i["mat"], baseColorFactor=[int(r * 255), int(g_ * 255), int(b * 255), int(a * 255)],
                     metallicFactor=met, roughnessFactor=rug, alphaMode="BLEND" if a < 1 else "OPAQUE",

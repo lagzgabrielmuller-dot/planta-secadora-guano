@@ -155,9 +155,11 @@ def coef_C(L):
 
 def cinta(t, Q_t_h, v=0.40, eta=0.85, f=0.025, theta_sob=20.0):
     p0, p1 = t["p0"], t["p1"]
-    L = math.dist(p0, p1)
+    tr = t.get("trazado", [p0, p1])                     # las inclinadas tienen un tramo horizontal de carga (en L)
+    L = sum(math.dist(a, b) for a, b in zip(tr, tr[1:]))
     H = p1[2] - p0[2]
-    delta = math.degrees(math.asin(max(-1, min(1, H / L)))) if L else 0
+    Li = math.dist(tr[-2], tr[-1])                      # inclinación del último tramo (el que sube)
+    delta = math.degrees(math.asin(max(-1, min(1, (tr[-1][2] - tr[-2][2]) / Li)))) if Li else 0
     B = t["ancho"]
     tipo_banda = "bordes" if t["tipo"] in ("inclinada",) else "lisa"
     qB = BANDAS.get(B, BANDAS[0.50])[tipo_banda]
@@ -228,7 +230,7 @@ def motores_nuevos(trans):
         kw, eta, cf = 3.0, 0.877, 0.81
         m.append({"tag": f"M{85 + i}", "nom": f"Sinfín dosificador {i + 1} de la TP-01", "kW": kw,
                   "In": round(corriente(kw, eta, cf), 2), "arranque": "VFD", "tablero": "TS-GU", "tipo": "P",
-                  "nota": "Ø400 × 6 m bajo la tolva llena; confirmar con el fabricante"})
+                  "nota": "Ø400 × 7,45 m (6,2 m bajo la tolva llena); confirmar con el fabricante"})
     for tag, nom in (("M89", "Actuador de la compuerta desviadora DV-O"), ("M90", "Actuador de la compuerta desviadora DV-E")):
         kw, eta, cf = 0.37, 0.77, 0.70
         m.append({"tag": tag, "nom": nom, "kW": kw, "In": round(corriente(kw, eta, cf), 2), "arranque": "inversor",

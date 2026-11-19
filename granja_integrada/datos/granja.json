@@ -141,33 +141,57 @@
    "galpon": "G1",
    "ancho": 0.65,
    "p0": [
-    -71.05,
-    23.799999999999997,
-    0.3
+    -70.65,
+    24.799999999999997,
+    -0.3
    ],
    "p1": [
-    -61.55,
-    23.799999999999997,
-    0.3
+    -62.25,
+    24.799999999999997,
+    -0.3
    ],
-   "nota": "dentro del galpón, en canal de H° bajo el extremo de las 20 cintas de las jaulas"
+   "nota": "dentro del galpón, en canal de H° con rejilla bajo el extremo de las 20 cintas de las jaulas"
   },
   {
    "id": "CI-1",
    "tipo": "inclinada",
    "galpon": "G1",
    "ancho": 0.5,
-   "ang": 33.1,
+   "ang": 46.1,
    "p0": [
     -61.9,
-    23.799999999999997,
-    0.45
+    25.6,
+    -0.95
    ],
    "p1": [
     -61.9,
-    14.6,
-    6.45
+    14.95,
+    7.1
    ],
+   "trazado": [
+    [
+     -61.9,
+     25.6,
+     -0.95
+    ],
+    [
+     -61.9,
+     22.7,
+     -0.95
+    ],
+    [
+     -61.9,
+     14.95,
+     7.1
+    ]
+   ],
+   "foso": {
+    "z_fondo": -1.65,
+    "y0": 21.35,
+    "y1": 26.2,
+    "x0": -63.0,
+    "x1": -61.25
+   },
    "banda": "goma EP 400/3 con bordes ondulados de 80 mm y tacos (como la cinta 3 de la Rev. F)"
   },
   {
@@ -176,33 +200,57 @@
    "galpon": "G2",
    "ancho": 0.65,
    "p0": [
-    -40.05,
-    23.799999999999997,
-    0.3
+    -39.65,
+    24.799999999999997,
+    -0.3
    ],
    "p1": [
-    -30.55,
-    23.799999999999997,
-    0.3
+    -31.25,
+    24.799999999999997,
+    -0.3
    ],
-   "nota": "dentro del galpón, en canal de H° bajo el extremo de las 20 cintas de las jaulas"
+   "nota": "dentro del galpón, en canal de H° con rejilla bajo el extremo de las 20 cintas de las jaulas"
   },
   {
    "id": "CI-2",
    "tipo": "inclinada",
    "galpon": "G2",
    "ancho": 0.5,
-   "ang": 33.1,
+   "ang": 46.1,
    "p0": [
     -30.9,
-    23.799999999999997,
-    0.45
+    25.6,
+    -0.95
    ],
    "p1": [
     -30.9,
-    14.6,
-    6.45
+    14.95,
+    7.1
    ],
+   "trazado": [
+    [
+     -30.9,
+     25.6,
+     -0.95
+    ],
+    [
+     -30.9,
+     22.7,
+     -0.95
+    ],
+    [
+     -30.9,
+     14.95,
+     7.1
+    ]
+   ],
+   "foso": {
+    "z_fondo": -1.65,
+    "y0": 21.35,
+    "y1": 26.2,
+    "x0": -32.0,
+    "x1": -30.25
+   },
    "banda": "goma EP 400/3 con bordes ondulados de 80 mm y tacos (como la cinta 3 de la Rev. F)"
   },
   {
@@ -211,33 +259,57 @@
    "galpon": "G3",
    "ancho": 0.65,
    "p0": [
-    73.05,
-    23.799999999999997,
-    0.3
+    72.65,
+    24.799999999999997,
+    -0.3
    ],
    "p1": [
-    63.55,
-    23.799999999999997,
-    0.3
+    64.25,
+    24.799999999999997,
+    -0.3
    ],
-   "nota": "dentro del galpón, en canal de H° bajo el extremo de las 20 cintas de las jaulas"
+   "nota": "dentro del galpón, en canal de H° con rejilla bajo el extremo de las 20 cintas de las jaulas"
   },
   {
    "id": "CI-3",
    "tipo": "inclinada",
    "galpon": "G3",
    "ancho": 0.5,
-   "ang": 33.1,
+   "ang": 46.1,
    "p0": [
     63.9,
-    23.799999999999997,
-    0.45
+    25.6,
+    -0.95
    ],
    "p1": [
     63.9,
-    14.6,
-    6.45
+    14.95,
+    7.1
    ],
+   "trazado": [
+    [
+     63.9,
+     25.6,
+     -0.95
+    ],
+    [
+     63.9,
+     22.7,
+     -0.95
+    ],
+    [
+     63.9,
+     14.95,
+     7.1
+    ]
+   ],
+   "foso": {
+    "z_fondo": -1.65,
+    "y0": 21.35,
+    "y1": 26.2,
+    "x0": 63.25,
+    "x1": 65.0
+   },
    "banda": "goma EP 400/3 con bordes ondulados de 80 mm y tacos (como la cinta 3 de la Rev. F)"
   },
   {
@@ -246,33 +318,57 @@
    "galpon": "G4",
    "ancho": 0.65,
    "p0": [
-    104.05,
-    23.799999999999997,
-    0.3
+    103.65,
+    24.799999999999997,
+    -0.3
    ],
    "p1": [
-    94.55,
-    23.799999999999997,
-    0.3
+    95.25,
+    24.799999999999997,
+    -0.3
    ],
-   "nota": "dentro del galpón, en canal de H° bajo el extremo de las 20 cintas de las jaulas"
+   "nota": "dentro del galpón, en canal de H° con rejilla bajo el extremo de las 20 cintas de las jaulas"
   },
   {
    "id": "CI-4",
    "tipo": "inclinada",
    "galpon": "G4",
    "ancho": 0.5,
-   "ang": 33.1,
+   "ang": 46.1,
    "p0": [
     94.9,
-    23.799999999999997,
-    0.45
+    25.6,
+    -0.95
    ],
    "p1": [
     94.9,
-    14.6,
-    6.45
+    14.95,
+    7.1
    ],
+   "trazado": [
+    [
+     94.9,
+     25.6,
+     -0.95
+    ],
+    [
+     94.9,
+     22.7,
+     -0.95
+    ],
+    [
+     94.9,
+     14.95,
+     7.1
+    ]
+   ],
+   "foso": {
+    "z_fondo": -1.65,
+    "y0": 21.35,
+    "y1": 26.2,
+    "x0": 94.25,
+    "x1": 96.0
+   },
    "banda": "goma EP 400/3 con bordes ondulados de 80 mm y tacos (como la cinta 3 de la Rev. F)"
   },
   {
@@ -300,14 +396,14 @@
    "tipo": "principal",
    "ancho": 0.65,
    "p0": [
-    -10.0,
+    -11.0,
     14.6,
-    5.2
+    4.4
    ],
    "p1": [
     2.0,
     14.6,
-    6.0
+    5.4
    ],
    "nota": "entra por el muro Oeste sobre la tolva pulmón"
   },
@@ -336,16 +432,16 @@
    "tipo": "principal",
    "ancho": 0.65,
    "p0": [
-    43.0,
+    44.0,
     14.6,
-    5.2
+    4.4
    ],
    "p1": [
     4.2,
     14.6,
-    5.0
+    5.4
    ],
-   "nota": "entra por el muro Este y cruza la nave a +5,0 m hasta la tolva pulmón (sin capota bajo techo)"
+   "nota": "entra por el muro Este y cruza la nave a +4,8/+5,4 m hasta la tolva pulmón (sin capota bajo techo)"
   }
  ],
  "torres": [
@@ -358,7 +454,18 @@
    "A": 3.2,
    "B": 3.2,
    "desviadora": "DV-O",
-   "boca_emergencia_z": 3.4
+   "boca_emergencia_z": 2.2,
+   "chute_ang": 50,
+   "contenedor": {
+    "L": 6.0,
+    "A": 2.35,
+    "H": 1.9,
+    "cap_m3": 20,
+    "dy": -3.0,
+    "id": "CR-O",
+    "x": -10.0,
+    "y": 11.6
+   }
   },
   {
    "id": "TT-E",
@@ -369,7 +476,18 @@
    "A": 3.2,
    "B": 3.2,
    "desviadora": "DV-E",
-   "boca_emergencia_z": 3.4
+   "boca_emergencia_z": 2.2,
+   "chute_ang": 50,
+   "contenedor": {
+    "L": 6.0,
+    "A": 2.35,
+    "H": 1.9,
+    "cap_m3": 20,
+    "dy": -3.0,
+    "id": "CR-E",
+    "x": 43.0,
+    "y": 11.6
+   }
   }
  ],
  "tolva_pulmon": {
@@ -385,7 +503,11 @@
    "n": 4,
    "D": 0.4,
    "sentido": "Sur",
-   "largo": 6.0
+   "z_eje": 1.42,
+   "y_sur": 8.95,
+   "y_norte": 16.4,
+   "largo": 7.45,
+   "bocas_y": 9.3
   },
   "celdas_carga": 4,
   "plataforma_z": 4.55,
@@ -500,9 +622,9 @@
    "id": "PY2",
    "x0": 34.0,
    "x1": 41.0,
-   "y0": 16.0,
-   "y1": 30.0,
-   "nom": "dársena de descarga de cáscara"
+   "y0": 17.0,
+   "y1": 32.0,
+   "nom": "dársena de descarga de cáscara (empieza 0,7 m al Norte de la galería de la CP-E)"
   },
   {
    "id": "PY3",
@@ -1484,10 +1606,11 @@
    "y": 24.6
   },
   "tanque_incendio": {
-   "x": -19.2,
+   "x": -24.7,
    "y": 2,
    "D": 2.8,
-   "h": 3.5
+   "h": 3.5,
+   "nota": "corrido 5,5 m al Oeste (camino C2 de la granja)"
   },
   "camara_lix": {
    "x": -1.3,
@@ -1506,8 +1629,9 @@
    "y": 7.55
   },
   "casilla_bomba": {
-   "x": -19.2,
-   "y": -2.2
+   "x": -24.7,
+   "y": -2.2,
+   "nota": "corrido 5,5 m al Oeste (camino C2 de la granja)"
   }
  },
  "quitado_de_la_planta": [
@@ -1537,9 +1661,9 @@
   "Y_COLECTORA": 14.6,
   "Z_COLECTORA": 6.2,
   "Y_SUR_GALPONES": 22.65,
-  "Z_CP_COLA": 5.2,
-  "Z_CP_O": 6.0,
-  "Z_CP_E": 5.0,
+  "Z_CP_COLA": 4.4,
+  "Z_CP_O": 5.4,
+  "Z_CP_E": 5.4,
   "SEP_NAVE": 30.0
  }
 }

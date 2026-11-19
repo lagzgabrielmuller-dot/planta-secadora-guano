@@ -144,7 +144,7 @@
   {
    "id": "CT-1",
    "tipo": "transversal",
-   "L_m": 9.5,
+   "L_m": 8.4,
    "H_m": 0.0,
    "inclinacion_deg": 0.0,
    "B_m": 0.65,
@@ -152,7 +152,7 @@
    "Q_diseno_t_h": 8,
    "Q_capacidad_t_h": 17.8,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.45,
+   "P_requerida_kW": 0.44,
    "motor_kW": 0.55,
    "eta": 0.808,
    "cosf": 0.72,
@@ -165,15 +165,15 @@
   {
    "id": "CI-1",
    "tipo": "inclinada",
-   "L_m": 10.98,
-   "H_m": 6.0,
-   "inclinacion_deg": 33.1,
+   "L_m": 14.07,
+   "H_m": 8.05,
+   "inclinacion_deg": 46.1,
    "B_m": 0.5,
    "v_m_s": 0.4,
    "Q_diseno_t_h": 8,
    "Q_capacidad_t_h": 21.2,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.77,
+   "P_requerida_kW": 0.82,
    "motor_kW": 1.1,
    "eta": 0.841,
    "cosf": 0.77,
@@ -181,12 +181,12 @@
    "tambor_D_m": 0.32,
    "rpm_tambor": 23.9,
    "relacion_reductor": 60.0,
-   "C": 4.37
+   "C": 3.97
   },
   {
    "id": "CT-2",
    "tipo": "transversal",
-   "L_m": 9.5,
+   "L_m": 8.4,
    "H_m": 0.0,
    "inclinacion_deg": 0.0,
    "B_m": 0.65,
@@ -194,7 +194,7 @@
    "Q_diseno_t_h": 8,
    "Q_capacidad_t_h": 17.8,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.45,
+   "P_requerida_kW": 0.44,
    "motor_kW": 0.55,
    "eta": 0.808,
    "cosf": 0.72,
@@ -207,15 +207,15 @@
   {
    "id": "CI-2",
    "tipo": "inclinada",
-   "L_m": 10.98,
-   "H_m": 6.0,
-   "inclinacion_deg": 33.1,
+   "L_m": 14.07,
+   "H_m": 8.05,
+   "inclinacion_deg": 46.1,
    "B_m": 0.5,
    "v_m_s": 0.4,
    "Q_diseno_t_h": 8,
    "Q_capacidad_t_h": 21.2,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.77,
+   "P_requerida_kW": 0.82,
    "motor_kW": 1.1,
    "eta": 0.841,
    "cosf": 0.77,
@@ -223,12 +223,12 @@
    "tambor_D_m": 0.32,
    "rpm_tambor": 23.9,
    "relacion_reductor": 60.0,
-   "C": 4.37
+   "C": 3.97
   },
   {
    "id": "CT-3",
    "tipo": "transversal",
-   "L_m": 9.5,
+   "L_m": 8.4,
    "H_m": 0.0,
    "inclinacion_deg": 0.0,
    "B_m": 0.65,
@@ -236,7 +236,7 @@
    "Q_diseno_t_h": 8,
    "Q_capacidad_t_h": 17.8,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.45,
+   "P_requerida_kW": 0.44,
    "motor_kW": 0.55,
    "eta": 0.808,
    "cosf": 0.72,
@@ -249,15 +249,15 @@
   {
    "id": "CI-3",
    "tipo": "inclinada",
-   "L_m": 10.98,
-   "H_m": 6.0,
-   "inclinacion_deg": 33.1,
+   "L_m": 14.07,
+   "H_m": 8.05,
+   "inclinacion_deg": 46.1,
    "B_m": 0.5,
    "v_m_s": 0.4,
    "Q_diseno_t_h": 8,
    "Q_capacidad_t_h": 21.2,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.77,
+   "P_requerida_kW": 0.82,
    "motor_kW": 1.1,
    "eta": 0.841,
    "cosf": 0.77,
@@ -265,12 +265,12 @@
    "tambor_D_m": 0.32,
    "rpm_tambor": 23.9,
    "relacion_reductor": 60.0,
-   "C": 4.37
+   "C": 3.97
   },
   {
    "id": "CT-4",
    "tipo": "transversal",
-   "L_m": 9.5,
+   "L_m": 8.4,
    "H_m": 0.0,
    "inclinacion_deg": 0.0,
    "B_m": 0.65,
@@ -278,7 +278,7 @@
    "Q_diseno_t_h": 8,
    "Q_capacidad_t_h": 17.8,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.45,
+   "P_requerida_kW": 0.44,
    "motor_kW": 0.55,
    "eta": 0.808,
    "cosf": 0.72,
@@ -291,15 +291,15 @@
   {
    "id": "CI-4",
    "tipo": "inclinada",
-   "L_m": 10.98,
-   "H_m": 6.0,
-   "inclinacion_deg": 33.1,
+   "L_m": 14.07,
+   "H_m": 8.05,
+   "inclinacion_deg": 46.1,
    "B_m": 0.5,
    "v_m_s": 0.4,
    "Q_diseno_t_h": 8,
    "Q_capacidad_t_h": 21.2,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.77,
+   "P_requerida_kW": 0.82,
    "motor_kW": 1.1,
    "eta": 0.841,
    "cosf": 0.77,
@@ -307,7 +307,7 @@
    "tambor_D_m": 0.32,
    "rpm_tambor": 23.9,
    "relacion_reductor": 60.0,
-   "C": 4.37
+   "C": 3.97
   },
   {
    "id": "CE-O",
@@ -333,15 +333,15 @@
   {
    "id": "CP-O",
    "tipo": "principal",
-   "L_m": 12.03,
-   "H_m": 0.8,
-   "inclinacion_deg": 3.8,
+   "L_m": 13.04,
+   "H_m": 1.0,
+   "inclinacion_deg": 4.4,
    "B_m": 0.65,
    "v_m_s": 0.5,
    "Q_diseno_t_h": 16,
-   "Q_capacidad_t_h": 28.3,
+   "Q_capacidad_t_h": 28.1,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.82,
+   "P_requerida_kW": 0.84,
    "motor_kW": 1.1,
    "eta": 0.841,
    "cosf": 0.77,
@@ -349,7 +349,7 @@
    "tambor_D_m": 0.32,
    "rpm_tambor": 29.8,
    "relacion_reductor": 48.0,
-   "C": 4.24
+   "C": 4.11
   },
   {
    "id": "CE-E",
@@ -375,23 +375,23 @@
   {
    "id": "CP-E",
    "tipo": "principal",
-   "L_m": 38.8,
-   "H_m": -0.2,
-   "inclinacion_deg": -0.3,
+   "L_m": 39.81,
+   "H_m": 1.0,
+   "inclinacion_deg": 1.4,
    "B_m": 0.65,
    "v_m_s": 0.5,
    "Q_diseno_t_h": 16,
-   "Q_capacidad_t_h": 29.6,
+   "Q_capacidad_t_h": 29.2,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.9,
-   "motor_kW": 1.1,
-   "eta": 0.841,
-   "cosf": 0.77,
-   "In_A": 2.58,
+   "P_requerida_kW": 0.97,
+   "motor_kW": 1.5,
+   "eta": 0.853,
+   "cosf": 0.79,
+   "In_A": 3.38,
    "tambor_D_m": 0.32,
    "rpm_tambor": 29.8,
    "relacion_reductor": 48.0,
-   "C": 2.45
+   "C": 2.41
   }
  ],
  "motores_nuevos": [
@@ -603,7 +603,7 @@
    "arranque": "directo",
    "tablero": "TS-G1",
    "tipo": "P",
-   "nota": "P req. 0.45 kW"
+   "nota": "P req. 0.44 kW"
   },
   {
    "tag": "M122",
@@ -613,7 +613,7 @@
    "arranque": "VFD",
    "tablero": "TS-G1",
    "tipo": "P",
-   "nota": "P req. 0.77 kW"
+   "nota": "P req. 0.82 kW"
   },
   {
    "tag": "M201",
@@ -823,7 +823,7 @@
    "arranque": "directo",
    "tablero": "TS-G2",
    "tipo": "P",
-   "nota": "P req. 0.45 kW"
+   "nota": "P req. 0.44 kW"
   },
   {
    "tag": "M222",
@@ -833,7 +833,7 @@
    "arranque": "VFD",
    "tablero": "TS-G2",
    "tipo": "P",
-   "nota": "P req. 0.77 kW"
+   "nota": "P req. 0.82 kW"
   },
   {
    "tag": "M301",
@@ -1043,7 +1043,7 @@
    "arranque": "directo",
    "tablero": "TS-G3",
    "tipo": "P",
-   "nota": "P req. 0.45 kW"
+   "nota": "P req. 0.44 kW"
   },
   {
    "tag": "M322",
@@ -1053,7 +1053,7 @@
    "arranque": "VFD",
    "tablero": "TS-G3",
    "tipo": "P",
-   "nota": "P req. 0.77 kW"
+   "nota": "P req. 0.82 kW"
   },
   {
    "tag": "M401",
@@ -1263,7 +1263,7 @@
    "arranque": "directo",
    "tablero": "TS-G4",
    "tipo": "P",
-   "nota": "P req. 0.45 kW"
+   "nota": "P req. 0.44 kW"
   },
   {
    "tag": "M422",
@@ -1273,7 +1273,7 @@
    "arranque": "VFD",
    "tablero": "TS-G4",
    "tipo": "P",
-   "nota": "P req. 0.77 kW"
+   "nota": "P req. 0.82 kW"
   },
   {
    "tag": "M81",
@@ -1293,7 +1293,7 @@
    "arranque": "VFD",
    "tablero": "TS-GU",
    "tipo": "P",
-   "nota": "P req. 0.82 kW"
+   "nota": "P req. 0.84 kW"
   },
   {
    "tag": "M83",
@@ -1308,12 +1308,12 @@
   {
    "tag": "M84",
    "nom": "Cinta principal CP-E",
-   "kW": 1.1,
-   "In": 2.58,
+   "kW": 1.5,
+   "In": 3.38,
    "arranque": "VFD",
    "tablero": "TS-GU",
    "tipo": "P",
-   "nota": "P req. 0.9 kW"
+   "nota": "P req. 0.97 kW"
   },
   {
    "tag": "M85",
@@ -1323,7 +1323,7 @@
    "arranque": "VFD",
    "tablero": "TS-GU",
    "tipo": "P",
-   "nota": "Ø400 × 6 m bajo la tolva llena; confirmar con el fabricante"
+   "nota": "Ø400 × 7,45 m (6,2 m bajo la tolva llena); confirmar con el fabricante"
   },
   {
    "tag": "M86",
@@ -1333,7 +1333,7 @@
    "arranque": "VFD",
    "tablero": "TS-GU",
    "tipo": "P",
-   "nota": "Ø400 × 6 m bajo la tolva llena; confirmar con el fabricante"
+   "nota": "Ø400 × 7,45 m (6,2 m bajo la tolva llena); confirmar con el fabricante"
   },
   {
    "tag": "M87",
@@ -1343,7 +1343,7 @@
    "arranque": "VFD",
    "tablero": "TS-GU",
    "tipo": "P",
-   "nota": "Ø400 × 6 m bajo la tolva llena; confirmar con el fabricante"
+   "nota": "Ø400 × 7,45 m (6,2 m bajo la tolva llena); confirmar con el fabricante"
   },
   {
    "tag": "M88",
@@ -1353,7 +1353,7 @@
    "arranque": "VFD",
    "tablero": "TS-GU",
    "tipo": "P",
-   "nota": "Ø400 × 6 m bajo la tolva llena; confirmar con el fabricante"
+   "nota": "Ø400 × 7,45 m (6,2 m bajo la tolva llena); confirmar con el fabricante"
   },
   {
    "tag": "M89",
@@ -1376,5 +1376,5 @@
    "nota": "actuador eléctrico de cuarto de vuelta con finales de carrera"
   }
  ],
- "potencia_nueva_kW": 112.54
+ "potencia_nueva_kW": 112.94
 }

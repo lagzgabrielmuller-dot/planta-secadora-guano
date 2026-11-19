@@ -1,0 +1,1337 @@
+{
+ "tg2": {
+  "motores": [
+   {
+    "tag": "M16",
+    "nom": "Hidrolavadora de camiones (lavadero P1)",
+    "kW": 4.0,
+    "In": 8.2,
+    "arranque": "directo",
+    "tablero": "TS-LAV",
+    "fases": 3
+   },
+   {
+    "tag": "M17",
+    "nom": "Bomba del arco de desinfección",
+    "kW": 1.1,
+    "In": 2.5,
+    "arranque": "directo",
+    "tablero": "TS-LAV",
+    "fases": 3
+   },
+   {
+    "tag": "M18",
+    "nom": "Zaranda rotativa (trommel)",
+    "kW": 1.1,
+    "In": 2.5,
+    "arranque": "VFD",
+    "tablero": "TS-ENS",
+    "fases": 3
+   },
+   {
+    "tag": "M19",
+    "nom": "Alimentador de la ensacadora 25 kg",
+    "kW": 0.75,
+    "In": 1.9,
+    "arranque": "VFD",
+    "tablero": "TS-ENS",
+    "fases": 3
+   },
+   {
+    "tag": "M20",
+    "nom": "Cosedora de bolsas",
+    "kW": 0.37,
+    "In": 0.9,
+    "arranque": "directo",
+    "tablero": "TS-ENS",
+    "fases": 3
+   },
+   {
+    "tag": "M21",
+    "nom": "Cinta de salida de bolsas",
+    "kW": 0.55,
+    "In": 1.4,
+    "arranque": "directo",
+    "tablero": "TS-ENS",
+    "fases": 3
+   },
+   {
+    "tag": "M22",
+    "nom": "Envasadora vertical de bolsas chicas",
+    "kW": 2.2,
+    "In": 4.9,
+    "arranque": "propio",
+    "tablero": "TS-ENS",
+    "fases": 3
+   },
+   {
+    "tag": "M23",
+    "nom": "Extractor de la campana de recepción",
+    "kW": 4.0,
+    "In": 8.2,
+    "arranque": "VFD",
+    "tablero": "TG2",
+    "fases": 3
+   },
+   {
+    "tag": "M24",
+    "nom": "Transportador flexible a la envasadora",
+    "kW": 0.55,
+    "In": 1.4,
+    "arranque": "directo",
+    "tablero": "TS-ENS",
+    "fases": 3
+   },
+   {
+    "tag": "M25",
+    "nom": "Bomba de incendio",
+    "kW": 7.5,
+    "In": 15.4,
+    "arranque": "directo",
+    "tablero": "TBI",
+    "fases": 3
+   },
+   {
+    "tag": "M26",
+    "nom": "Bomba jockey de incendio",
+    "kW": 0.75,
+    "In": 1.9,
+    "arranque": "directo",
+    "tablero": "TBI",
+    "fases": 3
+   },
+   {
+    "tag": "M27",
+    "nom": "Bomba trituradora de alimentación a digestores",
+    "kW": 4.0,
+    "In": 8.2,
+    "arranque": "directo",
+    "tablero": "TS-BIO",
+    "fases": 3
+   },
+   {
+    "tag": "M28",
+    "nom": "Agitador sumergible biodigestor BD-1",
+    "kW": 4.0,
+    "In": 8.2,
+    "arranque": "directo",
+    "tablero": "TS-BIO",
+    "fases": 3
+   },
+   {
+    "tag": "M29",
+    "nom": "Agitador sumergible biodigestor BD-2",
+    "kW": 4.0,
+    "In": 8.2,
+    "arranque": "directo",
+    "tablero": "TS-BIO",
+    "fases": 3
+   },
+   {
+    "tag": "M30",
+    "nom": "Agitador del tanque de digestato",
+    "kW": 4.0,
+    "In": 8.2,
+    "arranque": "directo",
+    "tablero": "TS-BIO",
+    "fases": 3
+   },
+   {
+    "tag": "M31",
+    "nom": "Bomba de digestato y recirculación",
+    "kW": 3.0,
+    "In": 6.2,
+    "arranque": "directo",
+    "tablero": "TS-BIO",
+    "fases": 3
+   },
+   {
+    "tag": "M32",
+    "nom": "Separador sólido-líquido (tornillo prensa)",
+    "kW": 2.2,
+    "In": 4.9,
+    "arranque": "directo",
+    "tablero": "TS-BIO",
+    "fases": 3
+   },
+   {
+    "tag": "M33",
+    "nom": "Soplante de biogás",
+    "kW": 1.1,
+    "In": 2.5,
+    "arranque": "directo",
+    "tablero": "TS-BIO (Ex)",
+    "fases": 3
+   },
+   {
+    "tag": "M34",
+    "nom": "Bomba de agua caliente (calefacción de digestores)",
+    "kW": 0.55,
+    "In": 1.4,
+    "arranque": "directo",
+    "tablero": "TS-BIO",
+    "fases": 3
+   },
+   {
+    "tag": "M35",
+    "nom": "Actuador de la válvula desviadora del elevador",
+    "kW": 0.12,
+    "In": 0.3,
+    "arranque": "directo",
+    "tablero": "TS-ENS",
+    "fases": 3
+   },
+   {
+    "tag": "M36",
+    "nom": "Extractor EX-01 Campagnoni AirTEC 1215 (1,5 HP)",
+    "kW": 1.1,
+    "In": 2.6,
+    "arranque": "directo",
+    "tablero": "TS-VEN",
+    "fases": 3
+   },
+   {
+    "tag": "M37",
+    "nom": "Extractor EX-02 Campagnoni AirTEC 1215 (1,5 HP)",
+    "kW": 1.1,
+    "In": 2.6,
+    "arranque": "directo",
+    "tablero": "TS-VEN",
+    "fases": 3
+   },
+   {
+    "tag": "M38",
+    "nom": "Ventilador móvil VM-1 50\" (1 HP, 220 V, toma 2P+T)",
+    "kW": 0.75,
+    "In": 5.1,
+    "arranque": "toma",
+    "tablero": "TS-VEN",
+    "fases": 1
+   },
+   {
+    "tag": "M39",
+    "nom": "Ventilador móvil VM-2 50\" (1 HP, 220 V, toma 2P+T)",
+    "kW": 0.75,
+    "In": 5.1,
+    "arranque": "toma",
+    "tablero": "TS-VEN",
+    "fases": 1
+   },
+   {
+    "tag": "M40",
+    "nom": "Ventilador del enfriador de producto (Rev. F)",
+    "kW": 0.55,
+    "In": 1.4,
+    "arranque": "directo",
+    "tablero": "TS-ENS",
+    "fases": 3
+   }
+  ],
+  "circuitos": [
+   {
+    "Q": "Q21",
+    "destino": "TS-ENS zaranda, envasado y enfriador",
+    "cargas": [
+     "M18",
+     "M19",
+     "M20",
+     "M21",
+     "M22",
+     "M24",
+     "M35",
+     "M40"
+    ],
+    "kW": 6.19,
+    "Ib": 14.7,
+    "In": 20,
+    "S": 4,
+    "L": 25,
+    "metodo": "E",
+    "Iz": 23.7,
+    "fases": 3,
+    "dU_V": 2.81,
+    "dU_pct": 0.74,
+    "verifica": true,
+    "nota": "",
+    "dU_total_pct": 1.18,
+    "lim_dU_pct": 5.0
+   },
+   {
+    "Q": "Q22",
+    "destino": "TS-LAV limpieza de vehículos",
+    "cargas": [
+     "M16",
+     "M17"
+    ],
+    "kW": 5.1,
+    "Ib": 10.7,
+    "In": 13,
+    "S": 4,
+    "L": 50,
+    "metodo": "E",
+    "Iz": 23.7,
+    "fases": 3,
+    "dU_V": 4.09,
+    "dU_pct": 1.08,
+    "verifica": true,
+    "nota": "",
+    "dU_total_pct": 1.52,
+    "lim_dU_pct": 5.0
+   },
+   {
+    "Q": "Q23",
+    "destino": "TS-BIO biogás + G1 25 kWe",
+    "cargas": [
+     "M27",
+     "M28",
+     "M29",
+     "M30",
+     "M31",
+     "M32",
+     "M33",
+     "M34"
+    ],
+    "kW": 22.85,
+    "Ib": 40.0,
+    "In": 50,
+    "S": 16,
+    "L": 105,
+    "metodo": "D1",
+    "Iz": 60.8,
+    "fases": 3,
+    "dU_V": 8.26,
+    "dU_pct": 2.17,
+    "verifica": true,
+    "nota": "mayor entre carga (fs 0,7: 33.5 A) y G1 a plena potencia (40.0 A)",
+    "dU_total_pct": 2.61,
+    "lim_dU_pct": 5.0
+   },
+   {
+    "Q": "Q24",
+    "destino": "VFD M23 extractor de recepción",
+    "cargas": [
+     "M23"
+    ],
+    "kW": 4.0,
+    "Ib": 8.2,
+    "In": 10,
+    "S": 2.5,
+    "L": 30,
+    "metodo": "E",
+    "Iz": 17.4,
+    "fases": 3,
+    "dU_V": 3.0,
+    "dU_pct": 0.79,
+    "verifica": true,
+    "nota": "",
+    "dU_total_pct": 1.23,
+    "lim_dU_pct": 5.0
+   },
+   {
+    "Q": "Q25",
+    "destino": "TL2 iluminación del Sector Este",
+    "cargas": [
+     "ILUM"
+    ],
+    "kW": 1.89,
+    "Ib": 3.0,
+    "In": 6,
+    "S": 4,
+    "L": 45,
+    "metodo": "D1",
+    "Iz": 28.5,
+    "fases": 3,
+    "dU_V": 1.15,
+    "dU_pct": 0.3,
+    "verifica": true,
+    "nota": "",
+    "dU_total_pct": 0.74,
+    "lim_dU_pct": 3.0
+   },
+   {
+    "Q": "Q26",
+    "destino": "CI central de incendio",
+    "cargas": [
+     "CI"
+    ],
+    "kW": 0.15,
+    "Ib": 0.8,
+    "In": 6,
+    "S": 2.5,
+    "L": 5,
+    "metodo": "E",
+    "Iz": 20.9,
+    "fases": 1,
+    "dU_V": 0.06,
+    "dU_pct": 0.03,
+    "verifica": true,
+    "nota": "",
+    "dU_total_pct": 0.47,
+    "lim_dU_pct": 5.0
+   },
+   {
+    "Q": "Q27",
+    "destino": "TS-VEN ventilación de la nave (E10)",
+    "cargas": [
+     "M36",
+     "M37",
+     "M38",
+     "M39"
+    ],
+    "kW": 3.7,
+    "Ib": 10.3,
+    "In": 13,
+    "S": 2.5,
+    "L": 28,
+    "metodo": "E",
+    "Iz": 17.4,
+    "fases": 3,
+    "dU_V": 3.52,
+    "dU_pct": 0.93,
+    "verifica": true,
+    "nota": "",
+    "dU_total_pct": 1.37,
+    "lim_dU_pct": 5.0
+   }
+  ],
+  "total_anterior_kW": 45.84,
+  "total_kW": 50.09,
+  "agregado_kW": 4.25,
+  "base_fs_anterior_kW": 37.59,
+  "base_fs_kW": 41.84,
+  "fs": 0.55,
+  "demanda_tg2_kW": 25.1,
+  "demanda_tg2_anterior_kW": 20.7,
+  "I_demanda_A": 44.8,
+  "I_instalada_A": 78.4,
+  "acometida": {
+   "S": 35,
+   "L": 40,
+   "Iz": 93.1,
+   "In": 80,
+   "Ir": 63,
+   "fusible": 80,
+   "verifica": true,
+   "I2_fusible": 128.0,
+   "lim_I2": 135.0,
+   "dU_pct": 0.44,
+   "In_recomendada": 80
+  },
+  "P_ilum_kW": 2.04,
+  "recorridos": {
+   "Q22": [
+    [
+     "TG2 → bandeja (subida)",
+     2.6
+    ],
+    [
+     "bandeja muro Sur, x 24,8 → 0,3",
+     24.5
+    ],
+    [
+     "bandeja muro Oeste, y 0,45 → 17,5",
+     17.1
+    ],
+    [
+     "bajada y paso de muro a TS-LAV",
+     3.2
+    ],
+    [
+     "reserva 5 %",
+     2.4
+    ]
+   ],
+   "Q25": [
+    [
+     "TG2 → salida de la nave por la sala de control",
+     3.0
+    ],
+    [
+     "zanja junto al playón P2, x 26 → 60",
+     34.0
+    ],
+    [
+     "subidas y bajadas en cámaras",
+     3.0
+    ],
+    [
+     "dentro del depósito hasta TL2",
+     2.5
+    ],
+    [
+     "reserva 5 %",
+     2.1
+    ]
+   ]
+  },
+  "Icc_TG2_kA": 4.5,
+  "S_min_cc_mm2": 12.4,
+  "balance": {
+   "TGF_kW": "54 - 59",
+   "TG2_kW": 25.1,
+   "incendio_kW": 7.5,
+   "G1_kW": -25.0,
+   "sin_G1_kW": 91.6,
+   "con_G1_kW": 66.6,
+   "adoptada_kW": 100,
+   "margen_sin_G1_pct": 8.4
+  },
+  "I_EX": 2.58,
+  "I_VM": 5.15
+ },
+ "iluminacion": {
+  "a": 20.0,
+  "b": 12.0,
+  "h": 4.75,
+  "k": 1.58,
+  "E": 200.0,
+  "CU": 0.62,
+  "fm": 0.7,
+  "phi_lum": 19500.0,
+  "p_lum": 150.0,
+  "phi_t": 110599,
+  "n_calc": 5.67,
+  "n": 6,
+  "E_real": 212,
+  "sep_max": 7.1,
+  "cargas": [
+   [
+    "Depósito E7: campanas LED 150 W",
+    6,
+    150.0
+   ],
+   [
+    "Farolas del Sector Este (calles R6, R7, R8): LED 100 W",
+    5,
+    100.0
+   ],
+   [
+    "Zona de biogás: proyectores LED Ex 60 W",
+    4,
+    60.0
+   ],
+   [
+    "Dársena y portón del depósito: reflectores LED 100 W",
+    2,
+    100.0
+   ],
+   [
+    "Luces de emergencia autónomas (carga de baterías)",
+    8,
+    6.0
+   ]
+  ],
+  "P_Q25_kW": 1.89,
+  "P_Q26_kW": 0.15
+ },
+ "ventilacion": {
+  "V_nave": 4158,
+  "V_techo": 401,
+  "V": 4559,
+  "n_inv": 6,
+  "n_ver": 12,
+  "Q_inv": 27354,
+  "Q_ver": 54707,
+  "cargas": {
+   "Paredes del secador (lana de roca 80 mm)": 6.1,
+   "Ductos calientes dentro de la nave": 3.0,
+   "Motores M5 a M11 (20 % de 6,35 kW)": 1.3,
+   "Producto que se enfría (329 kg/h, 60 → 35 °C)": 3.4,
+   "Personas (7) e iluminación (18 LED)": 3.8,
+   "Sol sobre la cubierta (594 m² × 25 W/m²)": 14.9
+  },
+  "H_kW": 32.5,
+  "q_prod_kW": 3.4,
+  "Q_termico": 33744,
+  "Q_diseno": 54707,
+  "Q_ex": 54700,
+  "n_ex": 2,
+  "Q_real": 92990,
+  "ren_real": 20.4,
+  "Q_un_extractor": 46495,
+  "ren_un_extractor": 10.2,
+  "A_tomas": 12.9,
+  "P_ex_kW": 2.2,
+  "p_max": 24.0,
+  "punto": {
+   "frac_calc": 0.877,
+   "dp_Pa": 5.5,
+   "v_toma": 1.78,
+   "frac_adoptada": 0.85
+  },
+  "biofiltro": {
+   "Q": 6000,
+   "A": 38.2,
+   "h": 1.2,
+   "carga": 157,
+   "t_contacto": 27.5
+  }
+ },
+ "biogas": {
+  "guano_t_dia": 2.52,
+  "ST_kg": 706,
+  "SV_kg": 526,
+  "Q_alim_calc": 8.82,
+  "Q_alim": 9.4,
+  "TRH": 30,
+  "V_util": 282,
+  "h_util": 4.25,
+  "A_dig": 33.2,
+  "V_dig_c_u": 141,
+  "carga": 1.87,
+  "biogas": 184,
+  "CH4": 0.58,
+  "PCI": 20.8,
+  "E_MJ": 3833,
+  "piloto": 12.1,
+  "E_chp_kWh": 995,
+  "E_el": 318,
+  "horas": 12.7,
+  "calor": 477,
+  "calor_med": [
+   23,
+   160,
+   147,
+   307
+  ],
+  "calor_inv": [
+   20,
+   199,
+   217,
+   415
+  ],
+  "almacen": 105,
+  "h_almacen": 13.7,
+  "U": {
+   "paredes": 0.46,
+   "techo": 2.11,
+   "piso": 0.56
+  },
+  "capas": {
+   "paredes": [
+    [
+     "Rsi (digestato → pared)",
+     0.13
+    ],
+    [
+     "acero vitrificado 5 mm (λ 50)",
+     0.0001
+    ],
+    [
+     "lana mineral 80 mm (λ 0,040)",
+     2.0
+    ],
+    [
+     "chapa trapezoidal de protección",
+     0.0
+    ],
+    [
+     "Rse (exterior, viento)",
+     0.04
+    ]
+   ],
+   "techo": [
+    [
+     "Rsi ascendente (superficie del digestato → biogás)",
+     0.1
+    ],
+    [
+     "capa de biogás no ventilada (domo, flujo ascendente)",
+     0.16
+    ],
+    [
+     "Rsi ascendente (biogás → membrana interior)",
+     0.1
+    ],
+    [
+     "membranas de PVC-poliéster 2 × 1,2 mm (λ 0,16)",
+     0.014999999999999998
+    ],
+    [
+     "cámara de aire inflada por el soplante (ventilada: se toma Rsi)",
+     0.1
+    ]
+   ],
+   "piso": [
+    [
+     "Rsi",
+     0.17
+    ],
+    [
+     "losa de H°A° 300 mm (λ 1,6)",
+     0.18749999999999997
+    ],
+    [
+     "XPS 50 mm bajo losa (λ 0,035)",
+     1.4285714285714286
+    ]
+   ]
+  },
+  "balance_calor": {
+   "med": 171,
+   "inv": 62
+  },
+  "liquido": 2.79,
+  "V_T3": 201,
+  "dias_T3": 72,
+  "solido": 1.8,
+  "recirc": 4.6
+ },
+ "fuego": {
+  "S1": [
+   {
+    "material": "Guano seco en pila de acopio (21,7 m³ × 500 kg/m³)",
+    "kg": 10840,
+    "PCI": 10.5,
+    "MJ": 113820
+   },
+   {
+    "material": "Guano en proceso dentro del secador (equivalente seco)",
+    "kg": 600,
+    "PCI": 10.5,
+    "MJ": 6300
+   },
+   {
+    "material": "Guano húmedo en playa de recepción (8 m³ × 800 kg/m³)",
+    "kg": 6400,
+    "PCI": 2.0,
+    "MJ": 12800
+   },
+   {
+    "material": "Producto embolsado en zona 28 (104 bolsas × 25 kg)",
+    "kg": 2600,
+    "PCI": 10.5,
+    "MJ": 27300
+   },
+   {
+    "material": "Bolsas vacías de PE (stock de línea)",
+    "kg": 102,
+    "PCI": 46.0,
+    "MJ": 4692
+   },
+   {
+    "material": "Rechazo de zaranda (plumas y cáscara de huevo)",
+    "kg": 300,
+    "PCI": 8.0,
+    "MJ": 2400
+   },
+   {
+    "material": "Pallets de madera (10 u × 22 kg)",
+    "kg": 220,
+    "PCI": 18.4,
+    "MJ": 4048
+   },
+   {
+    "material": "Bandas y recubrimientos de goma",
+    "kg": 180,
+    "PCI": 32.0,
+    "MJ": 5760
+   },
+   {
+    "material": "Guías UHMW-PE del secador (15 × 12 m)",
+    "kg": 135,
+    "PCI": 46.0,
+    "MJ": 6210
+   },
+   {
+    "material": "Aislación de cables (PVC/XLPE)",
+    "kg": 250,
+    "PCI": 20.0,
+    "MJ": 5000
+   },
+   {
+    "material": "Aceites y grasas en taller y depósito (200 l)",
+    "kg": 176,
+    "PCI": 43.0,
+    "MJ": 7568
+   },
+   {
+    "material": "Gasoil en tanque de la pala cargadora (150 l)",
+    "kg": 126,
+    "PCI": 43.0,
+    "MJ": 5418
+   },
+   {
+    "material": "Mobiliario, papeles y ropa (oficina, vestuario, sala de control)",
+    "kg": 800,
+    "PCI": 18.4,
+    "MJ": 14720
+   },
+   {
+    "material": "Repuestos embalados (cartón y plásticos)",
+    "kg": 150,
+    "PCI": 17.0,
+    "MJ": 2550
+   }
+  ],
+  "E_S1": 218586,
+  "madera_S1": 11873,
+  "sectores": [
+   {
+    "sector": "S1 Nave de proceso",
+    "sup": 594,
+    "E": 218586,
+    "q": 20.0,
+    "rango": "16 a 30",
+    "riesgo": "R3",
+    "F": "F 60",
+    "A": "2 A",
+    "B": "6 B"
+   },
+   {
+    "sector": "S2 Anexo del generador",
+    "sup": 52,
+    "E": 2274,
+    "q": 2.4,
+    "rango": "hasta 15",
+    "riesgo": "R3",
+    "F": "F 30",
+    "A": "1 A",
+    "B": "4 B"
+   },
+   {
+    "sector": "S3 Silo de cáscara (al aire libre)",
+    "sup": 72,
+    "E": 103950,
+    "q": 78.4,
+    "rango": "61 a 100",
+    "riesgo": "R3",
+    "F": "F 120",
+    "A": "6 A",
+    "B": "10 B"
+   },
+   {
+    "sector": "S4 Depósito de expedición (nuevo)",
+    "sup": 240,
+    "E": 173991,
+    "q": 39.4,
+    "rango": "31 a 60",
+    "riesgo": "R3",
+    "F": "F 90",
+    "A": "3 A",
+    "B": "8 B"
+   },
+   {
+    "sector": "S5 Zona de biogás (al aire libre)",
+    "sup": 864,
+    "E": 10451,
+    "q": 0.7,
+    "rango": "hasta 15",
+    "riesgo": "R2",
+    "F": "F 60",
+    "A": "—",
+    "B": "6 B"
+   }
+  ],
+  "bomba_kW_eje": 4.9,
+  "reserva_m3": 10.0,
+  "hidrantes_m3": 12.0,
+  "tanque_m3": 20
+ },
+ "fatiga": {
+  "servicio": {
+   "horas_dia": 9.0,
+   "dias_anio": 250,
+   "anios": 20
+  },
+  "confiabilidad": 99,
+  "n_adm": 1.5,
+  "materiales": {
+   "SAE 1045 HR": {
+    "Sut": 570,
+    "Sy": 310,
+    "HB": 163,
+    "fuente": "Shigley tabla A-20"
+   },
+   "SAE 1045 CD": {
+    "Sut": 630,
+    "Sy": 530,
+    "HB": 179,
+    "fuente": "Shigley tabla A-20"
+   },
+   "SAE 1020 HR": {
+    "Sut": 380,
+    "Sy": 210,
+    "HB": 111,
+    "fuente": "Shigley tabla A-20"
+   },
+   "F-24 (IRAM-IAS U 500-503)": {
+    "Sut": 370,
+    "Sy": 240,
+    "HB": 110,
+    "fuente": "IRAM-IAS U 500-503"
+   }
+  },
+  "eje_motriz": {
+   "material": "SAE 1045 HR",
+   "Sut": 570,
+   "Sy": 310,
+   "rpm": 0.373,
+   "T": 471.0,
+   "fluct": 0.15,
+   "P_H": 3489.0,
+   "P_V": 225.0,
+   "Fc": 2069.0,
+   "Se_prima": 285.0,
+   "secciones": [
+    {
+     "cod": "S1",
+     "seccion": "asiento del cubo Sur (borde del buje cónico)",
+     "u_mm": 1044,
+     "d": 60,
+     "M": 1150.5,
+     "T": 471.0,
+     "temp": 100,
+     "acabado": "rectificado",
+     "Kt": 1.7,
+     "Kts": 1.5,
+     "r": 3.0,
+     "q": 0.812,
+     "qs": 0.852,
+     "Kf": 1.569,
+     "Kfs": 1.426,
+     "Se": 147.1,
+     "marin": {
+      "ka": 0.921,
+      "kb": 0.794,
+      "kc": 1.0,
+      "kd": 1.02,
+      "ke": 0.814,
+      "kf": 0.85
+     },
+     "sigma_a": 85.09,
+     "sigma_m": 0.0,
+     "tau_a": 2.38,
+     "tau_m": 15.84,
+     "vm_a": 85.19,
+     "vm_m": 27.43,
+     "vm_max": 90.75,
+     "n_goodman": 1.59,
+     "n_gerber": 1.72,
+     "n_fluencia": 3.42,
+     "N_falla": "infinita",
+     "s_ar": 89.5
+    },
+    {
+     "cod": "S2",
+     "seccion": "asiento del rodamiento B (UCF 212)",
+     "u_mm": 1370,
+     "d": 60,
+     "M": 279.3,
+     "T": 471.0,
+     "temp": 50,
+     "acabado": "maquinado",
+     "Kt": 1.5,
+     "Kts": 1.3,
+     "r": 3.0,
+     "q": 0.812,
+     "qs": 0.852,
+     "Kf": 1.406,
+     "Kfs": 1.256,
+     "Se": 132.7,
+     "marin": {
+      "ka": 0.839,
+      "kb": 0.794,
+      "kc": 1.0,
+      "kd": 1.01,
+      "ke": 0.814,
+      "kf": 0.85
+     },
+     "sigma_a": 18.52,
+     "sigma_m": 0.0,
+     "tau_a": 2.09,
+     "tau_m": 13.94,
+     "vm_a": 18.87,
+     "vm_m": 24.15,
+     "vm_max": 33.38,
+     "n_goodman": 5.42,
+     "n_gerber": 6.5,
+     "n_fluencia": 9.29,
+     "N_falla": "infinita",
+     "s_ar": 19.7
+    },
+    {
+     "cod": "S3",
+     "seccion": "escalón Ø60/Ø50, radio de acuerdo 2 mm",
+     "u_mm": 1455,
+     "d": 50,
+     "M": 103.4,
+     "T": 471.0,
+     "temp": 50,
+     "acabado": "maquinado",
+     "Kt": 1.95,
+     "Kts": 1.55,
+     "r": 2.0,
+     "q": 0.779,
+     "qs": 0.825,
+     "Kf": 1.74,
+     "Kfs": 1.454,
+     "Se": 136.4,
+     "marin": {
+      "ka": 0.839,
+      "kb": 0.816,
+      "kc": 1.0,
+      "kd": 1.01,
+      "ke": 0.814,
+      "kf": 0.85
+     },
+     "sigma_a": 14.67,
+     "sigma_m": 0.0,
+     "tau_a": 4.18,
+     "tau_m": 27.89,
+     "vm_a": 16.36,
+     "vm_m": 48.31,
+     "vm_max": 57.46,
+     "n_goodman": 4.88,
+     "n_gerber": 6.1,
+     "n_fluencia": 5.39,
+     "N_falla": "infinita",
+     "s_ar": 17.9
+    },
+    {
+     "cod": "S4",
+     "seccion": "chavetero de la corona Z75 (14×9, fresado)",
+     "u_mm": 1469,
+     "d": 50,
+     "M": 74.5,
+     "T": 471.0,
+     "temp": 50,
+     "acabado": "maquinado",
+     "Kt": 2.14,
+     "Kts": 3.0,
+     "r": 1.0,
+     "q": 0.714,
+     "qs": 0.769,
+     "Kf": 1.814,
+     "Kfs": 2.538,
+     "Se": 136.4,
+     "marin": {
+      "ka": 0.839,
+      "kb": 0.816,
+      "kc": 1.0,
+      "kd": 1.01,
+      "ke": 0.814,
+      "kf": 0.85
+     },
+     "sigma_a": 11.01,
+     "sigma_m": 0.0,
+     "tau_a": 7.3,
+     "tau_m": 48.7,
+     "vm_a": 16.77,
+     "vm_m": 84.35,
+     "vm_max": 97.62,
+     "n_goodman": 3.69,
+     "n_gerber": 4.51,
+     "n_fluencia": 3.18,
+     "N_falla": "infinita",
+     "s_ar": 19.7
+    }
+   ],
+   "critica": "S1",
+   "n_min": 1.59,
+   "ciclos_vida": 1007100,
+   "anios": 20,
+   "atasco": {
+    "T_motor": 5.12,
+    "i": 1500,
+    "eta": 0.38,
+    "T_atasco": 4374,
+    "tau": 178.2,
+    "Sys": 178.9,
+    "n": 1.0,
+    "T_limite_VFD": 706,
+    "tau_limite": 28.8,
+    "n_limite": 6.2
+   },
+   "S1_torneado": {
+    "Se": 134.0,
+    "n_goodman": 1.46
+   },
+   "verifica": true
+  },
+  "eje_reenvio": {
+   "t_cola": 2812,
+   "f_ret": 812,
+   "P_H": 2812,
+   "brazo": 0.32600000000000007,
+   "M": 918.6,
+   "casos": [
+    {
+     "caso": "Ø50 constante (actual)",
+     "d": 50,
+     "Kf": 1.569,
+     "Se": 136.4,
+     "sigma_a": 117.4,
+     "n": 1.16,
+     "N_falla": "infinita"
+    },
+    {
+     "caso": "Ø60 en cubos, muñones Ø50 (propuesto)",
+     "d": 60,
+     "Kf": 1.569,
+     "Se": 132.7,
+     "sigma_a": 67.9,
+     "n": 1.95,
+     "N_falla": "infinita"
+    }
+   ],
+   "n_munon": 11.4,
+   "rpm": 0.4736451106414805
+  },
+  "chaveta": {
+   "F": 18840,
+   "tau_m": 27.5,
+   "tau_a": 4.1,
+   "sigma_ap": 109.9,
+   "Se_corte": 105.0,
+   "Sus": 382,
+   "n_fatiga": 9.0,
+   "n_aplast": 2.8,
+   "l_ef": 49
+  },
+  "cadena": {
+   "Fc": 2069.0,
+   "k": 1.3,
+   "F_servicio": 2690,
+   "F_adm_fatiga": 8807,
+   "F_rotura_min": 31269,
+   "n_fatiga": 3.27,
+   "n_rotura": 15.1
+  },
+  "rodamientos": {
+   "filas": [
+    {
+     "rodamiento": "UCF 212 - apoyo B del tambor motriz",
+     "C": 52.5,
+     "C0": 36.0,
+     "P": 4.364,
+     "rpm": 0.373,
+     "L10_Mrev": 1741,
+     "L10_h": "7.78e+07",
+     "s0": 8.2
+    },
+    {
+     "rodamiento": "UCF 212 - apoyo A del tambor motriz",
+     "C": 52.5,
+     "C0": 36.0,
+     "P": 3.506,
+     "rpm": 0.373,
+     "L10_Mrev": 3358,
+     "L10_h": "1.50e+08",
+     "s0": 10.3
+    },
+    {
+     "rodamiento": "UCT 210 - tambor de reenvío",
+     "C": 35.0,
+     "C0": 23.2,
+     "P": 2.818,
+     "rpm": 0.47,
+     "L10_Mrev": 1916,
+     "L10_h": "6.79e+07",
+     "s0": 8.2
+    }
+   ],
+   "nota": "a tan baja velocidad la vida a fatiga es prácticamente ilimitada; manda la capacidad estática (s0 ≥ 2 para cargas con choques leves, catálogo NTN/SKF)."
+  },
+  "anclajes": {
+   "masa": {
+    "filas": [
+     [
+      "Columnas UPN 120 (10 × 3,4 m × 13,4 kg/m)",
+      456
+     ],
+     [
+      "Vigas longitudinales IPN 140 (4 × 13 m × 14,3 kg/m)",
+      744
+     ],
+     [
+      "Travesaños L 50×50×5 (39 × 2,6 m × 3,77 kg/m)",
+      382
+     ],
+     [
+      "Placas base 200×200×12 (10 × 3,8 kg)",
+      38
+     ],
+     [
+      "Paneles sándwich 80 mm (161 m² × 17 kg/m²)",
+      2737
+     ],
+     [
+      "Bandas de malla AISI 304 (3 × 25 m × 2 m × 12 kg/m²)",
+      1800
+     ],
+     [
+      "Tambores motrices con eje (3 × 145 kg)",
+      435
+     ],
+     [
+      "Tambores de reenvío con eje y tensores (3 × 115 kg)",
+      345
+     ],
+     [
+      "Motorreductores 0,75 kW 1:300 con base y cadena (3 × 65 kg)",
+      195
+     ],
+     [
+      "Guías (PTFE pisos 2-3, UHMW-PE piso 1), guías laterales inox, tolvas de caída",
+      933
+     ],
+     [
+      "Faldones de sellado de bordes AISI 304 1,5 mm (6 × 11,6 m × 0,32 m)",
+      265
+     ],
+     [
+      "Plenum, campana de salida y bridas de ductos",
+      640
+     ],
+     [
+      "Pasarela superior 4.13 con barandas y escalera",
+      600
+     ],
+     [
+      "Rodillos de retorno Ø89 (15 × 9 kg)",
+      135
+     ]
+    ],
+    "total_kg": 9704,
+    "peso_kN": 95.2,
+    "modelo_cad_kg": 9538,
+    "dif_cad_pct": -1.7
+   },
+   "secador": {
+    "m_kg": 10784,
+    "V_placa_kN": 10.6,
+    "H_total_N": 8393,
+    "H_var_N": 210,
+    "tau_MPa": 1.3,
+    "N_Rd": 26.0,
+    "V_Rd": 15.0,
+    "uso_V_pct": 1.4,
+    "placas": 10,
+    "varillas": 4,
+    "T_inst": 80.0,
+    "F_pre_kN": 25.0,
+    "sigma_apoyo_MPa": 0.26
+   },
+   "ventilador": {
+    "rpm": 1450,
+    "m_rotor": 70.0,
+    "e_um": 41.5,
+    "F_unb_N": 67.0,
+    "F_falla_N": 670,
+    "Fi_kN": 70.7,
+    "sigma_a": 0.13,
+    "sigma_i": 450,
+    "n_f": 383.5
+   }
+  },
+  "mensula": {
+   "R": 4364.0,
+   "e": 0.15,
+   "h": 6.0,
+   "l": 370.0,
+   "sigma": 3.38,
+   "tau": 1.39,
+   "s_a": 0.55,
+   "s_m": 3.66,
+   "Kfs": 2.7,
+   "Sse": 64.0,
+   "n": 17.3
+  },
+  "wohler": {
+   "Sut": 570,
+   "Se_prima": 285.0,
+   "f": 0.876,
+   "a": 874.2,
+   "b": -0.0811,
+   "niveles": [
+    {
+     "S": 484,
+     "frac": 0.85,
+     "N": "1.44e+03"
+    },
+    {
+     "S": 456,
+     "frac": 0.8,
+     "N": "3.05e+03"
+    },
+    {
+     "S": 428,
+     "frac": 0.75,
+     "N": "6.75e+03"
+    },
+    {
+     "S": 399,
+     "frac": 0.7,
+     "N": "1.58e+04"
+    },
+    {
+     "S": 370,
+     "frac": 0.65,
+     "N": "3.94e+04"
+    },
+    {
+     "S": 342,
+     "frac": 0.6,
+     "N": "1.06e+05"
+    },
+    {
+     "S": 319,
+     "frac": 0.56,
+     "N": "2.47e+05"
+    },
+    {
+     "S": 302,
+     "frac": 0.53,
+     "N": "4.88e+05"
+    },
+    {
+     "S": 291,
+     "frac": 0.51,
+     "N": "7.83e+05"
+    },
+    {
+     "S": 285,
+     "frac": 0.5,
+     "N": "> 10⁶ (no rompe)"
+    },
+    {
+     "S": 274,
+     "frac": 0.48,
+     "N": "> 10⁶ (no rompe)"
+    },
+    {
+     "S": 262,
+     "frac": 0.46,
+     "N": "> 10⁶ (no rompe)"
+    }
+   ],
+   "probetas": 12
+  },
+  "recepcion": {
+   "stock": "SAE 1020 HR",
+   "n_motriz_stock": 1.13,
+   "n_reenvio_stock": 1.49,
+   "hb_min": 154,
+   "hb_adop": 155,
+   "hb_max": 190,
+   "sut_hb_min": 531,
+   "n_hb_min": 1.5,
+   "d_max": 4.81,
+   "d_min": 4.37,
+   "brinell": {
+    "designacion": "HB 10/3000/15",
+    "D": 10,
+    "P": 3000,
+    "C": 30,
+    "t": "10 a 15 s",
+    "d_D": "0,25 a 0,50",
+    "borde": "2,5·d",
+    "entre_centros": "4·d",
+    "espesor": "10·h"
+   },
+   "probetas_wohler_min": 12,
+   "probetas_wohler_rigurosa": 50
+  }
+ }
+}

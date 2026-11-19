@@ -214,7 +214,8 @@ def galpon(e, g):
     e.caja(eje - 1250, y1 - 25, 0, eje + 1250, y1 + 25, 2600, "chapa_trap", tag, "Portón de servicio 2,5 × 2,6 m")
     e.caja(eje - lado_dep * 3200 - 450, y1 - 25, 0, eje - lado_dep * 3200 + 450, y1 + 25, 2100, "acero_pintado", tag,
            "Puerta de personal (pediluvio y cambio de calzado)")
-    e.caja(x0 - 25, y0 + 1500, 0, x0 + 25, y0 + 2400, 2100, "acero_pintado", tag, "Puerta de la cabecera de guano")
+    x_pg = x0 if sig > 0 else x1                    # la puerta va del lado opuesto a la planta (del otro está el CCM)
+    e.caja(x_pg - 25, y0 + 1500, 0, x_pg + 25, y0 + 2400, 2100, "acero_pintado", tag, "Puerta de la cabecera de guano")
     # ------------------------------------------------------------------ jaulas, cintas, comederos y bebederos
     e.en(f"Galpones - jaulas {gid}")
     yc0 = y0 + CAB_G
@@ -307,7 +308,7 @@ def galpon(e, g):
     e.caja(xs0, y1, 0, xs1, y1 + 3000, 3000, "panel", f"SS-{gid}", f"Sala de servicio del {gid}")
     e.caja(xs0 - 100, y1 - 100, 3000, xs1 + 100, y1 + 3100, 3080, "chapa_techo", f"SS-{gid}", "")
     C.tablero(e, (xs0 + xs1) / 2 - 600, y1 + 3000 + 2, 0, 1200, 2000, 400, rotz=0, tag=f"TS-{gid}",
-              nombre=f"Tablero seccional TS-{gid} (fuerza, CCM de las cintas y PLC)")
+              nombre=f"Tablero seccional TS-{gid} (fuerza, ventilación, alimentación, huevos y PLC; alimenta al CCM-{gid})")
     C.tablero(e, (xs0 + xs1) / 2 + 900, y1 + 3000 + 2, 600, 600, 800, 250, rotz=0, tag=f"CA-{gid}",
               nombre="Controlador ambiental (temperatura, humedad, NH3 y CO2)")
     for yy in (y0 + 30000, y0 + 60000, y0 + 90000):

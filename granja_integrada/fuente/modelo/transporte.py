@@ -603,8 +603,12 @@ def torre(e, tt):
                nom="Tope de posicionamiento del contenedor")
     e.en("Torres de transferencia")
     # ------------------------------------------------------------------ periferia remota, botonera y cartel
-    C.tablero(e, x_cp - sig * 700, y1 - 260, zp, 800, 1000, 300, rotz=180, tag=f"RIO-{tt['lado']}",
-              nombre=f"Tablero de periferia remota RIO-{tt['lado']} (ET 200SP, PROFINET)")
+    # periferia en la esquina libre del lado de la principal (no tapa la llegada de la escalera ni de la pasarela)
+    C.tablero(e, x_cp - sig * 170, y0 + 500, zp, 800, 1000, 300, rotz=-90 * sig, tag=f"RIO-{tt['lado']}",
+              nombre=f"Tablero de periferia remota RIO-{tt['lado']} (ET 200SP con F-DI, PROFINET por fibra)")
+    xp = x_cp - sig * (170 + 150 + 20)
+    e.caja_rot((xp, y0 + 500, zp + 100 + 850), (24, 140, 100), 0.0, "negro", f"RIO-{tt['lado']}", "Panel de operador KTP400")
+    e.caja_rot((xp - sig * 14, y0 + 500, zp + 100 + 850), (4, 115, 75), 0.0, "vidrio", f"RIO-{tt['lado']}", "")
     C.botonera(e, (x - 600, y0 + 60, zp + 1200), (0, 1, 0), tag=tag)
     C.placa(e, (x, y1 + 30, zp + 1600), (0, 1, 0), 900, 300, "amarillo", tag=tag,
             nom=f"{tag} · TORRE DE TRANSFERENCIA · USAR ARNÉS EN LA ABERTURA")
@@ -740,6 +744,7 @@ def tolva_pulmon(e):
         e.caja(cx - 400, cy - 350, zt, cx + 400, cy + 350, zt + 50, "amarillo", cod=tag,
                nom="Registro de inspección 800 × 700 con bisagras y traba")
         e.caja(cx - 420, cy + 330, zt + 30, cx + 420, cy + 360, zt + 80, "negro", cod=tag, nom="Bisagra")
+        C.sensor(e, "final", (cx + 470, cy - 200, zt), (0, 0, 1), tag=f"ZS-REG{1 if cx < 3000 else 2}")   # enclavamiento del registro
     e.tubo((1200, 15900, zt), (1200, 15900, 6000), 300, 296, "galv", cod=tag, nom="Boca de aspiración Ø600 (a M23 y biofiltro)")
     C.cano(e, [(1200, 15900, 6000), (1200, 18300, 6000)], d=600, tag=tag, mat="galv")
     e.caja(1500, 15850, 5050, 1620, 15950, 5250, "amarillo", cod=tag, nom="Compuerta mariposa con palanca")

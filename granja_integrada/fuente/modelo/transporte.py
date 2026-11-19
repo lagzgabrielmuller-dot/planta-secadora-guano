@@ -821,7 +821,7 @@ def colgadores_cp_e(e, x_porticos=(5.5, 11.0, 16.5, 22.0, 27.5)):
     m = Marco(TR[cid]["p0"], TR[cid]["p1"])
     B = TR[cid]["ancho"] * 1000
     tag = f"COL-{cid}"
-    z_cercha = NAVE["h_alero"] * 1000
+    z_cercha = NAVE["h_alero"] * 1000 - 175 - 45     # cara inferior del cordón inferior de la cercha
     n_inf = -d_cab(B) / 2 - 250
     t_pas0, t_pas1 = -(B / 2 + 250), -(B / 2 + 850)            # −t de la CP-E es el Norte
     for xp in x_porticos:

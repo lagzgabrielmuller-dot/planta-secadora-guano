@@ -95,8 +95,10 @@ def _depositos(galpones):
         par = [g for g in galpones if g["lado"] == lado]
         xm = sum(g["x"] for g in par) / 2
         y0 = par[0]["y1"] + 4.0                                         # P: paso de las cintas de huevos
-        d.append({"id": "DH-" + lado, "lado": lado, "x0": round(xm - DEPOSITO["L"] / 2, 3),
-                  "x1": round(xm + DEPOSITO["L"] / 2, 3), "y0": round(y0, 3), "y1": round(y0 + DEPOSITO["A"], 3),
+        # S: el depósito de San Jorge tiene el portón en un lado corto (16 m) y el pasillo del transelevador a lo largo
+        # (21,8 m); acá se gira para que el portón mire al camino Norte (limpio) y el pasillo vaya de Norte a Sur
+        d.append({"id": "DH-" + lado, "lado": lado, "x0": round(xm - DEPOSITO["A"] / 2, 3),
+                  "x1": round(xm + DEPOSITO["A"] / 2, 3), "y0": round(y0, 3), "y1": round(y0 + DEPOSITO["L"], 3),
                   "porton": "N", "galpones": [g["id"] for g in par]})
     return d
 
@@ -189,12 +191,13 @@ TOLVA_PULMON["volumen_util_m3"] = round((_tp["x1"] - _tp["x0"]) * (_tp["y1"] - _
 # =============================================================================== predio, caminos y servicios (P)
 X_MIN = EJES_X["G1"] - _A2 - 50.0
 X_MAX = EJES_X["G4"] + _A2 + 50.0
-Y_MAX = Y_SUR_GALPONES + GALPON["L"] + 4.0 + DEPOSITO["A"] + 32.0
+_Y_DEP1 = Y_SUR_GALPONES + GALPON["L"] + 4.0 + DEPOSITO["L"]       # muro Norte (portón) de los depósitos
+_yn = _Y_DEP1 + 15.0                                                # playón de 15 m frente al muelle
+Y_MAX = _yn + 7.0 + 20.0
 PREDIO = {"x0": round(X_MIN, 1), "x1": round(X_MAX, 1), "y0": -70.0, "y1": round(Y_MAX, 1),
           "nota": "cerco a ≥ 50 m de los galpones (criterio de la Res. SENASA anterior; verificar con la 1699/2019)"}
 CALLE = {"y0": -85.0, "y1": -78.0, "nom": "Camino rural público"}
 _xo, _xe = EJES_X["G1"] - _A2 - 38.0, EJES_X["G4"] + _A2 + 38.0   # dejan lugar para un galpón más por lado
-_yn = Y_SUR_GALPONES + GALPON["L"] + 4.0 + DEPOSITO["A"] + 6.0
 CAMINOS = [
     {"id": "C1", "zona": "sucia", "x0": 13.0, "x1": 20.0, "y0": -55.0, "y1": -22.0, "nom": "acceso a la planta"},
     {"id": "C2", "zona": "sucia", "x0": -20.0, "x1": -13.0, "y0": -22.0, "y1": 39.0, "nom": "camino Oeste de la planta"},
@@ -216,6 +219,10 @@ PLAYONES = [
                                                                           "0,7 m al Norte de la galería de la CP-E)"},
     {"id": "PY3", "x0": -13.0, "x1": 0.0, "y0": 2.0, "y1": 24.0, "nom": "playón Oeste: boca de emergencia de la TT-O"},
     {"id": "PY4", "x0": 33.0, "x1": 46.0, "y0": 2.0, "y1": 13.0, "nom": "playón Este: boca de emergencia de la TT-E"},
+    {"id": "PY5", "x0": round(EJES_X["G2"] - GALPON["eje_par"] / 2 - 11.0, 1), "x1": round(EJES_X["G2"] - GALPON["eje_par"] / 2 + 11.0, 1),
+     "y0": round(_Y_DEP1, 2), "y1": round(_yn, 2), "nom": "playón de carga de huevos del DH-O (camión al muelle)"},
+    {"id": "PY6", "x0": round(EJES_X["G3"] + GALPON["eje_par"] / 2 - 11.0, 1), "x1": round(EJES_X["G3"] + GALPON["eje_par"] / 2 + 11.0, 1),
+     "y0": round(_Y_DEP1, 2), "y1": round(_yn, 2), "nom": "playón de carga de huevos del DH-E (camión al muelle)"},
 ]
 ACCESO = {  # P: todos los vehículos cruzan el vado; el personal entra por los vestuarios con ducha
     "porton": {"x0": 11.0, "x1": 22.0, "y": -70.0},

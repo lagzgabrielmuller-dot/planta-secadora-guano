@@ -96,10 +96,10 @@
   {
    "id": "DH-O",
    "lado": "O",
-   "x0": -61.65,
-   "x1": -39.85,
+   "x0": -58.75,
+   "x1": -42.75,
    "y0": 126.65,
-   "y1": 142.65,
+   "y1": 148.45,
    "porton": "N",
    "galpones": [
     "G1",
@@ -109,10 +109,10 @@
   {
    "id": "DH-E",
    "lado": "E",
-   "x0": 72.85,
-   "x1": 94.65,
+   "x0": 75.75,
+   "x1": 91.75,
    "y0": 126.65,
-   "y1": 142.65,
+   "y1": 148.45,
    "porton": "N",
    "galpones": [
     "G3",
@@ -518,7 +518,7 @@
   "x0": -121.5,
   "x1": 154.5,
   "y0": -70.0,
-  "y1": 174.7,
+  "y1": 190.5,
   "nota": "cerco a ≥ 50 m de los galpones (criterio de la Res. SENASA anterior; verificar con la 1699/2019)"
  },
  "calle": {
@@ -587,7 +587,7 @@
    "x0": -116.5,
    "x1": -109.5,
    "y0": -62.0,
-   "y1": 155.7,
+   "y1": 170.5,
    "nom": "camino perimetral Oeste (limpio)"
   },
   {
@@ -596,7 +596,7 @@
    "x0": 142.5,
    "x1": 149.5,
    "y0": -62.0,
-   "y1": 155.7,
+   "y1": 170.5,
    "nom": "camino perimetral Este (limpio)"
   },
   {
@@ -604,8 +604,8 @@
    "zona": "limpia",
    "x0": -116.5,
    "x1": 149.5,
-   "y0": 148.7,
-   "y1": 155.7,
+   "y0": 163.5,
+   "y1": 170.5,
    "nom": "camino Norte de los depósitos y silos (limpio)"
   }
  ],
@@ -641,6 +641,22 @@
    "y0": 2.0,
    "y1": 13.0,
    "nom": "playón Este: boca de emergencia de la TT-E"
+  },
+  {
+   "id": "PY5",
+   "x0": -61.8,
+   "x1": -39.8,
+   "y0": 148.45,
+   "y1": 163.45,
+   "nom": "playón de carga de huevos del DH-O (camión al muelle)"
+  },
+  {
+   "id": "PY6",
+   "x0": 72.8,
+   "x1": 94.8,
+   "y0": 148.45,
+   "y1": 163.45,
+   "nom": "playón de carga de huevos del DH-E (camión al muelle)"
   }
  ],
  "acceso": {

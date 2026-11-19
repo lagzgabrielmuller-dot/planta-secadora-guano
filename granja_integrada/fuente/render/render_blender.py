@@ -31,6 +31,48 @@ def nodo(nt, tipo, x=0, y=0):
     return n
 
 
+def malla_alambre(nt, bsdf, tex, paso=0.025, alambre=0.12):
+    """Alfa de malla electrosoldada: alambres cada `paso` m sobre los dos ejes del plano de cada cara."""
+    sep = nodo(nt, "ShaderNodeSeparateXYZ", -700, -400)
+    nt.links.new(tex.outputs["Object"], sep.inputs["Vector"])
+    nsep = nodo(nt, "ShaderNodeSeparateXYZ", -700, -600)
+    nt.links.new(tex.outputs["Normal"], nsep.inputs["Vector"])
+    total = None
+    for eje in ("X", "Y", "Z"):
+        m = nodo(nt, "ShaderNodeMath", -560, -400)
+        m.operation = "MULTIPLY"
+        m.inputs[1].default_value = 1.0 / paso
+        nt.links.new(sep.outputs[eje], m.inputs[0])
+        f = nodo(nt, "ShaderNodeMath", -460, -400)
+        f.operation = "FRACT"
+        nt.links.new(m.outputs[0], f.inputs[0])
+        lt = nodo(nt, "ShaderNodeMath", -360, -400)
+        lt.operation = "LESS_THAN"
+        lt.inputs[1].default_value = alambre
+        nt.links.new(f.outputs[0], lt.inputs[0])
+        # el eje solo cuenta si está en el plano de la cara (|n| chico en ese eje)
+        an = nodo(nt, "ShaderNodeMath", -560, -600)
+        an.operation = "ABSOLUTE"
+        nt.links.new(nsep.outputs[eje], an.inputs[0])
+        enp = nodo(nt, "ShaderNodeMath", -460, -600)
+        enp.operation = "LESS_THAN"
+        enp.inputs[1].default_value = 0.5
+        nt.links.new(an.outputs[0], enp.inputs[0])
+        mul = nodo(nt, "ShaderNodeMath", -260, -500)
+        mul.operation = "MULTIPLY"
+        nt.links.new(lt.outputs[0], mul.inputs[0])
+        nt.links.new(enp.outputs[0], mul.inputs[1])
+        if total is None:
+            total = mul
+        else:
+            mx = nodo(nt, "ShaderNodeMath", -160, -500)
+            mx.operation = "MAXIMUM"
+            nt.links.new(total.outputs[0], mx.inputs[0])
+            nt.links.new(mul.outputs[0], mx.inputs[1])
+            total = mx
+    nt.links.new(total.outputs[0], bsdf.inputs["Alpha"])
+
+
 def mejorar_material(mat):
     """Agrega textura procedural según el nombre del material (los colores y la rugosidad vienen del GLB)."""
     nombre = mat.name.split(".")[0]
@@ -77,8 +119,8 @@ def mejorar_material(mat):
         mix = nodo(nt, "ShaderNodeTexNoise", -600, 400)
         mix.inputs["Scale"].default_value = 0.08
         ramp = nodo(nt, "ShaderNodeValToRGB", -300, 400)
-        ramp.color_ramp.elements[0].color = (0.20, 0.30, 0.10, 1)
-        ramp.color_ramp.elements[1].color = (0.42, 0.50, 0.22, 1)
+        ramp.color_ramp.elements[0].color = (0.045, 0.085, 0.020, 1)     # lineal: pasto de campo entrerriano
+        ramp.color_ramp.elements[1].color = (0.110, 0.160, 0.045, 1)
         nt.links.new(tex.outputs["Object"], mix.inputs["Vector"])
         nt.links.new(mix.outputs["Fac"], ramp.inputs["Fac"])
         nt.links.new(ramp.outputs["Color"], bsdf.inputs["Base Color"])
@@ -93,9 +135,13 @@ def mejorar_material(mat):
     elif nombre in ("vidrio", "policarbonato", "agua"):
         bsdf.inputs["Transmission Weight"].default_value = 0.9
         bsdf.inputs["Roughness"].default_value = 0.05
+    if nombre in ("malla",):
+        malla_alambre(nt, bsdf, tex, paso=0.025, alambre=0.12)
     if nombre in ("luz",):
         bsdf.inputs["Emission Color"].default_value = (1.0, 0.97, 0.9, 1)
-        bsdf.inputs["Emission Strength"].default_value = 6.0
+        bsdf.inputs["Emission Strength"].default_value = 40.0
+    if nombre in ("gallina",):
+        ruido(120.0, 8.0, 0.5, (0.8, 1.0))                  # plumaje
 
 
 def preparar_escena(glb, sol=(225.0, 38.0), cielo=0.30, sol_w=3.0):
@@ -171,6 +217,7 @@ def configurar_render(v):
     s.cycles.samples = int(v.get("muestras", 96))
     s.cycles.use_denoising = True
     s.cycles.max_bounces = 6
+    s.cycles.transparent_max_bounces = 48              # mallas de jaulas y guardas superpuestas
     s.render.resolution_x = int(v.get("ancho", 1920))
     s.render.resolution_y = int(v.get("alto", 1080))
     s.render.resolution_percentage = 100

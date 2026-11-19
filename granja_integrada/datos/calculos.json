@@ -25,10 +25,30 @@
    "tipo": "R",
    "fuente": "máximo con aire a 135 °C (Rev. F)"
   },
+  "T_aire_diseno": {
+   "valor": 100.0,
+   "tipo": "R",
+   "fuente": "aire de secado a la alimentación de diseño (lámina SC-01)"
+  },
+  "T_aire_max": {
+   "valor": 135.0,
+   "tipo": "R",
+   "fuente": "aire de secado a 1.440 kg/h (Rev. F)"
+  },
+  "horas_secador": {
+   "valor": 16.0,
+   "tipo": "P",
+   "fuente": "dos turnos de 8 h"
+  },
+  "disponibilidad": {
+   "valor": 0.95,
+   "tipo": "P",
+   "fuente": "paradas de limpieza y mantenimiento"
+  },
   "postura": {
-   "valor": 0.85,
-   "tipo": "H",
-   "fuente": "tasa de postura media del ciclo (a confirmar con el establecimiento)"
+   "valor": 0.9,
+   "tipo": "S",
+   "fuente": "San Jorge: 64.800 huevos por día con 72.000 gallinas (2 galpones de 36.000)"
   },
   "huevos_cajon": {
    "valor": 360,
@@ -77,57 +97,62 @@
   }
  },
  "balance": {
-  "aves_por_galpon": 14592,
-  "aves_total": 58368,
+  "aves_por_galpon": 36000,
+  "aves_total": 144000,
   "densidad_cm2_ave": 491.0,
-  "guano_galpon_kg_dia": 1941.0,
-  "guano_total_kg_dia": 7763.0,
-  "guano_por_cinta_kg": 242.6,
+  "guano_galpon_kg_dia": 4788.0,
+  "guano_total_kg_dia": 19152.0,
+  "guano_por_cinta_kg": 239.4,
   "guano_kg_por_m_de_cinta": 2.62,
   "flujo_cinta_jaula_t_h": 1.57,
-  "flujo_por_piso_t_h": 3.14,
-  "tiempo_por_piso_min": 9.6,
-  "tiempo_galpon_min": 42.0,
-  "flujo_lado_simultaneo_t_h": 6.28,
-  "producto_seco_kg_dia": 2557.0,
-  "agua_evaporada_kg_dia": 5206.0,
-  "horas_secador_dia": 7.76,
-  "horas_secador_dia_max": 5.39,
-  "reserva_secador_pct": 3.0,
-  "tolva_pulmon_m3": 23.0,
-  "tolva_pulmon_dias": 2.81,
-  "huevos_dia": 49613.0,
-  "cajones_dia": 137.8,
-  "palets_dia": 5.51,
-  "palets_dia_por_deposito": 2.76,
-  "alimento_t_dia_galpon": 1.61
+  "flujo_por_piso_t_h": 6.28,
+  "tiempo_por_piso_min": 9.4,
+  "flujo_lado_simultaneo_t_h": 12.56,
+  "tiempo_por_galpon_min": 52.0,
+  "producto_seco_kg_dia": 6309.0,
+  "agua_evaporada_kg_dia": 12843.0,
+  "horas_secador_dia": 19.15,
+  "horas_secador_dia_max": 13.3,
+  "secador_kg_h_regimen": 1260.0,
+  "secador_turnos": 2,
+  "T_aire_regimen_C": 121.0,
+  "reserva_secador_pct": 12.5,
+  "tolva_pulmon_m3": 46.0,
+  "tolva_pulmon_dias": 2.28,
+  "huevos_dia": 129600.0,
+  "cajones_dia": 360.0,
+  "palets_dia": 14.4,
+  "palets_dia_por_deposito": 7.2,
+  "alimento_t_dia_galpon": 3.96
  },
  "ventilacion": {
-  "caudal_verano_m3h": 138624.0,
-  "ventiladores_50": 4,
-  "caudal_instalado_m3h": 144000.0,
-  "seccion_m2": 24.05,
-  "velocidad_tunel_m_s": 1.66,
+  "caudal_verano_m3h": 342000.0,
+  "ventiladores_50": 10,
+  "caudal_instalado_m3h": 360000.0,
+  "seccion_m2": 53.1,
+  "velocidad_tunel_m_s": 1.88,
   "verifica_velocidad": true,
-  "caudal_minimo_m3h": 14592.0,
-  "ventiladores_36": 1,
-  "panel_evaporativo_m2": 22.2,
-  "panel_por_lado_m": 7.4,
-  "panel_alto_m": 1.5
+  "caudal_minimo_m3h": 36000.0,
+  "ventiladores_36": 3,
+  "panel_evaporativo_m2": 55.6,
+  "panel_por_lado_m": 15.4,
+  "panel_alto_m": 1.8,
+  "ventiladores_cabecera": 4,
+  "ventiladores_laterales_por_lado": 3
  },
  "transportadores": [
   {
    "id": "CT-1",
    "tipo": "transversal",
-   "L_m": 5.1,
+   "L_m": 9.5,
    "H_m": 0.0,
    "inclinacion_deg": 0.0,
-   "B_m": 0.6,
+   "B_m": 0.65,
    "v_m_s": 0.3,
-   "Q_diseno_t_h": 4,
-   "Q_capacidad_t_h": 14.9,
+   "Q_diseno_t_h": 8,
+   "Q_capacidad_t_h": 17.8,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.41,
+   "P_requerida_kW": 0.45,
    "motor_kW": 0.55,
    "eta": 0.808,
    "cosf": 0.72,
@@ -140,15 +165,15 @@
   {
    "id": "CI-1",
    "tipo": "inclinada",
-   "L_m": 10.94,
+   "L_m": 10.98,
    "H_m": 6.0,
-   "inclinacion_deg": 33.3,
+   "inclinacion_deg": 33.1,
    "B_m": 0.5,
    "v_m_s": 0.4,
-   "Q_diseno_t_h": 4,
+   "Q_diseno_t_h": 8,
    "Q_capacidad_t_h": 21.2,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.67,
+   "P_requerida_kW": 0.77,
    "motor_kW": 1.1,
    "eta": 0.841,
    "cosf": 0.77,
@@ -156,41 +181,20 @@
    "tambor_D_m": 0.32,
    "rpm_tambor": 23.9,
    "relacion_reductor": 60.0,
-   "C": 4.38
-  },
-  {
-   "id": "CE-1",
-   "tipo": "exterior",
-   "L_m": 12.15,
-   "H_m": 0.0,
-   "inclinacion_deg": 0.0,
-   "B_m": 0.5,
-   "v_m_s": 0.4,
-   "Q_diseno_t_h": 4,
-   "Q_capacidad_t_h": 13.3,
-   "verifica_capacidad": true,
-   "P_requerida_kW": 0.59,
-   "motor_kW": 0.75,
-   "eta": 0.825,
-   "cosf": 0.75,
-   "In_A": 1.84,
-   "tambor_D_m": 0.32,
-   "rpm_tambor": 23.9,
-   "relacion_reductor": 60.0,
-   "C": 4.22
+   "C": 4.37
   },
   {
    "id": "CT-2",
    "tipo": "transversal",
-   "L_m": 5.1,
+   "L_m": 9.5,
    "H_m": 0.0,
    "inclinacion_deg": 0.0,
-   "B_m": 0.6,
+   "B_m": 0.65,
    "v_m_s": 0.3,
-   "Q_diseno_t_h": 4,
-   "Q_capacidad_t_h": 14.9,
+   "Q_diseno_t_h": 8,
+   "Q_capacidad_t_h": 17.8,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.41,
+   "P_requerida_kW": 0.45,
    "motor_kW": 0.55,
    "eta": 0.808,
    "cosf": 0.72,
@@ -203,15 +207,15 @@
   {
    "id": "CI-2",
    "tipo": "inclinada",
-   "L_m": 10.94,
+   "L_m": 10.98,
    "H_m": 6.0,
-   "inclinacion_deg": 33.3,
+   "inclinacion_deg": 33.1,
    "B_m": 0.5,
    "v_m_s": 0.4,
-   "Q_diseno_t_h": 4,
+   "Q_diseno_t_h": 8,
    "Q_capacidad_t_h": 21.2,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.67,
+   "P_requerida_kW": 0.77,
    "motor_kW": 1.1,
    "eta": 0.841,
    "cosf": 0.77,
@@ -219,41 +223,20 @@
    "tambor_D_m": 0.32,
    "rpm_tambor": 23.9,
    "relacion_reductor": 60.0,
-   "C": 4.38
-  },
-  {
-   "id": "CE-2",
-   "tipo": "exterior",
-   "L_m": 12.15,
-   "H_m": 0.0,
-   "inclinacion_deg": 0.0,
-   "B_m": 0.5,
-   "v_m_s": 0.4,
-   "Q_diseno_t_h": 4,
-   "Q_capacidad_t_h": 13.3,
-   "verifica_capacidad": true,
-   "P_requerida_kW": 0.59,
-   "motor_kW": 0.75,
-   "eta": 0.825,
-   "cosf": 0.75,
-   "In_A": 1.84,
-   "tambor_D_m": 0.32,
-   "rpm_tambor": 23.9,
-   "relacion_reductor": 60.0,
-   "C": 4.22
+   "C": 4.37
   },
   {
    "id": "CT-3",
    "tipo": "transversal",
-   "L_m": 5.1,
+   "L_m": 9.5,
    "H_m": 0.0,
    "inclinacion_deg": 0.0,
-   "B_m": 0.6,
+   "B_m": 0.65,
    "v_m_s": 0.3,
-   "Q_diseno_t_h": 4,
-   "Q_capacidad_t_h": 14.9,
+   "Q_diseno_t_h": 8,
+   "Q_capacidad_t_h": 17.8,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.41,
+   "P_requerida_kW": 0.45,
    "motor_kW": 0.55,
    "eta": 0.808,
    "cosf": 0.72,
@@ -266,15 +249,15 @@
   {
    "id": "CI-3",
    "tipo": "inclinada",
-   "L_m": 10.94,
+   "L_m": 10.98,
    "H_m": 6.0,
-   "inclinacion_deg": 33.3,
+   "inclinacion_deg": 33.1,
    "B_m": 0.5,
    "v_m_s": 0.4,
-   "Q_diseno_t_h": 4,
+   "Q_diseno_t_h": 8,
    "Q_capacidad_t_h": 21.2,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.67,
+   "P_requerida_kW": 0.77,
    "motor_kW": 1.1,
    "eta": 0.841,
    "cosf": 0.77,
@@ -282,41 +265,20 @@
    "tambor_D_m": 0.32,
    "rpm_tambor": 23.9,
    "relacion_reductor": 60.0,
-   "C": 4.38
-  },
-  {
-   "id": "CE-3",
-   "tipo": "exterior",
-   "L_m": 9.45,
-   "H_m": 0.0,
-   "inclinacion_deg": 0.0,
-   "B_m": 0.5,
-   "v_m_s": 0.4,
-   "Q_diseno_t_h": 4,
-   "Q_capacidad_t_h": 13.3,
-   "verifica_capacidad": true,
-   "P_requerida_kW": 0.57,
-   "motor_kW": 0.75,
-   "eta": 0.825,
-   "cosf": 0.75,
-   "In_A": 1.84,
-   "tambor_D_m": 0.32,
-   "rpm_tambor": 23.9,
-   "relacion_reductor": 60.0,
-   "C": 4.5
+   "C": 4.37
   },
   {
    "id": "CT-4",
    "tipo": "transversal",
-   "L_m": 5.1,
+   "L_m": 9.5,
    "H_m": 0.0,
    "inclinacion_deg": 0.0,
-   "B_m": 0.6,
+   "B_m": 0.65,
    "v_m_s": 0.3,
-   "Q_diseno_t_h": 4,
-   "Q_capacidad_t_h": 14.9,
+   "Q_diseno_t_h": 8,
+   "Q_capacidad_t_h": 17.8,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.41,
+   "P_requerida_kW": 0.45,
    "motor_kW": 0.55,
    "eta": 0.808,
    "cosf": 0.72,
@@ -329,15 +291,15 @@
   {
    "id": "CI-4",
    "tipo": "inclinada",
-   "L_m": 10.94,
+   "L_m": 10.98,
    "H_m": 6.0,
-   "inclinacion_deg": 33.3,
+   "inclinacion_deg": 33.1,
    "B_m": 0.5,
    "v_m_s": 0.4,
-   "Q_diseno_t_h": 4,
+   "Q_diseno_t_h": 8,
    "Q_capacidad_t_h": 21.2,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.67,
+   "P_requerida_kW": 0.77,
    "motor_kW": 1.1,
    "eta": 0.841,
    "cosf": 0.77,
@@ -345,96 +307,96 @@
    "tambor_D_m": 0.32,
    "rpm_tambor": 23.9,
    "relacion_reductor": 60.0,
-   "C": 4.38
+   "C": 4.37
   },
   {
-   "id": "CE-4",
-   "tipo": "exterior",
-   "L_m": 14.85,
+   "id": "CE-O",
+   "tipo": "colectora",
+   "L_m": 52.2,
    "H_m": 0.0,
    "inclinacion_deg": 0.0,
-   "B_m": 0.5,
-   "v_m_s": 0.4,
-   "Q_diseno_t_h": 4,
-   "Q_capacidad_t_h": 13.3,
+   "B_m": 0.65,
+   "v_m_s": 0.5,
+   "Q_diseno_t_h": 16,
+   "Q_capacidad_t_h": 29.7,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.6,
-   "motor_kW": 0.75,
-   "eta": 0.825,
-   "cosf": 0.75,
-   "In_A": 1.84,
+   "P_requerida_kW": 0.97,
+   "motor_kW": 1.5,
+   "eta": 0.853,
+   "cosf": 0.79,
+   "In_A": 3.38,
    "tambor_D_m": 0.32,
-   "rpm_tambor": 23.9,
-   "relacion_reductor": 60.0,
-   "C": 3.87
+   "rpm_tambor": 29.8,
+   "relacion_reductor": 48.0,
+   "C": 2.16
   },
   {
    "id": "CP-O",
    "tipo": "principal",
-   "L_m": 39.81,
+   "L_m": 12.03,
    "H_m": 0.8,
-   "inclinacion_deg": 1.2,
-   "B_m": 0.5,
-   "v_m_s": 0.4,
-   "Q_diseno_t_h": 8,
-   "Q_capacidad_t_h": 13.1,
+   "inclinacion_deg": 3.8,
+   "B_m": 0.65,
+   "v_m_s": 0.5,
+   "Q_diseno_t_h": 16,
+   "Q_capacidad_t_h": 28.3,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.72,
+   "P_requerida_kW": 0.82,
    "motor_kW": 1.1,
    "eta": 0.841,
    "cosf": 0.77,
    "In_A": 2.58,
    "tambor_D_m": 0.32,
-   "rpm_tambor": 23.9,
-   "relacion_reductor": 60.0,
-   "C": 2.41
+   "rpm_tambor": 29.8,
+   "relacion_reductor": 48.0,
+   "C": 4.24
+  },
+  {
+   "id": "CE-E",
+   "tipo": "colectora",
+   "L_m": 52.2,
+   "H_m": 0.0,
+   "inclinacion_deg": 0.0,
+   "B_m": 0.65,
+   "v_m_s": 0.5,
+   "Q_diseno_t_h": 16,
+   "Q_capacidad_t_h": 29.7,
+   "verifica_capacidad": true,
+   "P_requerida_kW": 0.97,
+   "motor_kW": 1.5,
+   "eta": 0.853,
+   "cosf": 0.79,
+   "In_A": 3.38,
+   "tambor_D_m": 0.32,
+   "rpm_tambor": 29.8,
+   "relacion_reductor": 48.0,
+   "C": 2.16
   },
   {
    "id": "CP-E",
    "tipo": "principal",
-   "L_m": 37.8,
-   "H_m": 0.4,
-   "inclinacion_deg": 0.6,
-   "B_m": 0.5,
-   "v_m_s": 0.4,
-   "Q_diseno_t_h": 8,
-   "Q_capacidad_t_h": 13.2,
+   "L_m": 38.8,
+   "H_m": -0.2,
+   "inclinacion_deg": -0.3,
+   "B_m": 0.65,
+   "v_m_s": 0.5,
+   "Q_diseno_t_h": 16,
+   "Q_capacidad_t_h": 29.6,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.7,
+   "P_requerida_kW": 0.9,
    "motor_kW": 1.1,
    "eta": 0.841,
    "cosf": 0.77,
    "In_A": 2.58,
    "tambor_D_m": 0.32,
-   "rpm_tambor": 23.9,
-   "relacion_reductor": 60.0,
-   "C": 2.49
-  },
-  {
-   "id": "CN-E",
-   "tipo": "interior",
-   "L_m": 29.8,
-   "H_m": 0.0,
-   "inclinacion_deg": 0.0,
-   "B_m": 0.5,
-   "v_m_s": 0.4,
-   "Q_diseno_t_h": 8,
-   "Q_capacidad_t_h": 13.3,
-   "verifica_capacidad": true,
-   "P_requerida_kW": 0.67,
-   "motor_kW": 1.1,
-   "eta": 0.841,
-   "cosf": 0.77,
-   "In_A": 2.58,
-   "tambor_D_m": 0.32,
-   "rpm_tambor": 23.9,
-   "relacion_reductor": 60.0,
-   "C": 2.81
+   "rpm_tambor": 29.8,
+   "relacion_reductor": 48.0,
+   "C": 2.45
   }
  ],
  "motores_nuevos": [
   {
-   "tag": "M41",
+   "tag": "M101",
    "nom": "Cinta de guano G1 piso 1 fila A",
    "kW": 1.1,
    "In": 2.58,
@@ -444,7 +406,7 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M42",
+   "tag": "M102",
    "nom": "Cinta de guano G1 piso 1 fila B",
    "kW": 1.1,
    "In": 2.58,
@@ -454,7 +416,27 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M43",
+   "tag": "M103",
+   "nom": "Cinta de guano G1 piso 1 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G1",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M104",
+   "nom": "Cinta de guano G1 piso 1 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G1",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M105",
    "nom": "Cinta de guano G1 piso 2 fila A",
    "kW": 1.1,
    "In": 2.58,
@@ -464,7 +446,7 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M44",
+   "tag": "M106",
    "nom": "Cinta de guano G1 piso 2 fila B",
    "kW": 1.1,
    "In": 2.58,
@@ -474,7 +456,27 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M45",
+   "tag": "M107",
+   "nom": "Cinta de guano G1 piso 2 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G1",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M108",
+   "nom": "Cinta de guano G1 piso 2 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G1",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M109",
    "nom": "Cinta de guano G1 piso 3 fila A",
    "kW": 1.1,
    "In": 2.58,
@@ -484,7 +486,7 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M46",
+   "tag": "M110",
    "nom": "Cinta de guano G1 piso 3 fila B",
    "kW": 1.1,
    "In": 2.58,
@@ -494,7 +496,27 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M47",
+   "tag": "M111",
+   "nom": "Cinta de guano G1 piso 3 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G1",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M112",
+   "nom": "Cinta de guano G1 piso 3 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G1",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M113",
    "nom": "Cinta de guano G1 piso 4 fila A",
    "kW": 1.1,
    "In": 2.58,
@@ -504,7 +526,7 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M48",
+   "tag": "M114",
    "nom": "Cinta de guano G1 piso 4 fila B",
    "kW": 1.1,
    "In": 2.58,
@@ -514,27 +536,87 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M49",
+   "tag": "M115",
+   "nom": "Cinta de guano G1 piso 4 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G1",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M116",
+   "nom": "Cinta de guano G1 piso 4 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G1",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M117",
+   "nom": "Cinta de guano G1 piso 5 fila A",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G1",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M118",
+   "nom": "Cinta de guano G1 piso 5 fila B",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G1",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M119",
+   "nom": "Cinta de guano G1 piso 5 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G1",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M120",
+   "nom": "Cinta de guano G1 piso 5 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G1",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M121",
    "nom": "Cinta transversal G1",
    "kW": 0.55,
    "In": 1.44,
    "arranque": "directo",
    "tablero": "TS-G1",
    "tipo": "P",
-   "nota": "P req. 0.41 kW"
+   "nota": "P req. 0.45 kW"
   },
   {
-   "tag": "M50",
+   "tag": "M122",
    "nom": "Cinta inclinada G1",
    "kW": 1.1,
    "In": 2.58,
    "arranque": "VFD",
    "tablero": "TS-G1",
    "tipo": "P",
-   "nota": "P req. 0.67 kW"
+   "nota": "P req. 0.77 kW"
   },
   {
-   "tag": "M51",
+   "tag": "M201",
    "nom": "Cinta de guano G2 piso 1 fila A",
    "kW": 1.1,
    "In": 2.58,
@@ -544,7 +626,7 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M52",
+   "tag": "M202",
    "nom": "Cinta de guano G2 piso 1 fila B",
    "kW": 1.1,
    "In": 2.58,
@@ -554,7 +636,27 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M53",
+   "tag": "M203",
+   "nom": "Cinta de guano G2 piso 1 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G2",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M204",
+   "nom": "Cinta de guano G2 piso 1 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G2",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M205",
    "nom": "Cinta de guano G2 piso 2 fila A",
    "kW": 1.1,
    "In": 2.58,
@@ -564,7 +666,7 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M54",
+   "tag": "M206",
    "nom": "Cinta de guano G2 piso 2 fila B",
    "kW": 1.1,
    "In": 2.58,
@@ -574,7 +676,27 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M55",
+   "tag": "M207",
+   "nom": "Cinta de guano G2 piso 2 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G2",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M208",
+   "nom": "Cinta de guano G2 piso 2 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G2",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M209",
    "nom": "Cinta de guano G2 piso 3 fila A",
    "kW": 1.1,
    "In": 2.58,
@@ -584,7 +706,7 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M56",
+   "tag": "M210",
    "nom": "Cinta de guano G2 piso 3 fila B",
    "kW": 1.1,
    "In": 2.58,
@@ -594,7 +716,27 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M57",
+   "tag": "M211",
+   "nom": "Cinta de guano G2 piso 3 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G2",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M212",
+   "nom": "Cinta de guano G2 piso 3 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G2",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M213",
    "nom": "Cinta de guano G2 piso 4 fila A",
    "kW": 1.1,
    "In": 2.58,
@@ -604,7 +746,7 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M58",
+   "tag": "M214",
    "nom": "Cinta de guano G2 piso 4 fila B",
    "kW": 1.1,
    "In": 2.58,
@@ -614,27 +756,87 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M59",
+   "tag": "M215",
+   "nom": "Cinta de guano G2 piso 4 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G2",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M216",
+   "nom": "Cinta de guano G2 piso 4 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G2",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M217",
+   "nom": "Cinta de guano G2 piso 5 fila A",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G2",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M218",
+   "nom": "Cinta de guano G2 piso 5 fila B",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G2",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M219",
+   "nom": "Cinta de guano G2 piso 5 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G2",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M220",
+   "nom": "Cinta de guano G2 piso 5 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G2",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M221",
    "nom": "Cinta transversal G2",
    "kW": 0.55,
    "In": 1.44,
    "arranque": "directo",
    "tablero": "TS-G2",
    "tipo": "P",
-   "nota": "P req. 0.41 kW"
+   "nota": "P req. 0.45 kW"
   },
   {
-   "tag": "M60",
+   "tag": "M222",
    "nom": "Cinta inclinada G2",
    "kW": 1.1,
    "In": 2.58,
    "arranque": "VFD",
    "tablero": "TS-G2",
    "tipo": "P",
-   "nota": "P req. 0.67 kW"
+   "nota": "P req. 0.77 kW"
   },
   {
-   "tag": "M61",
+   "tag": "M301",
    "nom": "Cinta de guano G3 piso 1 fila A",
    "kW": 1.1,
    "In": 2.58,
@@ -644,7 +846,7 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M62",
+   "tag": "M302",
    "nom": "Cinta de guano G3 piso 1 fila B",
    "kW": 1.1,
    "In": 2.58,
@@ -654,7 +856,27 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M63",
+   "tag": "M303",
+   "nom": "Cinta de guano G3 piso 1 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G3",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M304",
+   "nom": "Cinta de guano G3 piso 1 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G3",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M305",
    "nom": "Cinta de guano G3 piso 2 fila A",
    "kW": 1.1,
    "In": 2.58,
@@ -664,7 +886,7 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M64",
+   "tag": "M306",
    "nom": "Cinta de guano G3 piso 2 fila B",
    "kW": 1.1,
    "In": 2.58,
@@ -674,7 +896,27 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M65",
+   "tag": "M307",
+   "nom": "Cinta de guano G3 piso 2 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G3",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M308",
+   "nom": "Cinta de guano G3 piso 2 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G3",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M309",
    "nom": "Cinta de guano G3 piso 3 fila A",
    "kW": 1.1,
    "In": 2.58,
@@ -684,7 +926,7 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M66",
+   "tag": "M310",
    "nom": "Cinta de guano G3 piso 3 fila B",
    "kW": 1.1,
    "In": 2.58,
@@ -694,7 +936,27 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M67",
+   "tag": "M311",
+   "nom": "Cinta de guano G3 piso 3 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G3",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M312",
+   "nom": "Cinta de guano G3 piso 3 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G3",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M313",
    "nom": "Cinta de guano G3 piso 4 fila A",
    "kW": 1.1,
    "In": 2.58,
@@ -704,7 +966,7 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M68",
+   "tag": "M314",
    "nom": "Cinta de guano G3 piso 4 fila B",
    "kW": 1.1,
    "In": 2.58,
@@ -714,27 +976,87 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M69",
+   "tag": "M315",
+   "nom": "Cinta de guano G3 piso 4 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G3",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M316",
+   "nom": "Cinta de guano G3 piso 4 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G3",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M317",
+   "nom": "Cinta de guano G3 piso 5 fila A",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G3",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M318",
+   "nom": "Cinta de guano G3 piso 5 fila B",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G3",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M319",
+   "nom": "Cinta de guano G3 piso 5 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G3",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M320",
+   "nom": "Cinta de guano G3 piso 5 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G3",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M321",
    "nom": "Cinta transversal G3",
    "kW": 0.55,
    "In": 1.44,
    "arranque": "directo",
    "tablero": "TS-G3",
    "tipo": "P",
-   "nota": "P req. 0.41 kW"
+   "nota": "P req. 0.45 kW"
   },
   {
-   "tag": "M70",
+   "tag": "M322",
    "nom": "Cinta inclinada G3",
    "kW": 1.1,
    "In": 2.58,
    "arranque": "VFD",
    "tablero": "TS-G3",
    "tipo": "P",
-   "nota": "P req. 0.67 kW"
+   "nota": "P req. 0.77 kW"
   },
   {
-   "tag": "M71",
+   "tag": "M401",
    "nom": "Cinta de guano G4 piso 1 fila A",
    "kW": 1.1,
    "In": 2.58,
@@ -744,7 +1066,7 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M72",
+   "tag": "M402",
    "nom": "Cinta de guano G4 piso 1 fila B",
    "kW": 1.1,
    "In": 2.58,
@@ -754,7 +1076,27 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M73",
+   "tag": "M403",
+   "nom": "Cinta de guano G4 piso 1 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G4",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M404",
+   "nom": "Cinta de guano G4 piso 1 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G4",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M405",
    "nom": "Cinta de guano G4 piso 2 fila A",
    "kW": 1.1,
    "In": 2.58,
@@ -764,7 +1106,7 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M74",
+   "tag": "M406",
    "nom": "Cinta de guano G4 piso 2 fila B",
    "kW": 1.1,
    "In": 2.58,
@@ -774,7 +1116,27 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M75",
+   "tag": "M407",
+   "nom": "Cinta de guano G4 piso 2 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G4",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M408",
+   "nom": "Cinta de guano G4 piso 2 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G4",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M409",
    "nom": "Cinta de guano G4 piso 3 fila A",
    "kW": 1.1,
    "In": 2.58,
@@ -784,7 +1146,7 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M76",
+   "tag": "M410",
    "nom": "Cinta de guano G4 piso 3 fila B",
    "kW": 1.1,
    "In": 2.58,
@@ -794,7 +1156,27 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M77",
+   "tag": "M411",
+   "nom": "Cinta de guano G4 piso 3 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G4",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M412",
+   "nom": "Cinta de guano G4 piso 3 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G4",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M413",
    "nom": "Cinta de guano G4 piso 4 fila A",
    "kW": 1.1,
    "In": 2.58,
@@ -804,7 +1186,7 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M78",
+   "tag": "M414",
    "nom": "Cinta de guano G4 piso 4 fila B",
    "kW": 1.1,
    "In": 2.58,
@@ -814,117 +1196,167 @@
    "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
   },
   {
-   "tag": "M79",
+   "tag": "M415",
+   "nom": "Cinta de guano G4 piso 4 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G4",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M416",
+   "nom": "Cinta de guano G4 piso 4 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G4",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M417",
+   "nom": "Cinta de guano G4 piso 5 fila A",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G4",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M418",
+   "nom": "Cinta de guano G4 piso 5 fila B",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G4",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M419",
+   "nom": "Cinta de guano G4 piso 5 fila C",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G4",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M420",
+   "nom": "Cinta de guano G4 piso 5 fila D",
+   "kW": 1.1,
+   "In": 2.58,
+   "arranque": "directo",
+   "tablero": "TS-G4",
+   "tipo": "P",
+   "nota": "1 a 1,5 kW hasta 100 m (proveedores)"
+  },
+  {
+   "tag": "M421",
    "nom": "Cinta transversal G4",
    "kW": 0.55,
    "In": 1.44,
    "arranque": "directo",
    "tablero": "TS-G4",
    "tipo": "P",
-   "nota": "P req. 0.41 kW"
+   "nota": "P req. 0.45 kW"
   },
   {
-   "tag": "M80",
+   "tag": "M422",
    "nom": "Cinta inclinada G4",
    "kW": 1.1,
    "In": 2.58,
    "arranque": "VFD",
    "tablero": "TS-G4",
    "tipo": "P",
-   "nota": "P req. 0.67 kW"
+   "nota": "P req. 0.77 kW"
   },
   {
    "tag": "M81",
-   "nom": "Cinta exterior CE-1",
-   "kW": 0.75,
-   "In": 1.84,
+   "nom": "Cinta colectora CE-O",
+   "kW": 1.5,
+   "In": 3.38,
    "arranque": "VFD",
    "tablero": "TS-GU",
    "tipo": "P",
-   "nota": "P req. 0.59 kW"
+   "nota": "P req. 0.97 kW"
   },
   {
    "tag": "M82",
-   "nom": "Cinta exterior CE-2",
-   "kW": 0.75,
-   "In": 1.84,
-   "arranque": "VFD",
-   "tablero": "TS-GU",
-   "tipo": "P",
-   "nota": "P req. 0.59 kW"
-  },
-  {
-   "tag": "M83",
    "nom": "Cinta principal CP-O",
    "kW": 1.1,
    "In": 2.58,
    "arranque": "VFD",
    "tablero": "TS-GU",
    "tipo": "P",
-   "nota": "P req. 0.72 kW"
+   "nota": "P req. 0.82 kW"
+  },
+  {
+   "tag": "M83",
+   "nom": "Cinta colectora CE-E",
+   "kW": 1.5,
+   "In": 3.38,
+   "arranque": "VFD",
+   "tablero": "TS-GU",
+   "tipo": "P",
+   "nota": "P req. 0.97 kW"
   },
   {
    "tag": "M84",
-   "nom": "Cinta exterior CE-3",
-   "kW": 0.75,
-   "In": 1.84,
-   "arranque": "VFD",
-   "tablero": "TS-GU",
-   "tipo": "P",
-   "nota": "P req. 0.57 kW"
-  },
-  {
-   "tag": "M85",
-   "nom": "Cinta exterior CE-4",
-   "kW": 0.75,
-   "In": 1.84,
-   "arranque": "VFD",
-   "tablero": "TS-GU",
-   "tipo": "P",
-   "nota": "P req. 0.6 kW"
-  },
-  {
-   "tag": "M86",
    "nom": "Cinta principal CP-E",
    "kW": 1.1,
    "In": 2.58,
    "arranque": "VFD",
    "tablero": "TS-GU",
    "tipo": "P",
-   "nota": "P req. 0.7 kW"
+   "nota": "P req. 0.9 kW"
+  },
+  {
+   "tag": "M85",
+   "nom": "Sinfín dosificador 1 de la TP-01",
+   "kW": 3.0,
+   "In": 6.42,
+   "arranque": "VFD",
+   "tablero": "TS-GU",
+   "tipo": "P",
+   "nota": "Ø400 × 6 m bajo la tolva llena; confirmar con el fabricante"
+  },
+  {
+   "tag": "M86",
+   "nom": "Sinfín dosificador 2 de la TP-01",
+   "kW": 3.0,
+   "In": 6.42,
+   "arranque": "VFD",
+   "tablero": "TS-GU",
+   "tipo": "P",
+   "nota": "Ø400 × 6 m bajo la tolva llena; confirmar con el fabricante"
   },
   {
    "tag": "M87",
-   "nom": "Cinta interior CN-E",
-   "kW": 1.1,
-   "In": 2.58,
+   "nom": "Sinfín dosificador 3 de la TP-01",
+   "kW": 3.0,
+   "In": 6.42,
    "arranque": "VFD",
    "tablero": "TS-GU",
    "tipo": "P",
-   "nota": "P req. 0.67 kW"
+   "nota": "Ø400 × 6 m bajo la tolva llena; confirmar con el fabricante"
   },
   {
    "tag": "M88",
-   "nom": "Sinfín dosificador 1 de la TP-01",
-   "kW": 4.0,
-   "In": 8.37,
+   "nom": "Sinfín dosificador 4 de la TP-01",
+   "kW": 3.0,
+   "In": 6.42,
    "arranque": "VFD",
    "tablero": "TS-GU",
    "tipo": "P",
-   "nota": "con la carga de la tolva llena; confirmar con el fabricante"
+   "nota": "Ø400 × 6 m bajo la tolva llena; confirmar con el fabricante"
   },
   {
    "tag": "M89",
-   "nom": "Sinfín dosificador 2 de la TP-01",
-   "kW": 4.0,
-   "In": 8.37,
-   "arranque": "VFD",
-   "tablero": "TS-GU",
-   "tipo": "P",
-   "nota": "con la carga de la tolva llena; confirmar con el fabricante"
-  },
-  {
-   "tag": "M90",
    "nom": "Actuador de la compuerta desviadora DV-O",
    "kW": 0.37,
    "In": 1.04,
@@ -934,7 +1366,7 @@
    "nota": "actuador eléctrico de cuarto de vuelta con finales de carrera"
   },
   {
-   "tag": "M91",
+   "tag": "M90",
    "nom": "Actuador de la compuerta desviadora DV-E",
    "kW": 0.37,
    "In": 1.04,
@@ -944,5 +1376,5 @@
    "nota": "actuador eléctrico de cuarto de vuelta con finales de carrera"
   }
  ],
- "potencia_nueva_kW": 56.84
+ "potencia_nueva_kW": 112.54
 }

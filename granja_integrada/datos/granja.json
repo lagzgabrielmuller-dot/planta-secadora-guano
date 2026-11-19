@@ -2,98 +2,105 @@
  "titulo": "Granja avícola integrada con planta central de secado de guano",
  "lugar": "Crespo, Entre Ríos",
  "origen": "vértice Sudoeste de la nave de proceso (igual que el proyecto de la secadora)",
+ "distribucion": "en fila de Oeste a Este: G1, G2, planta de secado, G3, G4",
  "galpon": {
   "L": 100.0,
-  "A": 6.0,
+  "A": 10.5,
   "eje_par": 31.0,
   "e_muro": 0.1,
   "zocalo": 0.5,
-  "h_alero": 3.6,
+  "h_alero": 4.2,
   "pendiente_deg": 20.0,
   "paso_porticos": 5.0,
-  "cabecera_huevos": 2.6,
-  "cabecera_guano": 2.2
+  "cabecera_huevos": 2.8,
+  "cabecera_guano": 2.6,
+  "aves": 36000
  },
  "jaulas": {
-  "filas": 2,
-  "pisos": 4,
+  "filas": 4,
+  "pisos": 5,
   "celda_ancho": 0.61,
   "celda_prof": 0.483,
   "celda_alto": 0.46,
   "aves_por_celda": 6,
-  "celdas_por_modulo": 4,
-  "modulos_por_fila": 38,
+  "celdas_por_modulo": 5,
+  "modulos_por_fila": 30,
   "paso_pisos": 0.62,
   "z_piso1": 0.35,
   "ancho_fila": 1.3,
   "cinta_guano_ancho": 1.25,
   "cinta_guano_v_m_min": 10.0,
   "cinta_huevos_ancho": 0.1,
-  "modulo": 2.44,
-  "largo_fila": 92.72,
-  "celdas_por_lado": 152,
-  "aves_por_fila": 7296,
-  "aves_por_galpon": 14592
+  "modulo": 3.05,
+  "largo_fila": 91.5,
+  "celdas_por_lado": 150,
+  "aves_por_fila": 9000,
+  "aves_por_galpon": 36000,
+  "pasillo": 1.02
  },
  "galpones": [
   {
    "id": "G1",
    "lado": "O",
-   "x0": -145.0,
-   "x1": -45.0,
-   "y": 24.8,
-   "y0": 21.8,
-   "y1": 27.8,
-   "cab_guano": "E",
-   "cab_huevos": "O",
-   "posicion": "Norte"
+   "x": -66.25,
+   "x0": -71.5,
+   "x1": -61.0,
+   "y0": 22.65,
+   "y1": 122.65,
+   "cab_guano": "S",
+   "cab_huevos": "N",
+   "posicion": "exterior",
+   "hacia_planta": 1
   },
   {
    "id": "G2",
    "lado": "O",
-   "x0": -145.0,
-   "x1": -45.0,
-   "y": -6.199999999999999,
-   "y0": -9.2,
-   "y1": -3.1999999999999993,
-   "cab_guano": "E",
-   "cab_huevos": "O",
-   "posicion": "Sur"
+   "x": -35.25,
+   "x0": -40.5,
+   "x1": -30.0,
+   "y0": 22.65,
+   "y1": 122.65,
+   "cab_guano": "S",
+   "cab_huevos": "N",
+   "posicion": "interior",
+   "hacia_planta": 1
   },
   {
    "id": "G3",
    "lado": "E",
-   "x0": 78.0,
-   "x1": 178.0,
-   "y": 24.8,
-   "y0": 21.8,
-   "y1": 27.8,
-   "cab_guano": "O",
-   "cab_huevos": "E",
-   "posicion": "Norte"
+   "x": 68.25,
+   "x0": 63.0,
+   "x1": 73.5,
+   "y0": 22.65,
+   "y1": 122.65,
+   "cab_guano": "S",
+   "cab_huevos": "N",
+   "posicion": "interior",
+   "hacia_planta": -1
   },
   {
    "id": "G4",
    "lado": "E",
-   "x0": 78.0,
-   "x1": 178.0,
-   "y": -6.199999999999999,
-   "y0": -9.2,
-   "y1": -3.1999999999999993,
-   "cab_guano": "O",
-   "cab_huevos": "E",
-   "posicion": "Sur"
+   "x": 99.25,
+   "x0": 94.0,
+   "x1": 104.5,
+   "y0": 22.65,
+   "y1": 122.65,
+   "cab_guano": "S",
+   "cab_huevos": "N",
+   "posicion": "exterior",
+   "hacia_planta": -1
   }
  ],
  "depositos": [
   {
    "id": "DH-O",
    "lado": "O",
-   "x0": -170.8,
-   "x1": -149.0,
-   "y0": 16.8,
-   "y1": 32.8,
-   "porton": "O",
+   "x0": -61.65,
+   "x1": -39.85,
+   "y0": 126.65,
+   "y1": 142.65,
+   "porton": "N",
    "galpones": [
     "G1",
     "G2"
@@ -102,11 +109,11 @@
   {
    "id": "DH-E",
    "lado": "E",
-   "x0": 182.0,
-   "x1": 203.8,
-   "y0": 16.8,
-   "y1": 32.8,
-   "porton": "E",
+   "x0": 72.85,
+   "x1": 94.65,
+   "y0": 126.65,
+   "y1": 142.65,
+   "porton": "N",
    "galpones": [
     "G3",
     "G4"
@@ -124,271 +131,228 @@
    7.5,
    10.1
   ],
-  "muelle_h": 1.25
+  "muelle_h": 1.25,
+  "palets_dia": 7.2
  },
  "transporte": [
   {
    "id": "CT-1",
    "tipo": "transversal",
    "galpon": "G1",
-   "ancho": 0.6,
+   "ancho": 0.65,
    "p0": [
-    -46.15,
-    27.45,
+    -71.05,
+    23.799999999999997,
     0.3
    ],
    "p1": [
-    -46.15,
-    22.35,
+    -61.55,
+    23.799999999999997,
     0.3
    ],
-   "nota": "dentro del galpón, en canal de H°"
+   "nota": "dentro del galpón, en canal de H° bajo el extremo de las 20 cintas de las jaulas"
   },
   {
    "id": "CI-1",
    "tipo": "inclinada",
    "galpon": "G1",
    "ancho": 0.5,
-   "ang": 33.3,
+   "ang": 33.1,
    "p0": [
-    -46.15,
-    22.35,
+    -61.9,
+    23.799999999999997,
     0.45
    ],
    "p1": [
-    -37.0,
-    22.35,
+    -61.9,
+    14.6,
     6.45
    ],
-   "banda": "goma EP 400/3 con bordes de 80 mm y tacos (como la cinta 3 de la Rev. F)"
-  },
-  {
-   "id": "CE-1",
-   "tipo": "exterior",
-   "galpon": "G1",
-   "ancho": 0.5,
-   "p0": [
-    -37.0,
-    22.35,
-    6.2
-   ],
-   "p1": [
-    -37.0,
-    10.200000000000001,
-    6.2
-   ],
-   "nota": "artesa a 20°, cubierta, pasarela de 0,8 m"
+   "banda": "goma EP 400/3 con bordes ondulados de 80 mm y tacos (como la cinta 3 de la Rev. F)"
   },
   {
    "id": "CT-2",
    "tipo": "transversal",
    "galpon": "G2",
-   "ancho": 0.6,
+   "ancho": 0.65,
    "p0": [
-    -46.15,
-    -8.85,
+    -40.05,
+    23.799999999999997,
     0.3
    ],
    "p1": [
-    -46.15,
-    -3.749999999999999,
+    -30.55,
+    23.799999999999997,
     0.3
    ],
-   "nota": "dentro del galpón, en canal de H°"
+   "nota": "dentro del galpón, en canal de H° bajo el extremo de las 20 cintas de las jaulas"
   },
   {
    "id": "CI-2",
    "tipo": "inclinada",
    "galpon": "G2",
    "ancho": 0.5,
-   "ang": 33.3,
+   "ang": 33.1,
    "p0": [
-    -46.15,
-    -3.749999999999999,
+    -30.9,
+    23.799999999999997,
     0.45
    ],
    "p1": [
-    -37.0,
-    -3.749999999999999,
+    -30.9,
+    14.6,
     6.45
    ],
-   "banda": "goma EP 400/3 con bordes de 80 mm y tacos (como la cinta 3 de la Rev. F)"
-  },
-  {
-   "id": "CE-2",
-   "tipo": "exterior",
-   "galpon": "G2",
-   "ancho": 0.5,
-   "p0": [
-    -37.0,
-    -3.749999999999999,
-    6.2
-   ],
-   "p1": [
-    -37.0,
-    8.4,
-    6.2
-   ],
-   "nota": "artesa a 20°, cubierta, pasarela de 0,8 m"
+   "banda": "goma EP 400/3 con bordes ondulados de 80 mm y tacos (como la cinta 3 de la Rev. F)"
   },
   {
    "id": "CT-3",
    "tipo": "transversal",
    "galpon": "G3",
-   "ancho": 0.6,
+   "ancho": 0.65,
    "p0": [
-    79.15,
-    27.45,
+    73.05,
+    23.799999999999997,
     0.3
    ],
    "p1": [
-    79.15,
-    22.35,
+    63.55,
+    23.799999999999997,
     0.3
    ],
-   "nota": "dentro del galpón, en canal de H°"
+   "nota": "dentro del galpón, en canal de H° bajo el extremo de las 20 cintas de las jaulas"
   },
   {
    "id": "CI-3",
    "tipo": "inclinada",
    "galpon": "G3",
    "ancho": 0.5,
-   "ang": 33.3,
+   "ang": 33.1,
    "p0": [
-    79.15,
-    22.35,
+    63.9,
+    23.799999999999997,
     0.45
    ],
    "p1": [
-    70.0,
-    22.35,
+    63.9,
+    14.6,
     6.45
    ],
-   "banda": "goma EP 400/3 con bordes de 80 mm y tacos (como la cinta 3 de la Rev. F)"
-  },
-  {
-   "id": "CE-3",
-   "tipo": "exterior",
-   "galpon": "G3",
-   "ancho": 0.5,
-   "p0": [
-    70.0,
-    22.35,
-    6.2
-   ],
-   "p1": [
-    70.0,
-    12.9,
-    6.2
-   ],
-   "nota": "artesa a 20°, cubierta, pasarela de 0,8 m"
+   "banda": "goma EP 400/3 con bordes ondulados de 80 mm y tacos (como la cinta 3 de la Rev. F)"
   },
   {
    "id": "CT-4",
    "tipo": "transversal",
    "galpon": "G4",
-   "ancho": 0.6,
+   "ancho": 0.65,
    "p0": [
-    79.15,
-    -8.85,
+    104.05,
+    23.799999999999997,
     0.3
    ],
    "p1": [
-    79.15,
-    -3.749999999999999,
+    94.55,
+    23.799999999999997,
     0.3
    ],
-   "nota": "dentro del galpón, en canal de H°"
+   "nota": "dentro del galpón, en canal de H° bajo el extremo de las 20 cintas de las jaulas"
   },
   {
    "id": "CI-4",
    "tipo": "inclinada",
    "galpon": "G4",
    "ancho": 0.5,
-   "ang": 33.3,
+   "ang": 33.1,
    "p0": [
-    79.15,
-    -3.749999999999999,
+    94.9,
+    23.799999999999997,
     0.45
    ],
    "p1": [
-    70.0,
-    -3.749999999999999,
+    94.9,
+    14.6,
     6.45
    ],
-   "banda": "goma EP 400/3 con bordes de 80 mm y tacos (como la cinta 3 de la Rev. F)"
+   "banda": "goma EP 400/3 con bordes ondulados de 80 mm y tacos (como la cinta 3 de la Rev. F)"
   },
   {
-   "id": "CE-4",
-   "tipo": "exterior",
-   "galpon": "G4",
-   "ancho": 0.5,
+   "id": "CE-O",
+   "tipo": "colectora",
+   "ancho": 0.65,
    "p0": [
-    70.0,
-    -3.749999999999999,
+    -63.1,
+    14.6,
     6.2
    ],
    "p1": [
-    70.0,
-    11.1,
+    -10.9,
+    14.6,
     6.2
    ],
-   "nota": "artesa a 20°, cubierta, pasarela de 0,8 m"
+   "recibe": [
+    "G1",
+    "G2"
+   ],
+   "nota": "colectora 1: recibe las cintas inclinadas de los dos galpones; artesa a 20°, cubierta, pasarela"
   },
   {
    "id": "CP-O",
    "tipo": "principal",
-   "ancho": 0.5,
+   "ancho": 0.65,
    "p0": [
-    -37.0,
-    9.3,
+    -10.0,
+    14.6,
     5.2
    ],
    "p1": [
-    2.8,
-    9.3,
+    2.0,
+    14.6,
     6.0
    ],
-   "nota": "galería cubierta; cruza el camino Oeste con 5,0 m libres"
+   "nota": "entra por el muro Oeste sobre la tolva pulmón"
+  },
+  {
+   "id": "CE-E",
+   "tipo": "colectora",
+   "ancho": 0.65,
+   "p0": [
+    96.1,
+    14.6,
+    6.2
+   ],
+   "p1": [
+    43.9,
+    14.6,
+    6.2
+   ],
+   "recibe": [
+    "G4",
+    "G3"
+   ],
+   "nota": "colectora 2: recibe las cintas inclinadas de los dos galpones; artesa a 20°, cubierta, pasarela"
   },
   {
    "id": "CP-E",
    "tipo": "principal",
-   "ancho": 0.5,
+   "ancho": 0.65,
    "p0": [
-    70.0,
-    12.0,
+    43.0,
+    14.6,
     5.2
    ],
    "p1": [
-    32.2,
-    12.0,
-    5.6
-   ],
-   "nota": "galería cubierta; entra por el muro Este y descarga en la CN-E"
-  },
-  {
-   "id": "CN-E",
-   "tipo": "interior",
-   "ancho": 0.5,
-   "p0": [
-    32.6,
-    12.0,
+    4.2,
+    14.6,
     5.0
    ],
-   "p1": [
-    2.8,
-    12.0,
-    5.0
-   ],
-   "nota": "sin capota (bajo techo), con guardas laterales; descarga en la tolva pulmón por un chute"
+   "nota": "entra por el muro Este y cruza la nave a +5,0 m hasta la tolva pulmón (sin capota bajo techo)"
   }
  ],
  "torres": [
   {
    "id": "TT-O",
-   "x": -37.0,
-   "y": 9.3,
+   "x": -10.0,
+   "y": 14.6,
    "lado": "O",
    "z_plataforma": 4.8,
    "A": 3.2,
@@ -398,8 +362,8 @@
   },
   {
    "id": "TT-E",
-   "x": 70.0,
-   "y": 12.0,
+   "x": 43.0,
+   "y": 14.6,
    "lado": "E",
    "z_plataforma": 4.8,
    "A": 3.2,
@@ -412,32 +376,32 @@
   "id": "TP-01",
   "x0": 0.6,
   "x1": 5.0,
-  "y0": 7.8,
-  "y1": 10.8,
+  "y0": 10.2,
+  "y1": 16.2,
   "z_fondo": 2.2,
   "z_borde": 4.4,
   "z_tapa": 4.55,
-  "volumen_util_m3": 23.0,
   "sinfines": {
-   "n": 2,
+   "n": 4,
    "D": 0.4,
-   "sentido": "Oeste",
-   "descarga_x": 1.05
+   "sentido": "Sur",
+   "largo": 6.0
   },
   "celdas_carga": 4,
   "plataforma_z": 4.55,
-  "nota": "fondo vivo de doble sinfín con variador; descarga sobre la cola de la cinta de alimentación (3)"
+  "nota": "fondo vivo de 4 sinfines con variador que descargan sobre la cola de la cinta de alimentación (3); tapa cerrada con aspiración al extractor M23 y al biofiltro",
+  "volumen_util_m3": 46.0
  },
  "predio": {
-  "x0": -200.0,
-  "x1": 234.0,
-  "y0": -80.0,
-  "y1": 85.0,
+  "x0": -121.5,
+  "x1": 154.5,
+  "y0": -70.0,
+  "y1": 174.7,
   "nota": "cerco a ≥ 50 m de los galpones (criterio de la Res. SENASA anterior; verificar con la 1699/2019)"
  },
  "calle": {
-  "y0": -95.0,
-  "y1": -88.0,
+  "y0": -85.0,
+  "y1": -78.0,
   "nom": "Camino rural público"
  },
  "caminos": [
@@ -446,51 +410,51 @@
    "zona": "sucia",
    "x0": 13.0,
    "x1": 20.0,
-   "y0": -80.0,
-   "y1": -7.0,
-   "nom": "acceso central a la planta"
+   "y0": -55.0,
+   "y1": -22.0,
+   "nom": "acceso a la planta"
   },
   {
    "id": "C2",
    "zona": "sucia",
-   "x0": -28.0,
-   "x1": -21.0,
-   "y0": -40.0,
-   "y1": 47.0,
+   "x0": -20.0,
+   "x1": -13.0,
+   "y0": -22.0,
+   "y1": 39.0,
    "nom": "camino Oeste de la planta"
   },
   {
    "id": "C3",
    "zona": "sucia",
-   "x0": 54.0,
-   "x1": 61.0,
-   "y0": -40.0,
-   "y1": 47.0,
+   "x0": 46.0,
+   "x1": 53.0,
+   "y0": -22.0,
+   "y1": 39.0,
    "nom": "camino Este de la planta"
   },
   {
    "id": "C4",
    "zona": "sucia",
-   "x0": -28.0,
-   "x1": 61.0,
-   "y0": 40.0,
-   "y1": 47.0,
-   "nom": "camino Norte (cáscara y bomberos)"
+   "x0": -20.0,
+   "x1": 53.0,
+   "y0": 32.0,
+   "y1": 39.0,
+   "nom": "camino Norte de la planta (cáscara y bomberos)"
   },
   {
    "id": "C5",
    "zona": "sucia",
-   "x0": -28.0,
-   "x1": 61.0,
-   "y0": -47.0,
-   "y1": -40.0,
+   "x0": -20.0,
+   "x1": 53.0,
+   "y0": -22.0,
+   "y1": -15.0,
    "nom": "camino Sur de la planta"
   },
   {
    "id": "C6",
    "zona": "limpia",
-   "x0": -185.0,
-   "x1": 219.0,
+   "x0": -116.5,
+   "x1": 149.5,
    "y0": -62.0,
    "y1": -55.0,
    "nom": "camino perimetral Sur (limpio)"
@@ -498,20 +462,29 @@
   {
    "id": "C7",
    "zona": "limpia",
-   "x0": -185.0,
-   "x1": -178.0,
+   "x0": -116.5,
+   "x1": -109.5,
    "y0": -62.0,
-   "y1": 70.0,
-   "nom": "camino de los depósitos Oeste"
+   "y1": 155.7,
+   "nom": "camino perimetral Oeste (limpio)"
   },
   {
    "id": "C8",
    "zona": "limpia",
-   "x0": 212.0,
-   "x1": 219.0,
+   "x0": 142.5,
+   "x1": 149.5,
    "y0": -62.0,
-   "y1": 70.0,
-   "nom": "camino de los depósitos Este"
+   "y1": 155.7,
+   "nom": "camino perimetral Este (limpio)"
+  },
+  {
+   "id": "C9",
+   "zona": "limpia",
+   "x0": -116.5,
+   "x1": 149.5,
+   "y0": 148.7,
+   "y1": 155.7,
+   "nom": "camino Norte de los depósitos y silos (limpio)"
   }
  ],
  "playones": [
@@ -533,47 +506,39 @@
   },
   {
    "id": "PY3",
-   "x0": -21.0,
+   "x0": -13.0,
    "x1": 0.0,
-   "y0": 11.0,
-   "y1": 20.0,
-   "nom": "playón de mantenimiento (portón P1)"
+   "y0": 2.0,
+   "y1": 24.0,
+   "nom": "playón Oeste: boca de emergencia de la TT-O"
   },
   {
-   "id": "PY-O",
-   "x0": -178.0,
-   "x1": -170.8,
-   "y0": 18.8,
-   "y1": 30.8,
-   "nom": "muelle de huevos Oeste"
-  },
-  {
-   "id": "PY-E",
-   "x0": 203.8,
-   "x1": 212.0,
-   "y0": 18.8,
-   "y1": 30.8,
-   "nom": "muelle de huevos Este"
+   "id": "PY4",
+   "x0": 33.0,
+   "x1": 46.0,
+   "y0": 2.0,
+   "y1": 13.0,
+   "nom": "playón Este: boca de emergencia de la TT-E"
   }
  ],
  "acceso": {
   "porton": {
    "x0": 11.0,
    "x1": 22.0,
-   "y": -80.0
+   "y": -70.0
   },
   "garita": {
    "x0": 4.0,
    "x1": 8.0,
-   "y0": -79.0,
-   "y1": -75.0,
+   "y0": -69.0,
+   "y1": -65.0,
    "h": 2.8
   },
   "vado": {
    "x0": 13.0,
    "x1": 20.0,
-   "y0": -78.0,
-   "y1": -73.0,
+   "y0": -69.0,
+   "y1": -64.0,
    "nota": "vado sanitario (E1 de la Rev. D)"
   },
   "bascula": {
@@ -587,23 +552,23 @@
   "bioseguridad": {
    "x0": 26.0,
    "x1": 38.0,
-   "y0": -84.0,
-   "y1": -76.0,
+   "y0": -74.0,
+   "y1": -66.0,
    "h": 3.2,
    "nom": "vestuarios con ducha: se entra desde afuera del cerco y se sale adentro"
   },
   "estacionamiento": {
    "x0": 40.0,
    "x1": 62.0,
-   "y0": -87.0,
-   "y1": -81.0,
+   "y0": -77.0,
+   "y1": -71.0,
    "nota": "afuera del cerco"
   },
   "set": {
    "x0": -12.0,
    "x1": -4.0,
-   "y0": -87.0,
-   "y1": -81.0,
+   "y0": -77.0,
+   "y1": -71.0,
    "nom": "subestación 13,2/0,4 kV (preliminar), afuera del cerco"
   }
  },
@@ -611,8 +576,8 @@
   {
    "id": "SA-G1-1",
    "galpon": "G1",
-   "x": -137.0,
-   "y": 30.400000000000002,
+   "x": -74.1,
+   "y": 116.65,
    "D": 2.75,
    "h_cil": 5.5,
    "h_cono": 2.3,
@@ -622,8 +587,8 @@
   {
    "id": "SA-G1-2",
    "galpon": "G1",
-   "x": -133.4,
-   "y": 30.400000000000002,
+   "x": -74.1,
+   "y": 113.05,
    "D": 2.75,
    "h_cil": 5.5,
    "h_cono": 2.3,
@@ -633,8 +598,8 @@
   {
    "id": "SA-G2-1",
    "galpon": "G2",
-   "x": -137.0,
-   "y": -11.799999999999999,
+   "x": -27.4,
+   "y": 116.65,
    "D": 2.75,
    "h_cil": 5.5,
    "h_cono": 2.3,
@@ -644,8 +609,8 @@
   {
    "id": "SA-G2-2",
    "galpon": "G2",
-   "x": -133.4,
-   "y": -11.799999999999999,
+   "x": -27.4,
+   "y": 113.05,
    "D": 2.75,
    "h_cil": 5.5,
    "h_cono": 2.3,
@@ -655,8 +620,8 @@
   {
    "id": "SA-G3-1",
    "galpon": "G3",
-   "x": 170.0,
-   "y": 30.400000000000002,
+   "x": 60.4,
+   "y": 116.65,
    "D": 2.75,
    "h_cil": 5.5,
    "h_cono": 2.3,
@@ -666,8 +631,8 @@
   {
    "id": "SA-G3-2",
    "galpon": "G3",
-   "x": 166.4,
-   "y": 30.400000000000002,
+   "x": 60.4,
+   "y": 113.05,
    "D": 2.75,
    "h_cil": 5.5,
    "h_cono": 2.3,
@@ -677,8 +642,8 @@
   {
    "id": "SA-G4-1",
    "galpon": "G4",
-   "x": 170.0,
-   "y": -11.799999999999999,
+   "x": 107.1,
+   "y": 116.65,
    "D": 2.75,
    "h_cil": 5.5,
    "h_cono": 2.3,
@@ -688,8 +653,8 @@
   {
    "id": "SA-G4-2",
    "galpon": "G4",
-   "x": 166.4,
-   "y": -11.799999999999999,
+   "x": 107.1,
+   "y": 113.05,
    "D": 2.75,
    "h_cil": 5.5,
    "h_cono": 2.3,
@@ -700,16 +665,16 @@
  "servicios": [
   {
    "id": "TQ-AGUA",
-   "x": 10.0,
-   "y": 60.0,
-   "D": 6.0,
-   "h": 2.5,
+   "x": 16.5,
+   "y": 95.0,
+   "D": 8.0,
+   "h": 3.0,
    "nom": "tanque de agua de la granja (preliminar)"
   },
   {
    "id": "TQ-EF",
    "x": -6.5,
-   "y": 5.0,
+   "y": -3.0,
    "D": 2.6,
    "h": 3.0,
    "nom": "tanque de efluentes de 15 m³ (reemplaza al biodigestor)"
@@ -724,27 +689,21 @@
   },
   {
    "id": "MORT",
-   "x0": 44.0,
-   "x1": 52.0,
-   "y0": 32.0,
-   "y1": 38.0,
+   "x0": 56.0,
+   "x1": 62.0,
+   "y0": 26.0,
+   "y1": 32.0,
    "nom": "compostera de mortandad (preliminar)"
   }
  ],
  "ampliacion": [
   {
-   "id": "G5 (futuro)",
-   "lado": "O",
-   "x0": -145.0,
-   "x1": -45.0,
-   "y": 55.8
+   "id": "G0 (futuro)",
+   "x": -97.25
   },
   {
-   "id": "G6 (futuro)",
-   "lado": "E",
-   "x0": 78.0,
-   "x1": 178.0,
-   "y": 55.8
+   "id": "G5 (futuro)",
+   "x": 130.25
   }
  ],
  "planta": {
@@ -766,14 +725,6 @@
    ]
   },
   "portones": [
-   {
-    "id": "P1",
-    "muro": "O",
-    "a": 12.6,
-    "b": 16.6,
-    "h": 4.5,
-    "txt": "Portón P1 4,0 m - mantenimiento (ya no entran camiones de guano)"
-   },
    {
     "id": "P2",
     "muro": "S",
@@ -1579,17 +1530,16 @@
   "entrada_vehicular",
   "arboles",
   "farolas",
-  "pilar_acometida"
+  "pilar_acometida",
+  "portón P1"
  ],
  "cotas": {
-  "Y_PAR": 9.3,
-  "X_CAB_IZQ": -45.0,
-  "X_CAB_DER": 78.0,
-  "Z_CE": 6.2,
+  "Y_COLECTORA": 14.6,
+  "Z_COLECTORA": 6.2,
+  "Y_SUR_GALPONES": 22.65,
   "Z_CP_COLA": 5.2,
-  "Z_CP_IZQ": 6.0,
-  "Z_CP_DER": 5.6,
-  "Z_CN": 5.0,
-  "Y_CN": 12.0
+  "Z_CP_O": 6.0,
+  "Z_CP_E": 5.0,
+  "SEP_NAVE": 30.0
  }
 }

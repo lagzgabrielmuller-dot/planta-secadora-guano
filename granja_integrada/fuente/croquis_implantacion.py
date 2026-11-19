@@ -24,7 +24,7 @@ def rect(ax, x0, y0, x1, y1, **kw):
 
 
 def main():
-    fig, ax = plt.subplots(figsize=(16, 7.2), dpi=150)
+    fig, ax = plt.subplots(figsize=(13, 11), dpi=150)
     pr = D["predio"]
     rect(ax, pr["x0"], pr["y0"], pr["x1"], pr["y1"], fill=False, ec="#2f5d2f", lw=1.6, ls="--")
     ax.text(pr["x0"] + 2, pr["y1"] - 4, "cerco perimetral", fontsize=7, color="#2f5d2f")
@@ -37,11 +37,14 @@ def main():
         rect(ax, p["x0"], p["y0"], p["x1"], p["y1"], color="#dcdcdc", ec="#8a8a8a", lw=0.4)
     for g in D["galpones"]:
         rect(ax, g["x0"], g["y0"], g["x1"], g["y1"], color=C_GALPON, ec="#2d4a63", lw=0.8)
-        ax.text((g["x0"] + g["x1"]) / 2, g["y"], f"{g['id']} · {D['jaulas']['aves_por_galpon']:,} gallinas".replace(",", "."),
-                ha="center", va="center", fontsize=7, color="#10263a", weight="bold")
+        ax.text(g["x"], (g["y0"] + g["y1"]) / 2, f"{g['id']}\n{D['jaulas']['aves_por_galpon']:,} gallinas".replace(",", "."),
+                ha="center", va="center", fontsize=7, color="#10263a", weight="bold", rotation=90)
+        ax.text(g["x"], g["y0"] - 1.5, "guano", ha="center", va="top", fontsize=5.5, color="#8a5a24")
+        ax.text(g["x"], g["y1"] + 1.5, "huevos", ha="center", va="bottom", fontsize=5.5, color="#2f5d2f")
+    a2 = D["galpon"]["A"] / 2
     for a in D["ampliacion"]:
-        rect(ax, a["x0"], a["y"] - 3, a["x1"], a["y"] + 3, fill=False, ec="#2d4a63", lw=0.7, ls=":")
-        ax.text((a["x0"] + a["x1"]) / 2, a["y"], a["id"], ha="center", va="center", fontsize=6.5, color="#2d4a63")
+        rect(ax, a["x"] - a2, D["galpones"][0]["y0"], a["x"] + a2, D["galpones"][0]["y1"], fill=False, ec="#2d4a63", lw=0.7, ls=":")
+        ax.text(a["x"], 70, a["id"], ha="center", va="center", fontsize=6.5, color="#2d4a63", rotation=90)
     for dpo in D["depositos"]:
         rect(ax, dpo["x0"], dpo["y0"], dpo["x1"], dpo["y1"], color="#e9d79a", ec="#7a6420", lw=0.8)
         ax.text((dpo["x0"] + dpo["x1"]) / 2, (dpo["y0"] + dpo["y1"]) / 2, f"{dpo['id']}\nhuevos y\npalets", ha="center",
@@ -70,15 +73,15 @@ def main():
     for k in ("garita", "bascula", "vado", "bioseguridad", "set"):
         e = ac[k]
         rect(ax, e["x0"], e["y0"], e["x1"], e["y1"], color="#cfcfe8", ec="#444", lw=0.4)
-    ax.text(32, -80, "vestuarios\ny duchas", fontsize=5.5, ha="center", va="center")
-    ax.text(-8, -84, "SET", fontsize=5.5, ha="center", va="center")
+    ax.text(32, -70, "vestuarios\ny duchas", fontsize=5.5, ha="center", va="center")
+    ax.text(-8, -74, "SET", fontsize=5.5, ha="center", va="center")
     ax.text(16.5, -42, "báscula", fontsize=5.5, ha="center", va="center", rotation=90)
-    ax.text(16.5, -75.5, "vado", fontsize=5.5, ha="center", va="center")
-    ax.annotate("cintas de guano a la planta", (-30, 9.3), (-95, -32), fontsize=7, color="#b33a1d",
+    ax.text(16.5, -66.5, "vado", fontsize=5.5, ha="center", va="center")
+    ax.annotate("cintas de guano conectadas a la planta", (-40, 14.6), (-110, -30), fontsize=7, color="#b33a1d",
                 arrowprops=dict(arrowstyle="->", color="#b33a1d", lw=0.8))
-    ax.annotate("zona limpia: huevos y alimento", (-160, 0), (-195, -30), fontsize=7, color="#2f5d2f",
+    ax.annotate("zona limpia: huevos y alimento", (-50, 135), (-120, 160), fontsize=7, color="#2f5d2f",
                 arrowprops=dict(arrowstyle="->", color="#2f5d2f", lw=0.8))
-    ax.annotate("zona sucia: guano y planta", (16, 40), (60, 66), fontsize=7, color="#8a5a24",
+    ax.annotate("zona sucia: guano y planta", (16, 30), (95, -35), fontsize=7, color="#8a5a24",
                 arrowprops=dict(arrowstyle="->", color="#8a5a24", lw=0.8))
     ax.set_aspect("equal")
     ax.set_xlim(pr["x0"] - 18, pr["x1"] + 18)

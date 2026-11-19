@@ -85,22 +85,31 @@ los galpones son volúmenes de fondo.
 ejes, depósito con cintas de huevos, estaciones E1 y E2, transelevador, muelle y su control) y el interior se diseña
 ahora como propuesta preliminar (P), con equipos comerciales de referencia y respetando el ancho de 6 m.
 
-### 4.3 Discrepancia que hay que confirmar
+### 4.3 Gallinas por galpón y ancho de los galpones
 
-Con 2 filas de jaulas de 4 pisos en 6 m de ancho entran unas 14.800 gallinas por galpón (Fase 3). La producción que
-informa San Jorge (64.800 huevos por día en 2 galpones) supone más de 70.000 gallinas, que no entran en dos galpones de
-6 m con jaulas de 4 pisos. Puede ser que el ancho medido en la imagen satelital esté corto o que las jaulas tengan
-más pisos. **Hay que confirmar con el establecimiento el ancho real, el sistema de jaulas y la cantidad de gallinas.**
-El rediseño usa 4 galpones de ≈ 14.800 gallinas (≈ 59.000 en total), que producen el guano de diseño de la secadora
-(8 t/día).
+Gabriel confirmó (19/11/2026) que **cada galpón tiene 36.000 gallinas**. Coincide con la producción de San Jorge:
+64.800 huevos por día con 72.000 gallinas es una postura del 90 %.
+
+Con 36.000 gallinas, los 6 m de ancho que se midieron en la imagen satelital no alcanzan: con jaulas de 4 o 5 pisos
+entran dos filas y unas 15.000 a 18.000 gallinas. El rediseño mantiene los 100 m de largo y los 31 m entre ejes de
+San Jorge y lleva el ancho a **10,5 m**, con 4 filas de jaulas de 5 pisos (36.000 gallinas justas). **Hay que
+confirmar el ancho real y el sistema de jaulas de San Jorge**; si es otro, se cambia un solo dato en
+`fuente/datos_granja.py` y se regenera todo.
+
+### 4.4 Distribución
+
+Pedido de Gabriel (19/11/2026): en una fila, galpón, galpón, planta en el medio, galpón, galpón, con las cintas de
+guano conectadas. Cada lado de la granja es una copia del par de San Jorge (dos galpones paralelos con los ejes a
+31 m y su depósito de huevos), girada para que las cabeceras de guano miren al Sur, hacia la cinta colectora que
+entra a la planta, y las de huevos al Norte, hacia el depósito.
 
 ## 5. Datos que faltan
 
 | Dato | Para qué hace falta | Qué se usa mientras tanto |
 |---|---|---|
-| Gallinas por galpón y sistema de jaulas de San Jorge | Caudal de guano y huevos | 14.784 por galpón (P) |
-| Ancho real de los galpones | Distribución interior | 6 m (S) |
-| Tasa de postura media | Huevos por día | 85 % (H) |
+| Sistema de jaulas de San Jorge | Distribución interior | 4 filas × 5 pisos (P) |
+| Ancho real de los galpones | Distribución interior | 10,5 m (P; el satelital daba 6 m) |
+| Tasa de postura media | Huevos por día | 90 % (S: 64.800 huevos con 72.000 gallinas) |
 | Densidad del guano fresco | Volumen de la tolva pulmón | 950 kg/m³ (H, a medir) |
 | Distancias mínimas de la Res. SENASA 1699/2019 | Implantación | Separaciones conservadoras (Fase 3), a verificar con el texto vigente |
 | Potencias de las cintas de guano | Instalación eléctrica | Cálculo preliminar por fórmula (Fase 4) |
@@ -113,7 +122,7 @@ El rediseño usa 4 galpones de ≈ 14.800 gallinas (≈ 59.000 en total), que pr
 | Planta Rev. F | Nave, secador SC-4, generador, gases, alimentación, descarga, cáscara, envasado, seguridad | Planta central (copiada y ampliada) |
 | Planta Rev. F | Datos geométricos (`layout_planta.json`) y resultados eléctricos | `datos/base/` (copias) |
 | Láminas | Formato A3 IRAM y rótulo de la escuela | Planos `GI-xx` |
-| San Jorge | Galpón de 100 × 6 m y par de galpones a 31 m | 4 galpones (2 pares) |
+| San Jorge | Galpón de 100 m y par de galpones a 31 m (36.000 gallinas cada uno) | 4 galpones (2 pares) |
 | San Jorge | Depósito con cintas de huevos, estaciones E1–E2, transelevador y muelle | Un depósito por par de galpones |
 | San Jorge | Arquitectura de control S7 con periferia ET 200SP y pantallas | Base de la automatización de la planta |
 

@@ -1,0 +1,28 @@
+{
+ "glb": "modelo_3d/despieces/TP01.glb",
+ "salida": "renders/_png",
+ "sol": [
+  215,
+  40
+ ],
+ "vistas": [
+  {
+   "nombre": "R06_despiece_TP-01",
+   "cam": [
+    21.0,
+    33.0,
+    16.8
+   ],
+   "mira": [
+    4.7,
+    15.6,
+    6.0
+   ],
+   "lente": 35,
+   "ancho": 1600,
+   "alto": 1000,
+   "muestras": 64,
+   "exposicion": 0.6
+  }
+ ]
+}

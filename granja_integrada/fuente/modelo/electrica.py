@@ -184,6 +184,31 @@ def _mm(p):
     return tuple(v * 1000 for v in p)
 
 
+def clase_bandeja(nom):
+    """(ancho en mm, tag, cables) de cada bandeja nueva de red(), según su nombre. Lo usan el 3D y los planos."""
+    if nom.startswith("Troncal"):                 # antes que "sala de control": la troncal pasa sobre la sala
+        return 300, "BT-01", 6
+    if "sala de control" in nom:
+        return 200, "BT-SC", 4
+    if "PC-01" in nom:
+        return 200, "BT-PC01", 3
+    if "tolva pulmón" in nom or "RIO-TP" in nom:
+        return 200, "BT-TP", 4
+    if "torre" in nom or nom.startswith("Bajada al RIO"):
+        return 200, "BT-TT-" + ("O" if ("TT-O" in nom or "RIO-O" in nom) else "E"), 4
+    if "cabecera" in nom:
+        return 200, "BT-" + nom.split()[-1], 5
+    if "inclinada" in nom:
+        return 150, nom.split()[-1].replace("CI-", "BT-CI-"), 2
+    return 200, "BT", 3
+
+
+def clase_cano(nom):
+    """(diámetro en mm, tag) de cada caño nuevo de red()."""
+    d = 32 if "fibra" in nom else (50 if "cruce del muro" in nom else 25)
+    return d, ("FO" if "fibra" in nom else ("CT" if "transversal" in nom else "CÑ"))
+
+
 def _bandeja(e, pts, ancho, tag, cables=3, colgar=None):
     for a, b in zip(pts, pts[1:]):
         if math.dist(a, b) < 0.06:
@@ -251,29 +276,26 @@ def construir(e):
     e.en("Instalación eléctrica - canalizaciones")
     for nom, (tipo, pts, r) in ruta.items():
         if tipo == "bandeja":
-            if "sala de control" in nom:
-                _bandeja(e, pts, 200, "BT-SC", cables=4, colgar=lambda x, y: 3.0)
-            elif nom.startswith("Troncal"):
-                _bandeja(e, pts, 300, "BT-01", cables=6, colgar=zt)
+            ancho, tag, cables = clase_bandeja(nom)
+            if nom.startswith("Troncal"):
+                _bandeja(e, pts, ancho, tag, cables=cables, colgar=zt)
+            elif "sala de control" in nom:
+                _bandeja(e, pts, ancho, tag, cables=cables, colgar=lambda x, y: 3.0)
             elif "PC-01" in nom:
-                _bandeja(e, pts, 200, "BT-PC01", cables=3, colgar=lambda x, y: 6.17)
-            elif "tolva pulmón" in nom or "RIO-TP" in nom:
-                _bandeja(e, pts, 200, "BT-TP", cables=4)
+                _bandeja(e, pts, ancho, tag, cables=cables, colgar=lambda x, y: 6.17)
             elif "torre" in nom or nom.startswith("Bajada al RIO"):
-                lado = "O" if ("TT-O" in nom or "RIO-O" in nom) else "E"
-                _bandeja(e, pts, 200, f"BT-TT-{lado}", cables=4, colgar=lambda x, y: 8.02)
+                _bandeja(e, pts, ancho, tag, cables=cables, colgar=lambda x, y: 8.02)
             elif "cabecera" in nom:
                 gid = nom.split()[-1]
                 gal = next(x for x in D["galpones"] if x["id"] == gid)
                 eje = gal["x"]
                 z_g = lambda x, y, eje=eje: (GP.HA + (GP.A / 2 - abs(x * 1000 - eje * 1000)) * math.tan(GP.PEND)) / 1000 - 0.16  # noqa: E731
-                _bandeja(e, pts[3:], 200, f"BT-{gid}", cables=5, colgar=z_g)
-                _bandeja(e, pts[:4], 200, f"BT-{gid}", cables=5)
-            elif "inclinada" in nom:
-                _bandeja(e, pts, 150, nom.split()[-1].replace("CI-", "BT-CI-"), cables=2)
+                _bandeja(e, pts[3:], ancho, tag, cables=cables, colgar=z_g)
+                _bandeja(e, pts[:4], ancho, tag, cables=cables)
+            else:
+                _bandeja(e, pts, ancho, tag, cables=cables)
         elif tipo == "caño":
-            d = 32 if "fibra" in nom else (50 if "cruce del muro" in nom else 25)
-            tag = "FO" if "fibra" in nom else ("CT" if "transversal" in nom else "CÑ")
+            d, tag = clase_cano(nom)
             _cano(e, pts, d, tag)
     # ---------------------------------------------------------------- recepción: RIO-TP, sinfines y cabezales
     e.en("Instalación eléctrica - tableros y PLC")

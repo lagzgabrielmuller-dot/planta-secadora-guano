@@ -4,7 +4,7 @@
 
 `vistas.json`: {"glb": "...", "salida": "carpeta", "vistas": [{"nombre", "cam": [x,y,z], "mira": [x,y,z], "lente": 35,
 "ancho": 1920, "alto": 1080, "muestras": 96, "ocultar": ["G:grupo", ...], "solo": [...], "sol": [azimut, altura],
-"corte": {"plano": "x"|"y"|"z", "valor": m, "lado": 1}}]}
+"transparentes": [...], "alfa_transparentes": 0.1, "exposicion": 0.0}]}
 
 Coordenadas de cámara en metros del proyecto (x Este, y Norte, z arriba). Los materiales del GLB se mejoran por nombre
 (chapas, rejillas, hormigón, pasto, vidrio, mallas) con nodos procedurales.
@@ -196,9 +196,49 @@ def camara(nombre, cam, mira, lente=35.0):
     return ob
 
 
+_FANTASMA = {}
+
+
+def fantasma(rgb=(0.72, 0.78, 0.86), alfa=0.10):
+    """Material semitransparente para mostrar un grupo como contexto (vistas técnicas y eléctricas)."""
+    clave = (tuple(rgb), alfa)
+    if clave not in _FANTASMA:
+        m = bpy.data.materials.new(f"fantasma_{len(_FANTASMA)}")
+        m.use_nodes = True
+        b = next(n for n in m.node_tree.nodes if n.type == "BSDF_PRINCIPLED")
+        b.inputs["Base Color"].default_value = (*rgb, 1.0)
+        b.inputs["Alpha"].default_value = alfa
+        b.inputs["Roughness"].default_value = 0.6
+        _FANTASMA[clave] = m
+    return _FANTASMA[clave]
+
+
+_RESALTE = {}
+
+
+def resalte(rgb):
+    """Material de color pleno con algo de emisión para destacar un sistema (eléctrica, recorrido del guano)."""
+    clave = tuple(rgb)
+    if clave not in _RESALTE:
+        m = bpy.data.materials.new(f"resalte_{len(_RESALTE)}")
+        m.use_nodes = True
+        b = next(n for n in m.node_tree.nodes if n.type == "BSDF_PRINCIPLED")
+        b.inputs["Base Color"].default_value = (*rgb, 1.0)
+        b.inputs["Emission Color"].default_value = (*rgb, 1.0)
+        b.inputs["Emission Strength"].default_value = 0.6
+        b.inputs["Roughness"].default_value = 0.5
+        _RESALTE[clave] = m
+    return _RESALTE[clave]
+
+
 def visibilidad(v):
+    """ocultar: grupos que no se ven; solo: únicos grupos que se ven; transparentes: grupos en fantasma (contexto);
+    resaltar: {grupo: [r, g, b]} grupos en color pleno."""
     ocultar = set(v.get("ocultar", []))
     solo = set(v.get("solo", []))
+    transp = set(v.get("transparentes", []))
+    resaltar = v.get("resaltar", {})
+    alfa = float(v.get("alfa_transparentes", 0.10))
     for ob in bpy.data.objects:
         if ob.type not in ("MESH", "EMPTY"):
             continue
@@ -206,8 +246,18 @@ def visibilidad(v):
         while raiz.parent is not None:
             raiz = raiz.parent
         grupo = raiz.name.split(".")[0]
-        oculto = bool(grupo in ocultar or (solo and grupo not in solo))
+        oculto = bool(grupo in ocultar or (solo and grupo not in solo and grupo not in transp))
         ob.hide_render = oculto
+        if ob.type == "MESH":
+            for slot in ob.material_slots:
+                if grupo in resaltar:
+                    slot.link = "OBJECT"
+                    slot.material = resalte(resaltar[grupo])
+                elif grupo in transp:
+                    slot.link = "OBJECT"
+                    slot.material = fantasma(alfa=alfa)
+                else:
+                    slot.link = "DATA"
 
 
 def configurar_render(v):

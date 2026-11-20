@@ -49,6 +49,9 @@ def tag_motor(cid):
     return ""
 
 
+H_BORDE, H_TACO, PASO_TACO = 120.0, 110.0, 250.0    # mm: banda con bordes ondulados de las inclinadas (P)
+
+
 def d_cab(B):
     return 400 if B >= 600 else 320
 
@@ -145,10 +148,10 @@ def cinta(e, cid, lado_motor=1, capota=True, capota_hasta=None, guano=True, bord
             e.caja(s_a, -B / 2, -ESP, s_b, B / 2, 0, "banda", M=m.M, cod=cid,
                    nom=f"Banda EP 400/3 de {B:.0f} mm con bordes ondulados ({nombre} {cid})")
             for sg in (-1, 1):
-                e.caja(s_a, sg * t_borde - 5, 0, s_b, sg * t_borde + 5, 80, "banda", M=m.M, cod=cid,
-                       nom="Borde ondulado de 80 mm")
-            k_taco = proto(("taco", B), lambda: caja0(12, 2 * t_borde - 20, 70).translate((-6, -(t_borde - 10), 0)))
-            for s in np.arange(150 if primero else 100, L - 80, 250):
+                e.caja(s_a, sg * t_borde - 5, 0, s_b, sg * t_borde + 5, H_BORDE, "banda", M=m.M, cod=cid,
+                       nom=f"Borde ondulado de {H_BORDE:.0f} mm")
+            k_taco = proto(("taco", B, H_TACO), lambda: caja0(12, 2 * t_borde - 20, H_TACO).translate((-6, -(t_borde - 10), 0)))
+            for s in np.arange(150 if primero else 100, L - 80, PASO_TACO):
                 e.add(k_taco, "banda", m.at(s, 0, 0), cid, "")
         else:
             l3 = B / 3
@@ -609,7 +612,7 @@ def torre(e, tt):
     xp = x_cp - sig * (170 + 150 + 20)
     e.caja_rot((xp, y0 + 500, zp + 100 + 850), (24, 140, 100), 0.0, "negro", f"RIO-{tt['lado']}", "Panel de operador KTP400")
     e.caja_rot((xp - sig * 14, y0 + 500, zp + 100 + 850), (4, 115, 75), 0.0, "vidrio", f"RIO-{tt['lado']}", "")
-    C.botonera(e, (x - 600, y0 + 60, zp + 1200), (0, 1, 0), tag=tag)
+    C.botonera(e, (x - 600, y0 + 60, zp + 1200), (0, 1, 0), tag=f"HS-{tag}")
     C.placa(e, (x, y1 + 30, zp + 1600), (0, 1, 0), 900, 300, "amarillo", tag=tag,
             nom=f"{tag} · TORRE DE TRANSFERENCIA · USAR ARNÉS EN LA ABERTURA")
 

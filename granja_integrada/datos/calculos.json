@@ -157,9 +157,9 @@
    "eta": 0.808,
    "cosf": 0.72,
    "In_A": 1.44,
-   "tambor_D_m": 0.32,
-   "rpm_tambor": 17.9,
-   "relacion_reductor": 80.0,
+   "tambor_D_m": 0.4,
+   "rpm_tambor": 14.3,
+   "relacion_reductor": 101.0,
    "C": 4.5
   },
   {
@@ -171,9 +171,9 @@
    "B_m": 0.5,
    "v_m_s": 0.4,
    "Q_diseno_t_h": 8,
-   "Q_capacidad_t_h": 21.2,
+   "Q_capacidad_t_h": 12.4,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.82,
+   "P_requerida_kW": 0.83,
    "motor_kW": 1.1,
    "eta": 0.841,
    "cosf": 0.77,
@@ -199,9 +199,9 @@
    "eta": 0.808,
    "cosf": 0.72,
    "In_A": 1.44,
-   "tambor_D_m": 0.32,
-   "rpm_tambor": 17.9,
-   "relacion_reductor": 80.0,
+   "tambor_D_m": 0.4,
+   "rpm_tambor": 14.3,
+   "relacion_reductor": 101.0,
    "C": 4.5
   },
   {
@@ -213,9 +213,9 @@
    "B_m": 0.5,
    "v_m_s": 0.4,
    "Q_diseno_t_h": 8,
-   "Q_capacidad_t_h": 21.2,
+   "Q_capacidad_t_h": 12.4,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.82,
+   "P_requerida_kW": 0.83,
    "motor_kW": 1.1,
    "eta": 0.841,
    "cosf": 0.77,
@@ -241,9 +241,9 @@
    "eta": 0.808,
    "cosf": 0.72,
    "In_A": 1.44,
-   "tambor_D_m": 0.32,
-   "rpm_tambor": 17.9,
-   "relacion_reductor": 80.0,
+   "tambor_D_m": 0.4,
+   "rpm_tambor": 14.3,
+   "relacion_reductor": 101.0,
    "C": 4.5
   },
   {
@@ -255,9 +255,9 @@
    "B_m": 0.5,
    "v_m_s": 0.4,
    "Q_diseno_t_h": 8,
-   "Q_capacidad_t_h": 21.2,
+   "Q_capacidad_t_h": 12.4,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.82,
+   "P_requerida_kW": 0.83,
    "motor_kW": 1.1,
    "eta": 0.841,
    "cosf": 0.77,
@@ -283,9 +283,9 @@
    "eta": 0.808,
    "cosf": 0.72,
    "In_A": 1.44,
-   "tambor_D_m": 0.32,
-   "rpm_tambor": 17.9,
-   "relacion_reductor": 80.0,
+   "tambor_D_m": 0.4,
+   "rpm_tambor": 14.3,
+   "relacion_reductor": 101.0,
    "C": 4.5
   },
   {
@@ -297,9 +297,9 @@
    "B_m": 0.5,
    "v_m_s": 0.4,
    "Q_diseno_t_h": 8,
-   "Q_capacidad_t_h": 21.2,
+   "Q_capacidad_t_h": 12.4,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.82,
+   "P_requerida_kW": 0.83,
    "motor_kW": 1.1,
    "eta": 0.841,
    "cosf": 0.77,
@@ -320,14 +320,14 @@
    "Q_diseno_t_h": 16,
    "Q_capacidad_t_h": 29.7,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.97,
+   "P_requerida_kW": 1.01,
    "motor_kW": 1.5,
    "eta": 0.853,
    "cosf": 0.79,
    "In_A": 3.38,
-   "tambor_D_m": 0.32,
-   "rpm_tambor": 29.8,
-   "relacion_reductor": 48.0,
+   "tambor_D_m": 0.4,
+   "rpm_tambor": 23.9,
+   "relacion_reductor": 60.0,
    "C": 2.16
   },
   {
@@ -341,14 +341,14 @@
    "Q_diseno_t_h": 16,
    "Q_capacidad_t_h": 28.1,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.84,
+   "P_requerida_kW": 0.85,
    "motor_kW": 1.1,
    "eta": 0.841,
    "cosf": 0.77,
    "In_A": 2.58,
-   "tambor_D_m": 0.32,
-   "rpm_tambor": 29.8,
-   "relacion_reductor": 48.0,
+   "tambor_D_m": 0.4,
+   "rpm_tambor": 23.9,
+   "relacion_reductor": 60.0,
    "C": 4.11
   },
   {
@@ -362,14 +362,14 @@
    "Q_diseno_t_h": 16,
    "Q_capacidad_t_h": 29.7,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.97,
+   "P_requerida_kW": 1.01,
    "motor_kW": 1.5,
    "eta": 0.853,
    "cosf": 0.79,
    "In_A": 3.38,
-   "tambor_D_m": 0.32,
-   "rpm_tambor": 29.8,
-   "relacion_reductor": 48.0,
+   "tambor_D_m": 0.4,
+   "rpm_tambor": 23.9,
+   "relacion_reductor": 60.0,
    "C": 2.16
   },
   {
@@ -383,14 +383,14 @@
    "Q_diseno_t_h": 16,
    "Q_capacidad_t_h": 29.2,
    "verifica_capacidad": true,
-   "P_requerida_kW": 0.97,
+   "P_requerida_kW": 1.0,
    "motor_kW": 1.5,
    "eta": 0.853,
    "cosf": 0.79,
    "In_A": 3.38,
-   "tambor_D_m": 0.32,
-   "rpm_tambor": 29.8,
-   "relacion_reductor": 48.0,
+   "tambor_D_m": 0.4,
+   "rpm_tambor": 23.9,
+   "relacion_reductor": 60.0,
    "C": 2.41
   }
  ],
@@ -613,7 +613,7 @@
    "arranque": "VFD",
    "tablero": "TS-G1",
    "tipo": "P",
-   "nota": "P req. 0.82 kW"
+   "nota": "P req. 0.83 kW"
   },
   {
    "tag": "M201",
@@ -833,7 +833,7 @@
    "arranque": "VFD",
    "tablero": "TS-G2",
    "tipo": "P",
-   "nota": "P req. 0.82 kW"
+   "nota": "P req. 0.83 kW"
   },
   {
    "tag": "M301",
@@ -1053,7 +1053,7 @@
    "arranque": "VFD",
    "tablero": "TS-G3",
    "tipo": "P",
-   "nota": "P req. 0.82 kW"
+   "nota": "P req. 0.83 kW"
   },
   {
    "tag": "M401",
@@ -1273,7 +1273,7 @@
    "arranque": "VFD",
    "tablero": "TS-G4",
    "tipo": "P",
-   "nota": "P req. 0.82 kW"
+   "nota": "P req. 0.83 kW"
   },
   {
    "tag": "M81",
@@ -1283,7 +1283,7 @@
    "arranque": "VFD",
    "tablero": "TS-GU",
    "tipo": "P",
-   "nota": "P req. 0.97 kW"
+   "nota": "P req. 1.01 kW"
   },
   {
    "tag": "M82",
@@ -1293,7 +1293,7 @@
    "arranque": "VFD",
    "tablero": "TS-GU",
    "tipo": "P",
-   "nota": "P req. 0.84 kW"
+   "nota": "P req. 0.85 kW"
   },
   {
    "tag": "M83",
@@ -1303,7 +1303,7 @@
    "arranque": "VFD",
    "tablero": "TS-GU",
    "tipo": "P",
-   "nota": "P req. 0.97 kW"
+   "nota": "P req. 1.01 kW"
   },
   {
    "tag": "M84",
@@ -1313,7 +1313,7 @@
    "arranque": "VFD",
    "tablero": "TS-GU",
    "tipo": "P",
-   "nota": "P req. 0.97 kW"
+   "nota": "P req. 1.0 kW"
   },
   {
    "tag": "M85",

@@ -249,7 +249,7 @@ for _gid in ("G1", "G2", "G3", "G4"):
 SERVICIOS = [
     {"id": "TQ-AGUA", "x": 16.5, "y": 95.0, "D": 8.0, "h": 3.0, "nom": "tanque de agua de la granja (preliminar)"},
     {"id": "TQ-EF", "x": -6.5, "y": -3.0, "D": 2.6, "h": 3.0, "nom": "tanque de efluentes de 15 m³ (reemplaza al biodigestor)"},
-    {"id": "GLP", "x": 31.5, "y": 27.0, "D": 0.9, "L": 2.0, "nom": "tanque de GLP del piloto del hogar"},
+    {"id": "GLP", "x": 31.5, "y": 27.0, "D": 0.6, "L": 1.37, "nom": "tanque de GLP del piloto del hogar"},  # π·0,3²·1,37 + 4/3·π·0,3³ = 0,50 m³
     {"id": "MORT", "x0": 56.0, "x1": 62.0, "y0": 26.0, "y1": 32.0, "nom": "compostera de mortandad (preliminar)"},
 ]
 AMPLIACION = [  # P: lugar para un galpón más por lado; la secadora llega a 1.440 kg/h

@@ -260,7 +260,7 @@ def _porton(e, eje, pos, a, b, h, cara, cod, nom):
     c = ((a + b) / 2, pos - cara * 250, h + 450) if eje == "y" else (pos - cara * 250, (a + b) / 2, h + 450)
     e.caja_rot(c, (450, 250, 250) if eje == "y" else (250, 450, 250), 0, "gris_motor", cod, "Motor del portón seccional")
     bot = (b + 300, pos - cara * 40, 1300) if eje == "y" else (pos - cara * 40, b + 300, 1300)
-    C.botonera(e, bot, (0, -cara, 0) if eje == "y" else (-cara, 0, 0), tag=cod)
+    C.botonera(e, bot, (0, -cara, 0) if eje == "y" else (-cara, 0, 0), tag=f"HS-{cod}")   # HS: no se confunde con el portón
 
 
 def _puerta(e, eje, pos, a, b, h, cara, cod, nom, mat="acero_pintado"):

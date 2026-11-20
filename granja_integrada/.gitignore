@@ -1,0 +1,8 @@
+# temporales de la exportación STEP (se rehacen con fuente/ensamblar.py)
+modelo_3d/_step/
+planos/_tmp/
+# imágenes de las láminas para los DXF (van dentro de planos/dxf/Planos_DXF_GI.zip; se rehacen con planos_gi.py)
+planos/dxf/img/
+# renders en PNG antes de pasarlos a JPG (fuente/render/a_jpg.py)
+renders/_png/
+__pycache__/

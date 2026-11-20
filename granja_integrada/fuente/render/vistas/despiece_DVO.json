@@ -1,0 +1,18 @@
+{
+ "glb": "modelo_3d/despieces/DVO.glb",
+ "salida": "planos/img_tecnicas",
+ "vistas": [
+  {
+   "nombre": "X_DVO",
+   "auto": true,
+   "mira": [
+    -0.85,
+    1.0,
+    -0.55
+   ],
+   "px_ancho": 1800,
+   "margen": 0.03,
+   "retiro_m": 30
+  }
+ ]
+}

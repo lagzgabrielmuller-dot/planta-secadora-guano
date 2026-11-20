@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Granja integrada · visor 3D</title>
+<meta name="description" content="Visor 3D de la granja avícola integrada con planta central de secado de guano: 4 galpones, transporte automático, tolva pulmón, secador SC-4, instalación eléctrica.">
+<style>
+  :root {
+    --bg: #eef1f4; --panel: #ffffff; --texto: #1d2733; --suave: #5b6878; --borde: #d5dbe2;
+    --acento: #b23a1d; --acento2: #1f5f99; --boton: #f3f5f8; --boton-hover: #e6ebf1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #14181d; --panel: #1c2229; --texto: #e6ebf0; --suave: #9aa7b5; --borde: #2e3742;
+            --acento: #e0704f; --acento2: #6aa8e0; --boton: #242c35; --boton-hover: #2e3843; }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--texto);
+    font: 14px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+  #app { display: grid; grid-template-columns: 300px 1fr; height: 100vh; }
+  aside { background: var(--panel); border-right: 1px solid var(--borde); overflow-y: auto;
+    padding: 14px max(14px, env(safe-area-inset-left)) 24px 14px; }
+  h1 { font-size: 16px; margin: 0 0 2px; }
+  .sub { color: var(--suave); font-size: 12px; margin: 0 0 12px; }
+  h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--suave); margin: 16px 0 6px; }
+  select, button { font: inherit; color: var(--texto); }
+  select { width: 100%; padding: 6px 8px; border: 1px solid var(--borde); border-radius: 6px; background: var(--boton); }
+  .vistas { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .vistas button, .acciones button { padding: 6px 8px; border: 1px solid var(--borde); border-radius: 6px;
+    background: var(--boton); cursor: pointer; text-align: left; font-size: 12.5px; }
+  .vistas button:hover, .acciones button:hover { background: var(--boton-hover); }
+  .acciones { display: flex; flex-wrap: wrap; gap: 6px; }
+  details { border: 1px solid var(--borde); border-radius: 6px; margin-bottom: 6px; background: var(--boton); }
+  summary { padding: 5px 8px; cursor: pointer; font-weight: 600; font-size: 13px; display: flex; gap: 6px; align-items: center; }
+  summary input { margin: 0; }
+  .capa { display: flex; gap: 6px; align-items: center; padding: 3px 10px 3px 26px; font-size: 12.5px; }
+  .capa:hover { background: var(--boton-hover); }
+  a { color: var(--acento2); }
+  .docs a { display: block; padding: 3px 0; }
+  main { position: relative; min-width: 0; }
+  canvas { display: block; width: 100%; height: 100%; }
+  #estado { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: var(--panel);
+    border: 1px solid var(--borde); border-radius: 8px; padding: 14px 18px; max-width: 420px; text-align: center; }
+  #estado[hidden] { display: none; }
+  #info { position: absolute; left: 12px; bottom: 12px; background: var(--panel); border: 1px solid var(--borde);
+    border-radius: 6px; padding: 6px 10px; font-size: 12.5px; max-width: calc(100% - 24px); }
+  #ayuda { position: absolute; right: 12px; bottom: 12px; color: var(--suave); font-size: 11.5px; text-align: right; }
+  #menu { display: none; }
+  .barra { height: 6px; background: var(--borde); border-radius: 3px; overflow: hidden; margin-top: 8px; }
+  .barra div { height: 100%; width: 0; background: var(--acento); transition: width .2s; }
+  @media (max-width: 760px) {
+    #app { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+    aside { max-height: 46vh; border-right: 0; border-bottom: 1px solid var(--borde); }
+    #ayuda { display: none; }
+  }
+</style>
+<script type="importmap">
+{ "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.163.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.163.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div id="app">
+  <aside>
+    <h1>Granja integrada · visor 3D</h1>
+    <p class="sub">4 galpones de 36.000 gallinas, transporte automático del guano y planta central de secado (SC-4, Rev. F).</p>
+
+    <h2>Modelo</h2>
+    <select id="modelo">
+      <option value="modelo_3d/granja_integrada.glb">Granja completa (18 MB)</option>
+      <option value="modelo_3d/planta_central.glb">Planta central con transporte (9 MB)</option>
+      <option value="modelo_3d/galpon_tipo_G1.glb">Galpón tipo G1 (5 MB)</option>
+      <option value="modelo_3d/secador_SC4.glb">Secador SC-4 (3 MB)</option>
+    </select>
+
+    <h2>Vistas</h2>
+    <div class="vistas" id="vistas"></div>
+
+    <h2>Capas</h2>
+    <div class="acciones" style="margin-bottom:8px">
+      <button id="todas">Mostrar todo</button>
+      <button id="sinTechos">Sin techos ni muros</button>
+      <button id="soloElec">Solo eléctrica</button>
+    </div>
+    <div id="capas"></div>
+
+    <h2>Documentos</h2>
+    <div class="docs">
+      <a href="planos/Planos_GI.pdf">Planos GI-01 a GI-20 (PDF A3)</a>
+      <a href="planos/dxf/Planos_DXF_GI.zip">Planos en DXF (zip)</a>
+      <a href="memoria/Memoria_tecnica_granja_integrada.pdf">Memoria técnica (PDF)</a>
+      <a href="memoria/Memoria_tecnica_granja_integrada.docx">Memoria técnica (Word)</a>
+      <a href="documentacion/Listas_granja_integrada.xlsx">Listas de motores, instrumentos y E/S (Excel)</a>
+      <a href="modelo_3d/Granja_integrada_STEP.zip">Modelo STEP (zip)</a>
+      <a href="https://github.com/lagzgabrielmuller-dot/planta-secadora-guano/tree/main/granja_integrada/renders" target="_blank" rel="noopener">Renders (carpeta en GitHub)</a>
+      <a href="https://github.com/lagzgabrielmuller-dot/planta-secadora-guano/tree/main/granja_integrada#readme" target="_blank" rel="noopener">Cómo está armado el proyecto</a>
+    </div>
+  </aside>
+  <main>
+    <canvas id="lienzo"></canvas>
+    <div id="estado"><div id="msj">Cargando el modelo…</div><div class="barra"><div id="barra"></div></div></div>
+    <div id="info">Tocá una pieza para ver a qué sistema pertenece.</div>
+    <div id="ayuda">arrastrar: girar · rueda: acercar · clic derecho: desplazar</div>
+  </main>
+</div>
+
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
+
+// Coordenadas del proyecto (x Este, y Norte, z arriba, m) → three.js (y arriba): (x, z, -y)
+const P = (x, y, z) => new THREE.Vector3(x, z, -y);
+// Vistas: cámara, punto mirado y lente equivalente de 35 mm (las mismas de los renders)
+const VISTAS = {
+  "modelo_3d/granja_integrada.glb": [
+    ["General", [175, -135, 120], [16, 60, 0], 30], ["Planta y galpones", [16, -78, 46], [16, 45, 2], 26],
+    ["Recorrido del guano", [-98, -22, 40], [-22, 20, 3], 30], ["Depósito de huevos", [-30, 168, 16], [-50.5, 137, 2.5], 30],
+    ["CCM del galpón G1", [-53.5, 18.5, 3.2], [-60.8, 23.7, 1.7], 26], ["Desde arriba", [16, 30, 420], [16, 31, 0], 30],
+  ],
+  "modelo_3d/planta_central.glb": [
+    ["Interior de la nave", [31.2, 16.9, 5.2], [12, 7.5, 2.0], 18], ["Secador SC-4", [32, -2.5, 6.2], [17, 9.3, 1.6], 28],
+    ["Planta general", [37, -13, 25], [13.5, 9.5, 3], 30], ["Torre TT-O", [-2.0, 22.5, 9.8], [-10, 14.6, 5.6], 26],
+    ["Recepción TP-01", [10.8, 11.2, 3.3], [4.5, 15.2, 2.6], 20], ["Sala de control", [21.2, 6.8, 5.4], [25.2, 2.2, 1.4], 22],
+  ],
+  "modelo_3d/galpon_tipo_G1.glb": [
+    ["Pasillo interior", [-66.25, 46, 1.75], [-66.1, 26, 1.6], 22], ["Cabecera de guano", [-69.2, 23.25, 2.7], [-63.2, 25.0, 1.5], 18],
+    ["Exterior", [-30, 0, 30], [-66, 60, 2], 30],
+  ],
+  "modelo_3d/secador_SC4.glb": [
+    ["Frente (Sur)", [18, -12, 6], [18, 9.3, 1.7], 30], ["Desde arriba", [18, 9.3, 40], [18, 9.31, 0], 30],
+  ],
+};
+
+const lienzo = document.getElementById("lienzo");
+const renderer = new THREE.WebGLRenderer({ canvas: lienzo, antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+const escena = new THREE.Scene();
+const oscuro = matchMedia("(prefers-color-scheme: dark)").matches;
+escena.background = new THREE.Color(oscuro ? 0x1b2128 : 0xdfe7ee);
+escena.add(new THREE.HemisphereLight(0xffffff, 0x8a9a7a, 1.4));
+const sol = new THREE.DirectionalLight(0xffffff, 2.2);
+sol.position.set(120, 200, 80);
+escena.add(sol);
+const camara = new THREE.PerspectiveCamera(40, 1, 0.1, 5000);
+const controles = new OrbitControls(camara, lienzo);
+controles.enableDamping = true;
+
+let raiz = null;
+const grupos = new Map();       // nombre del grupo → nodo raíz
+const cargador = new GLTFLoader();
+
+function redimensionar() {
+  const r = lienzo.parentElement.getBoundingClientRect();
+  renderer.setSize(r.width, r.height, false);
+  camara.aspect = r.width / Math.max(1, r.height);
+  camara.updateProjectionMatrix();
+}
+addEventListener("resize", redimensionar);
+
+function irA([nombre, cam, mira, lente]) {
+  const hfov = 2 * Math.atan(18 / lente);
+  camara.fov = THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(hfov / 2) / camara.aspect));
+  camara.position.copy(P(...cam));
+  controles.target.copy(P(...mira));
+  camara.updateProjectionMatrix();
+  controles.update();
+}
+
+function armarVistas(url) {
+  const cont = document.getElementById("vistas");
+  cont.replaceChildren();
+  for (const v of VISTAS[url] || []) {
+    const b = document.createElement("button");
+    b.textContent = v[0];
+    b.onclick = () => irA(v);
+    cont.append(b);
+  }
+}
+
+function armarCapas() {
+  const cont = document.getElementById("capas");
+  cont.replaceChildren();
+  const cats = new Map();
+  for (const nombre of grupos.keys()) {
+    const cat = nombre.split(" - ")[0];
+    if (!cats.has(cat)) cats.set(cat, []);
+    cats.get(cat).push(nombre);
+  }
+  for (const [cat, lista] of cats) {
+    const det = document.createElement("details");
+    const sum = document.createElement("summary");
+    const todo = document.createElement("input");
+    todo.type = "checkbox"; todo.checked = lista.some((n) => grupos.get(n).visible);
+    todo.onclick = (e) => { e.stopPropagation(); lista.forEach((n) => fijar(n, todo.checked)); };
+    sum.append(todo, document.createTextNode(`${cat} (${lista.length})`));
+    det.append(sum);
+    for (const n of lista) {
+      const lab = document.createElement("label");
+      lab.className = "capa";
+      const cb = document.createElement("input");
+      cb.type = "checkbox"; cb.checked = grupos.get(n).visible; cb.dataset.grupo = n;
+      cb.onchange = () => fijar(n, cb.checked);
+      lab.append(cb, document.createTextNode(n.includes(" - ") ? n.split(" - ").slice(1).join(" - ") : n));
+      det.append(lab);
+    }
+    cont.append(det);
+  }
+}
+
+function fijar(nombre, visible) {
+  const g = grupos.get(nombre);
+  if (!g) return;
+  g.visible = visible;
+  document.querySelectorAll(`input[data-grupo="${CSS.escape(nombre)}"]`).forEach((cb) => { cb.checked = visible; });
+}
+
+document.getElementById("todas").onclick = () => grupos.forEach((g, n) => fijar(n, true));
+document.getElementById("sinTechos").onclick = () => grupos.forEach((g, n) => {
+  if (/cubierta|cerramientos|aberturas|forestación/i.test(n)) fijar(n, false);
+});
+document.getElementById("soloElec").onclick = () => grupos.forEach((g, n) => {
+  fijar(n, /Instalación eléctrica|instalación eléctrica|terreno|caminos/i.test(n));
+});
+
+// El modelo trae un nodo por pieza (hasta 36.000). Para que la vista sea fluida, en cada sistema las piezas repetidas
+// (misma malla y material) pasan a una InstancedMesh y las únicas se juntan en una malla por material.
+function optimizar(grupo) {
+  grupo.updateMatrixWorld(true);
+  const inv = new THREE.Matrix4().copy(grupo.matrixWorld).invert();
+  const cubos = new Map();
+  grupo.traverse((o) => {
+    if (!o.isMesh) return;
+    const k = o.geometry.uuid + "|" + o.material.uuid;
+    if (!cubos.has(k)) cubos.set(k, { geo: o.geometry, mat: o.material, ms: [] });
+    cubos.get(k).ms.push(new THREE.Matrix4().multiplyMatrices(inv, o.matrixWorld));
+  });
+  const nuevos = [];
+  const sueltas = new Map();                     // material → geometrías únicas ya transformadas
+  for (const { geo, mat, ms } of cubos.values()) {
+    if (ms.length === 1) {
+      const g = geo.clone();
+      for (const n of Object.keys(g.attributes)) if (n !== "position" && n !== "normal") g.deleteAttribute(n);
+      if (!g.attributes.normal) g.computeVertexNormals();
+      g.applyMatrix4(ms[0]);
+      if (!sueltas.has(mat)) sueltas.set(mat, []);
+      sueltas.get(mat).push(g.index ? g.toNonIndexed() : g);
+    } else {
+      const im = new THREE.InstancedMesh(geo, mat, ms.length);
+      ms.forEach((M, i) => im.setMatrixAt(i, M));
+      im.instanceMatrix.needsUpdate = true;
+      im.computeBoundingSphere();
+      nuevos.push(im);
+    }
+  }
+  for (const [mat, geos] of sueltas) {
+    const m = mergeGeometries(geos, false);
+    if (m) nuevos.push(new THREE.Mesh(m, mat));
+    geos.forEach((g) => g.dispose());
+  }
+  grupo.clear();
+  nuevos.forEach((m) => grupo.add(m));
+  return nuevos.length;
+}
+
+function cargar(url) {
+  const estado = document.getElementById("estado");
+  estado.hidden = false;
+  document.getElementById("msj").textContent = "Cargando el modelo…";
+  document.getElementById("barra").style.width = "0";
+  if (raiz) { escena.remove(raiz); raiz = null; }
+  grupos.clear();
+  cargador.load(url, (gltf) => {
+    raiz = gltf.scene;
+    for (const n of raiz.children) {
+      // GLTFLoader limpia los nombres (saca ":" y cambia espacios): el original está en el JSON del archivo
+      const a = gltf.parser.associations.get(n);
+      const original = a && a.nodes !== undefined ? gltf.parser.json.nodes[a.nodes].name : n.name;
+      const nombre = (original || "").replace(/^G:/, "");
+      n.userData.grupo = nombre;
+      optimizar(n);
+      grupos.set(nombre, n);
+      if (/Flujo de guano/i.test(nombre)) n.visible = false;
+    }
+    escena.add(raiz);
+    armarCapas();
+    armarVistas(url);
+    const vistas = VISTAS[url];
+    if (vistas && vistas.length) irA(vistas[0]);
+    estado.hidden = true;
+  }, (p) => {
+    if (p.total) document.getElementById("barra").style.width = `${(100 * p.loaded / p.total).toFixed(0)}%`;
+  }, () => {
+    document.getElementById("msj").innerHTML = "No se pudo cargar el modelo. Si abriste este archivo directo desde la " +
+      "carpeta, abrilo con un servidor (por ejemplo <code>python -m http.server</code>) o desde la página publicada.";
+  });
+}
+
+// identificar el sistema de la pieza tocada
+const ray = new THREE.Raycaster();
+const puntero = new THREE.Vector2();
+let abajo = null;
+lienzo.addEventListener("pointerdown", (e) => { abajo = [e.clientX, e.clientY]; });
+lienzo.addEventListener("pointerup", (e) => {
+  if (!raiz || !abajo || Math.hypot(e.clientX - abajo[0], e.clientY - abajo[1]) > 4) return;
+  const r = lienzo.getBoundingClientRect();
+  puntero.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+  ray.setFromCamera(puntero, camara);
+  const hit = ray.intersectObject(raiz, true).find((h) => {
+    for (let o = h.object; o; o = o.parent) if (!o.visible) return false;
+    return true;
+  });
+  const info = document.getElementById("info");
+  if (!hit) { info.textContent = "Tocá una pieza para ver a qué sistema pertenece."; return; }
+  let o = hit.object;
+  while (o.parent && o.parent !== raiz) o = o.parent;
+  const p = hit.point;
+  info.textContent = `${o.userData.grupo || o.name} · x ${p.x.toFixed(1)} · y ${(-p.z).toFixed(1)} · z ${p.y.toFixed(2)} m`;
+});
+
+const sel = document.getElementById("modelo");
+sel.onchange = () => cargar(sel.value);
+// ?modelo=planta|galpon|secador abre directamente otro modelo
+const pedido = new URLSearchParams(location.search).get("modelo");
+const opcion = pedido && [...sel.options].find((o) => o.value.includes(pedido));
+if (opcion) sel.value = opcion.value;
+redimensionar();
+cargar(sel.value);
+renderer.setAnimationLoop(() => { controles.update(); renderer.render(escena, camara); });
+</script>
+</body>
+</html>

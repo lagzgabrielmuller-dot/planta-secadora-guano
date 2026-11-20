@@ -137,9 +137,13 @@ def ventilacion():
 
 # ---------------------------------------------------------------------------------------- transportadores
 BANDAS = {  # q_B en kg/m (P: valores típicos de catálogo)
-    0.50: {"lisa": 3.6, "bordes": 6.5},
+    0.50: {"lisa": 3.6, "bordes": 8.0},             # bordes de 120 mm y tacos de 110 mm cada 250 mm
     0.60: {"lisa": 4.3, "bordes": 7.5},
+    0.65: {"lisa": 4.7, "bordes": 8.0},
 }
+
+
+TACOS = {"h": 0.110, "paso": 0.250}                # m: tacos de las inclinadas (P, catálogo de bandas con bordes)
 
 
 def coef_C(L):
@@ -162,13 +166,19 @@ def cinta(t, Q_t_h, v=0.40, eta=0.85, f=0.025, theta_sob=20.0):
     delta = math.degrees(math.asin(max(-1, min(1, (tr[-1][2] - tr[-2][2]) / Li)))) if Li else 0
     B = t["ancho"]
     tipo_banda = "bordes" if t["tipo"] in ("inclinada",) else "lisa"
-    qB = BANDAS.get(B, BANDAS[0.50])[tipo_banda]
-    b = 0.9 * B - 0.05
-    A = b * b * math.tan(math.radians(theta_sob)) / 6
+    qB = BANDAS[B][tipo_banda]                          # sin valor por defecto: un ancho nuevo tiene que estar en la tabla
     if t["tipo"] == "inclinada":
-        A *= 1.6                          # bordes de 80 mm y tacos: la sección útil crece (P)
-    k = max(0.4, 1 - 0.012 * abs(delta)) if t["tipo"] != "inclinada" else 1.0
-    Qv = A * v * k * 3600
+        # banda con bordes y tacos: a 46° el guano lo sostienen los tacos. Volumen de cada bolsillo con la superficie
+        # libre horizontal (sin sobrecarga, del lado seguro): triángulo de h_taco por h_taco / tg δ, por el ancho útil
+        # entre bordes; bolsillos por segundo = v / paso.
+        h_t, paso_t, w_u = TACOS["h"], TACOS["paso"], B - 0.09 - 0.02
+        A = 0.5 * h_t * min(h_t / math.tan(math.radians(max(delta, 1.0))), paso_t)
+        Qv = A * w_u * (v / paso_t) * 3600
+    else:
+        b = 0.9 * B - 0.05
+        A = b * b * math.tan(math.radians(theta_sob)) / 6
+        k = max(0.4, 1 - 0.012 * abs(delta))
+        Qv = A * v * k * 3600
     Qm = Qv * E["rho_guano"] / 1000
     qG = Q_t_h / (3.6 * v)
     qRO, qRU = 4.5, 1.1
@@ -178,7 +188,7 @@ def cinta(t, Q_t_h, v=0.40, eta=0.85, f=0.025, theta_sob=20.0):
     FS = 2 * 300 + 150 * min(L, 3.0)      # 2 rascadores + faldones en la carga (P)
     P = (FH + FSt + FS) * v / eta / 1000
     kw, e_m, cf = motor_std(P)
-    D_tambor = 0.32
+    D_tambor = 0.40 if B >= 0.6 else 0.32            # el mismo tambor motriz que el modelo 3D (transporte.d_cab)
     rpm = v / (math.pi * D_tambor) * 60
     return {"id": t["id"], "tipo": t["tipo"], "L_m": round(L, 2), "H_m": round(H, 2), "inclinacion_deg": round(delta, 1),
             "B_m": B, "v_m_s": v, "Q_diseno_t_h": Q_t_h, "Q_capacidad_t_h": round(Qm, 1),

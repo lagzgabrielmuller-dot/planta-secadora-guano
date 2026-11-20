@@ -1,0 +1,300 @@
+{
+ "glb": "modelo_3d/granja_integrada.glb",
+ "salida": "planos/img_tecnicas",
+ "vistas": [
+  {
+   "nombre": "T02_planta_galpon",
+   "centro": [
+    -66.0,
+    69.5,
+    3.0
+   ],
+   "mira": [
+    0,
+    0,
+    -1
+   ],
+   "arriba": [
+    -1,
+    0,
+    0
+   ],
+   "ancho_m": 115,
+   "alto_m": 24,
+   "px_por_m": 39.4,
+   "ocultar": [
+    "G:Predio - terreno"
+   ]
+  },
+  {
+   "nombre": "T02_cabecera",
+   "centro": [
+    -66.3,
+    23.7,
+    3.6
+   ],
+   "mira": "abajo",
+   "ancho_m": 15,
+   "alto_m": 7,
+   "px_por_m": 157.5,
+   "ocultar": [
+    "G:Predio - terreno"
+   ]
+  },
+  {
+   "nombre": "T04_D1_G1_CI",
+   "centro": [
+    -64.3,
+    19.5,
+    9.5
+   ],
+   "mira": "abajo",
+   "ancho_m": 17,
+   "alto_m": 16,
+   "px_por_m": 59.0,
+   "ocultar": [
+    "G:Galpones - cubierta G1",
+    "G:Predio - terreno"
+   ]
+  },
+  {
+   "nombre": "T04_D2_TT-O",
+   "centro": [
+    -9.75,
+    14.6,
+    7.9
+   ],
+   "mira": "abajo",
+   "ancho_m": 9,
+   "alto_m": 10,
+   "px_por_m": 59.0,
+   "ocultar": [
+    "G:Predio - terreno"
+   ]
+  },
+  {
+   "nombre": "T04_D3_TP01",
+   "centro": [
+    3.5,
+    13.25,
+    6.05
+   ],
+   "mira": "abajo",
+   "ancho_m": 9,
+   "alto_m": 11.5,
+   "px_por_m": 59.0,
+   "ocultar": [
+    "G:Predio - terreno"
+   ]
+  },
+  {
+   "nombre": "T05_oeste",
+   "centro": [
+    -30.5,
+    12.3,
+    4.0
+   ],
+   "mira": "norte",
+   "ancho_m": 72,
+   "alto_m": 11,
+   "fondo_m": 11.5,
+   "px_por_m": 47.2,
+   "ocultar": [
+    "G:Predio - terreno"
+   ]
+  },
+  {
+   "nombre": "T05_este",
+   "centro": [
+    63.5,
+    12.3,
+    4.0
+   ],
+   "mira": "norte",
+   "ancho_m": 72,
+   "alto_m": 11,
+   "fondo_m": 11.5,
+   "px_por_m": 47.2,
+   "ocultar": [
+    "G:Predio - terreno"
+   ]
+  },
+  {
+   "nombre": "T05_CI",
+   "centro": [
+    -61.85,
+    20.5,
+    3.0
+   ],
+   "mira": "oeste",
+   "ancho_m": 16,
+   "alto_m": 11,
+   "fondo_m": 12,
+   "px_por_m": 118.1,
+   "ocultar": [
+    "G:Predio - terreno"
+   ]
+  },
+  {
+   "nombre": "T06_planta",
+   "centro": [
+    -10.0,
+    14.6,
+    7.9
+   ],
+   "mira": "abajo",
+   "ancho_m": 8.5,
+   "alto_m": 11,
+   "px_por_m": 157.5,
+   "ocultar": [
+    "G:Predio - terreno"
+   ]
+  },
+  {
+   "nombre": "T06_A",
+   "centro": [
+    -10.0,
+    13.05,
+    4.6
+   ],
+   "mira": "norte",
+   "ancho_m": 8.0,
+   "alto_m": 11,
+   "fondo_m": 12,
+   "px_por_m": 157.5,
+   "ocultar": [
+    "G:Predio - terreno"
+   ]
+  },
+  {
+   "nombre": "T06_B",
+   "centro": [
+    -9.95,
+    14.6,
+    4.6
+   ],
+   "mira": "oeste",
+   "ancho_m": 13,
+   "alto_m": 11,
+   "fondo_m": 12,
+   "px_por_m": 118.1,
+   "ocultar": [
+    "G:Predio - terreno"
+   ]
+  },
+  {
+   "nombre": "T07_planta",
+   "centro": [
+    2.8,
+    12.7,
+    4.45
+   ],
+   "mira": "abajo",
+   "ancho_m": 8.2,
+   "alto_m": 12,
+   "px_por_m": 157.5,
+   "ocultar": [
+    "G:Predio - terreno"
+   ]
+  },
+  {
+   "nombre": "T07_A",
+   "centro": [
+    2.25,
+    12.7,
+    2.8
+   ],
+   "mira": "oeste",
+   "ancho_m": 12,
+   "alto_m": 8.6,
+   "fondo_m": 8,
+   "px_por_m": 157.5,
+   "ocultar": [
+    "G:Predio - terreno"
+   ]
+  },
+  {
+   "nombre": "T07_B",
+   "centro": [
+    2.8,
+    12.6,
+    2.8
+   ],
+   "mira": "norte",
+   "ancho_m": 8.2,
+   "alto_m": 8.6,
+   "fondo_m": 8,
+   "px_por_m": 157.5,
+   "ocultar": [
+    "G:Predio - terreno"
+   ]
+  },
+  {
+   "nombre": "T08_planta_nave",
+   "centro": [
+    16.75,
+    12.5,
+    6.15
+   ],
+   "mira": "abajo",
+   "ancho_m": 38,
+   "alto_m": 28,
+   "px_por_m": 78.7,
+   "ocultar": [
+    "G:Predio - terreno"
+   ]
+  },
+  {
+   "nombre": "T09_A",
+   "centro": [
+    16.75,
+    9.3,
+    7.0
+   ],
+   "mira": "norte",
+   "ancho_m": 38,
+   "alto_m": 17,
+   "fondo_m": 25,
+   "px_por_m": 78.7,
+   "ocultar": [
+    "G:Predio - terreno"
+   ]
+  },
+  {
+   "nombre": "T09_B",
+   "centro": [
+    3.0,
+    12.5,
+    7.0
+   ],
+   "mira": "oeste",
+   "ancho_m": 28,
+   "alto_m": 17,
+   "fondo_m": 20,
+   "px_por_m": 78.7,
+   "ocultar": [
+    "G:Predio - terreno"
+   ]
+  },
+  {
+   "nombre": "T10_SC4",
+   "auto": true,
+   "mira": [
+    -0.55,
+    0.7,
+    -0.45
+   ],
+   "px_ancho": 2600,
+   "margen": 0.03,
+   "solo": [
+    "G:Secador SC-4",
+    "G:Planta - alimentación del secador",
+    "G:Planta - generador de aire caliente",
+    "G:Planta - tratamiento de aire",
+    "G:Planta - descarga y envasado",
+    "G:Recepción - tolva pulmón TP-01",
+    "G:Planta - cáscara de arroz"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,288 @@
+{
+ "titulo": "DESVIADORA DV-O DE LA TORRE TT-O",
+ "mira": [
+  -0.85,
+  1.0,
+  -0.55
+ ],
+ "piezas": 29,
+ "items": [
+  {
+   "n": 1,
+   "descripcion": "Cuerpo pantalón de la desviadora (chapa 4 mm)",
+   "material": "acero galvanizado",
+   "punto": [
+    -10.3,
+    14.6,
+    5.35
+   ],
+   "candidatos": [
+    [
+     -10.3,
+     14.6,
+     5.35
+    ],
+    [
+     -10.3,
+     15.056,
+     5.35
+    ]
+   ]
+  },
+  {
+   "n": 2,
+   "descripcion": "Clapeta con eje y bujes",
+   "material": "acero SAE 1045",
+   "punto": [
+    -10.315,
+    13.75,
+    5.75
+   ],
+   "candidatos": [
+    [
+     -10.315,
+     13.75,
+     5.75
+    ]
+   ]
+  },
+  {
+   "n": 3,
+   "descripcion": "Actuador eléctrico de cuarto de vuelta M89 0,37 kW",
+   "material": "motor IE3 (carcasa de aluminio)",
+   "punto": [
+    -9.68,
+    12.951,
+    5.87
+   ],
+   "candidatos": [
+    [
+     -9.68,
+     13.05,
+     5.75
+    ],
+    [
+     -9.68,
+     12.951,
+     5.87
+    ],
+    [
+     -9.68,
+     13.043,
+     5.87
+    ],
+    [
+     -9.68,
+     12.843,
+     5.87
+    ],
+    [
+     -9.68,
+     13.059,
+     5.87
+    ],
+    [
+     -9.68,
+     12.951,
+     5.955
+    ],
+    [
+     -9.645,
+     12.951,
+     5.955
+    ],
+    [
+     -9.607,
+     12.927,
+     5.876
+    ],
+    [
+     -9.68,
+     13.046,
+     5.87
+    ]
+   ]
+  },
+  {
+   "n": 4,
+   "descripcion": "Finales de carrera ZSA y ZSB",
+   "material": "acero inoxidable / plástico",
+   "punto": [
+    -9.68,
+    12.745,
+    6.19
+   ],
+   "candidatos": [
+    [
+     -9.68,
+     12.745,
+     6.19
+    ],
+    [
+     -9.68,
+     12.355,
+     6.19
+    ]
+   ]
+  },
+  {
+   "n": 5,
+   "descripcion": "Pierna A hacia la cinta principal",
+   "material": "acero galvanizado",
+   "punto": [
+    -9.7,
+    14.6,
+    4.435
+   ],
+   "candidatos": [
+    [
+     -9.7,
+     14.6,
+     4.435
+    ]
+   ]
+  },
+  {
+   "n": 6,
+   "descripcion": "Chute de emergencia 450 × 450 a 50° (pierna B) con tapa de inspección",
+   "material": "acero galvanizado",
+   "punto": [
+    -10.9,
+    13.008,
+    3.009
+   ],
+   "candidatos": [
+    [
+     -10.9,
+     12.988,
+     2.985
+    ],
+    [
+     -10.9,
+     13.953,
+     4.136
+    ],
+    [
+     -10.9,
+     13.375,
+     3.446
+    ],
+    [
+     -10.9,
+     12.796,
+     2.757
+    ],
+    [
+     -10.9,
+     12.218,
+     2.067
+    ],
+    [
+     -10.9,
+     13.008,
+     3.009
+    ]
+   ]
+  },
+  {
+   "n": 7,
+   "descripcion": "Boca de emergencia al contenedor CR-O (+2,20) con manga de goma",
+   "material": "acero galvanizado",
+   "punto": [
+    -10.9,
+    11.226,
+    0.76
+   ],
+   "candidatos": [
+    [
+     -10.9,
+     11.226,
+     0.76
+    ],
+    [
+     -10.9,
+     11.226,
+     0.5
+    ]
+   ]
+  },
+  {
+   "n": 8,
+   "descripcion": "Detector de atascamiento LSH-DV-O de la boca de emergencia",
+   "material": "acero inoxidable / plástico",
+   "punto": [
+    -10.795,
+    11.226,
+    1.36
+   ],
+   "candidatos": [
+    [
+     -10.795,
+     11.226,
+     1.36
+    ]
+   ]
+  },
+  {
+   "n": 9,
+   "descripcion": "Bridas de entrada (de la CE-O) y de unión del cuerpo",
+   "material": "acero galvanizado",
+   "punto": [
+    -10.3,
+    14.6,
+    5.955
+   ],
+   "candidatos": [
+    [
+     -10.3,
+     14.6,
+     5.955
+    ],
+    [
+     -10.3,
+     14.6,
+     6.545
+    ]
+   ]
+  },
+  {
+   "n": 10,
+   "descripcion": "Seccionador de seguridad bloqueable Q-M89 (en la baranda de la plataforma)",
+   "material": "PVC / policarbonato",
+   "punto": [
+    -9.6,
+    12.91,
+    6.0
+   ],
+   "candidatos": [
+    [
+     -9.6,
+     12.855,
+     6.0
+    ],
+    [
+     -9.58,
+     12.931,
+     6.0
+    ],
+    [
+     -9.6,
+     12.91,
+     6.0
+    ]
+   ]
+  }
+ ],
+ "caja": [
+  [
+   -10.9,
+   11.23,
+   0.5
+  ],
+  [
+   -9.58,
+   15.06,
+   6.54
+  ]
+ ]
+}

@@ -1,0 +1,18 @@
+{
+ "glb": "modelo_3d/despieces/TP01.glb",
+ "salida": "planos/img_tecnicas",
+ "vistas": [
+  {
+   "nombre": "X_TP01",
+   "auto": true,
+   "mira": [
+    0.55,
+    -1.0,
+    -0.62
+   ],
+   "px_ancho": 2200,
+   "margen": 0.03,
+   "retiro_m": 30
+  }
+ ]
+}

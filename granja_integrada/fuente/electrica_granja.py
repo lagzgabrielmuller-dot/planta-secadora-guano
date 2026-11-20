@@ -64,8 +64,23 @@ DU_TG2_MAX = 2.0                         # alimentador del TG2: deja margen a lo
 DU_TSG_MAX = 1.5                         # alimentador del TS de cada galpón (integrador, P)
 
 
-def iz(s, metodo="E"):
-    return IZ[metodo][s] * F_TEMP[metodo] * F_AGRUP[metodo]
+def iz(s, metodo="E", f_grupo=None):
+    """Iz corregida. f_grupo: agrupamiento de caños enterrados en la misma zanja (tabla B.52.19 de la IEC 60364-5-52)."""
+    return IZ[metodo][s] * F_TEMP[metodo] * (F_AGRUP[metodo] if f_grupo is None else f_grupo)
+
+
+def fc(x, d=2):
+    """Número con coma decimal (formato argentino) para los textos que van a los planos y a la memoria."""
+    return f"{x:,.{d}f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+
+F_ZANJA = 0.95      # dos caños por zanja separados 0,5 m (QF1 con QF2, QF3 con QF4, QF5 con QF6); en contacto sería 0,85
+
+
+def fcg(x):
+    """Como fc, pero sin ceros de más: 1,5 · 0,55 · 3."""
+    t = fc(x, 2)
+    return t.rstrip("0").rstrip(",") if "," in t else t
 
 
 def caida(i, largo, s, cos=0.85):
@@ -74,14 +89,14 @@ def caida(i, largo, s, cos=0.85):
     return du, 100 * du / U
 
 
-def seccion(ib, largo, cos, lim, metodo="E", s_min=1.5, du_previo=0.0, i_prot=None):
+def seccion(ib, largo, cos, lim, metodo="E", s_min=1.5, du_previo=0.0, i_prot=None, f_grupo=None):
     """Menor sección que cumple Iz ≥ max(Ib, protección) y la caída acumulada."""
     for s in IZ[metodo]:
-        if s < s_min or iz(s, metodo) < max(ib, i_prot or 0):
+        if s < s_min or iz(s, metodo, f_grupo) < max(ib, i_prot or 0):
             continue
         du, pct = caida(ib, largo, s, cos)
         if pct + du_previo <= lim:
-            return s, round(iz(s, metodo), 1), round(pct, 2)
+            return s, round(iz(s, metodo, f_grupo), 1), round(pct, 2)
     raise ValueError(f"sin sección para Ib {ib} A y {largo} m")
 
 
@@ -90,7 +105,7 @@ def normal(i, minimo=6):
 
 
 def guardamotor(i):
-    return next(f"{a}–{b} A" for a, b in GUARDAMOTOR if a <= i <= b)
+    return next(f"{fcg(a)}–{fcg(b)} A" for a, b in GUARDAMOTOR if a <= i <= b)
 
 
 def vfd_kw(kw):
@@ -352,7 +367,7 @@ def motores_lista(pos3d, red_planta, dist_gu, redes_g, dist_ccm, du_gu, du_ccm):
             if m["arranque"] == "inversor":
                 arr, prot = "inversor de marcha (2 contactores enclavados)", f"guardamotor {guardamotor(ib)} + 2 contactores"
             else:
-                arr = f"variador SINAMICS G120 {vfd_kw(kw)} kW (PM240-2 + CU240E-2 PN-F)"
+                arr = f"variador SINAMICS G120 {fcg(vfd_kw(kw))} kW (PM240-2 + CU240E-2 PN-F)"
                 prot = f"interruptor C{normal(2 * ib)} + diferencial tipo B 300 mA + protección electrónica del variador"
             mando = "PLC-01 por PROFINET, STO por PROFIsafe" if "variador" in arr else "PLC-01 (salidas del RIO de la torre)"
             secc = f"Q-{tag} bloqueable junto al motor"
@@ -362,12 +377,12 @@ def motores_lista(pos3d, red_planta, dist_gu, redes_g, dist_ccm, du_gu, du_ccm):
             L, Lred, Lfin = largo_cable(redes_g[gid], dist_ccm[gid], p)
             du_prev = du_ccm[gid]
             if m["arranque"] == "VFD":
-                arr = f"variador SINAMICS G120C PN {vfd_kw(kw)} kW"
+                arr = f"variador SINAMICS G120C PN {fcg(vfd_kw(kw))} kW"
                 prot = f"interruptor C{normal(2 * ib)} + diferencial tipo B 300 mA + protección electrónica del variador"
                 mando = f"PLC-01 por PROFINET (CCM-{gid}), STO por PROFIsafe"
             else:
                 arr = "directo (contactor)"
-                prot = f"guardamotor {guardamotor(ib)} regulado a {ib:.2f} A + contactor"
+                prot = f"guardamotor {guardamotor(ib)} regulado a {fc(ib)} A + contactor"
                 mando = f"PLC-01 por RIO-{gid} (ET 200SP del CCM-{gid})"
             secc = f"interruptor del CCM-{gid} bloqueable con candado (a la vista de la cabecera)"
         vfd = "variador" in arr
@@ -376,7 +391,7 @@ def motores_lista(pos3d, red_planta, dist_gu, redes_g, dist_ccm, du_gu, du_ccm):
         lista.append({"tag": tag, "funcion": funcion, "nombre": m["nom"], "ubicacion": ubic, "pos": p, "tablero": tablero,
                       "kW": kw, "origen_kW": "P", "nota_kW": m.get("nota", ""), "In_A": ib, "cos_phi": cos, "arranque": arr,
                       "vinculo": vinc, "proteccion": prot, "seccionador": secc, "mando": mando,
-                      "cable": f"{'apantallado ' if vfd else ''}4G{s} mm² Cu/PVC 1 kV",
+                      "cable": f"{'apantallado ' if vfd else ''}4G{fc(s, 1 if s < 10 else 0)} mm² Cu/PVC 1 kV",
                       "S_mm2": s, "Iz_A": izz, "L_m": L, "L_bandeja_m": Lred, "L_cano_m": Lfin, "dU_pct": du,
                       "dU_aguas_arriba_pct": round(du_prev, 2), "dU_total_pct": round(du + du_prev, 2), "estado": "nuevo"})
     return lista
@@ -431,10 +446,11 @@ def alimentadores(polis, bal, tableros3d):
     pol = {n: p for n, _, p, _ in polis}
     out = []
 
-    def linea(nombre, desde, hasta, kw, cos, largo, metodo, lim, du_prev, r_up, x_up, s_min=4, i_extra=0.0, tipo="P"):
+    def linea(nombre, desde, hasta, kw, cos, largo, metodo, lim, du_prev, r_up, x_up, s_min=4, i_extra=0.0, tipo="P",
+              f_grupo=None):
         ib = kw * 1000 / (R3 * U * cos) + i_extra
         inn = normal(ib, 10)
-        s, izz, du = seccion(ib, largo, cos, lim, metodo=metodo, s_min=s_min, du_previo=du_prev, i_prot=inn)
+        s, izz, du = seccion(ib, largo, cos, lim, metodo=metodo, s_min=s_min, du_previo=du_prev, i_prot=inn, f_grupo=f_grupo)
         r, x = z_linea(largo, s)
         fila = {"circuito": nombre, "desde": desde, "hasta": hasta, "tipo": tipo, "kW_demanda": round(kw, 2),
                 "Ib_A": round(ib, 1), "In_A": inn, "S_mm2": s, "metodo": metodo, "Iz_A": izz, "L_m": round(largo, 1),
@@ -447,11 +463,11 @@ def alimentadores(polis, bal, tableros3d):
     filas = {f["carga"]: f for f in bal["filas"]}
     L = {k: largo_polilinea(pol[f"Alimentador TGBT → {k} (enterrado)"]) * RESERVA + 2 * TERMINAL for k in ("TG2", "TGF")}
     f_tgf, r_tgf, x_tgf = linea("QF1 · alimentador del TGF", "TGBT", "TGF", 59.0, 0.85, L["TGF"], "D1",
-                                LIM_DU["alimentador"], 0, rf, xf, tipo="R (cargas) / P (línea)")
+                                LIM_DU["alimentador"], 0, rf, xf, tipo="R (cargas) / P (línea)", f_grupo=F_ZANJA)
     k_gu = "TS-GU (en TG2 · Q23): cintas principales, colectoras, desviadoras y sinfines"
     dem_tg2 = filas["TG2 sin biogás ni lavadero (Rev. F)"]["kW_demanda"] + filas[k_gu]["kW_demanda"]
     f_tg2, r_tg2, x_tg2 = linea("QF2 · alimentador del TG2", "TGBT", "TG2", dem_tg2, 0.85, L["TG2"], "D1",
-                                DU_TG2_MAX, 0, rf, xf)
+                                DU_TG2_MAX, 0, rf, xf, f_grupo=F_ZANJA)
     L_gu = largo_polilinea(pol["Bandeja de la sala de control TG2 → TS-GU"]) * RESERVA + 2 * TERMINAL
     f_gu, r_gu, x_gu = linea("TG2 · Q23 → TS-GU (salida que era del TS-BIO)", "TG2", "TS-GU", filas[k_gu]["kW_demanda"],
                              0.80, L_gu, "E", LIM_DU["alimentador"], f_tg2["dU_pct"], r_tg2, x_tg2, s_min=6, i_extra=3.0)
@@ -462,7 +478,7 @@ def alimentadores(polis, bal, tableros3d):
         L_ts = (abs(ts[0] - (-7.4)) + abs(ts[1] - (-74.4)) + 2) * 1.10 + 2 * TERMINAL
         kw_g = sum(f["kW_demanda"] for f in bal["filas"] if f"TS-{gid}" in f["carga"] or f"CCM-{gid}" in f["carga"])
         f_ts, r_ts, x_ts = linea(f"QF{2 + int(gid[1])} · alimentador del TS-{gid} (integrador del galpón)", "TGBT",
-                                 f"TS-{gid}", kw_g, 0.85, L_ts, "D1", DU_TSG_MAX, 0, rf, xf, s_min=16)
+                                 f"TS-{gid}", kw_g, 0.85, L_ts, "D1", DU_TSG_MAX, 0, rf, xf, s_min=16, f_grupo=F_ZANJA)
         L_c = largo_polilinea(pol[f"Alimentador TS-{gid} → CCM-{gid} (enterrado)"]) * RESERVA + 2 * TERMINAL
         kw_c = filas[f"CCM-{gid}: cintas de guano (un piso por vez: 4 cintas + CT + CI)"]["kW_demanda"]
         f_c, r_c, x_c = linea(f"TS-{gid} → CCM-{gid}", f"TS-{gid}", f"CCM-{gid}", kw_c, 0.78, L_c, "D1", DU_GALPON_MAX,
@@ -477,15 +493,17 @@ def poder_de_corte(i_tgbt, i_tab, i_ccm):
     """Poder de corte pedido a cada tablero según su Icc máxima (la Rev. F eligió los del TG2 para 4,5 kA)."""
     def pc(i):
         return next(v for v in (4.5, 6, 10, 15, 25, 36) if v >= i * 1.0)
-    txt = [f"TGBT: Icc {i_tgbt:.1f} kA → interruptores de {pc(i_tgbt):g} kA o más"]
+    txt = [f"TGBT: Icc {fc(i_tgbt, 1)} kA → interruptores de {fcg(pc(i_tgbt))} kA o más"]
     for k, i in i_tab.items():
         nota = ""
         if k in ("TGF", "TG2") and i > 4.5:
-            nota = " (subió respecto de la Rev. F: verificar que sus interruptores sean de 6 kA o más y cambiar los de 4,5 kA)"
+            nota = (f" (subió respecto de la Rev. F: verificar que sus interruptores sean de {fcg(max(pc(i), 4.5))} kA o más "
+                    "y cambiar los de 4,5 kA)")
         elif k in ("TGF", "TG2"):
             nota = " (los de la Rev. F alcanzan)"
-        txt.append(f"{k}: Icc {i:.2f} kA → {max(pc(i), 4.5):g} kA o más{nota}")
-    txt.append("CCM: Icc " + ", ".join(f"{g} {i:.2f} kA" for g, i in i_ccm.items()) + " → 6 kA (guardamotores y variadores con su protección)")
+        p_ = max(pc(i), 4.5)
+        txt.append(f"{k}: Icc {fc(i)} kA → {fcg(p_)} kA o más{nota}")
+    txt.append("CCM: Icc " + ", ".join(f"{g} {fc(i)} kA" for g, i in i_ccm.items()) + " → 6 kA (guardamotores y variadores con su protección)")
     return txt
 
 
@@ -695,7 +713,9 @@ FALLAS = [
 ]
 
 LAZOS = [
-    {"tag": "FIC-101", "variable": "caudal de guano al secador (kg/h)", "medicion": "pérdida de peso de la TP-01 (WT-101 a 104)",
+    {"tag": "FIC-101", "variable": "caudal de guano al secador (kg/h)",
+     "medicion": "pérdida de peso de la TP-01 (WT-101 a 104); mientras entra guano de una CP pasa a modo volumétrico "
+                 "(kg por vuelta de la última calibración) y vuelve al gravimétrico 2 min después de que termina el llenado",
      "actuador": "velocidad de los sinfines M85 a M88 (variadores)", "consigna": "1.260 kg/h en régimen (la ajusta MIC-01)", "controlador": "PLC-01"},
     {"tag": "LIC-101", "variable": "nivel de la TP-01", "medicion": "radar LT-101", "actuador": "permiso de vaciado de los galpones",
      "consigna": "entre 20 y 80 %", "controlador": "PLC-01 (lógica de turnos)"},
@@ -742,7 +762,8 @@ def main():
     nuevos = [m for m in mot if m.get("estado") == "nuevo"]
     peor = max(nuevos, key=lambda m: m["dU_total_pct"])
     out = {
-        "criterio": {"norma": "AEA 90364-7-771 (Iz de la IEC 60364-5-52), IEC 60909 para cortocircuito, ECT TT como en la Rev. F",
+        "criterio": {"norma": "AEA 90364-7-771 y sección 705 (establecimientos agropecuarios) para los galpones; Iz de la "
+                              "IEC 60364-5-52 con agrupamiento de caños en zanja; IEC 60909 para cortocircuito; ECT TT como en la Rev. F",
                      "lim_dU_pct": LIM_DU, "U_V": U, "reserva_largo": RESERVA, "terminales_m": TERMINAL,
                      "factor_tramo_final": F_CANO, "dU_TGBT_a_CCM_max_pct": DU_GALPON_MAX,
                      "fuente": {"S_red_MVA": S_RED_MVA, "S_tr_kVA": S_TR_KVA, "ucc": UCC, "Pcu_kW": PCU_KW, "tipo": "P"}},

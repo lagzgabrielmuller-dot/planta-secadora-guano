@@ -1,0 +1,107 @@
+{
+ "glb": "modelo_3d/granja_integrada.glb",
+ "salida": "renders/_png",
+ "sol": [
+  215,
+  40
+ ],
+ "vistas": [
+  {
+   "nombre": "R01_granja_general",
+   "cam": [
+    175,
+    -135,
+    120
+   ],
+   "mira": [
+    16,
+    60,
+    0
+   ],
+   "lente": 30,
+   "ancho": 1600,
+   "alto": 1000,
+   "muestras": 40,
+   "ocultar": [
+    "G:Flujo de guano"
+   ]
+  },
+  {
+   "nombre": "R02_planta_y_galpones",
+   "cam": [
+    16,
+    -78,
+    46
+   ],
+   "mira": [
+    16,
+    45,
+    2
+   ],
+   "lente": 26,
+   "ancho": 1600,
+   "alto": 1000,
+   "muestras": 40,
+   "ocultar": [
+    "G:Flujo de guano"
+   ]
+  },
+  {
+   "nombre": "R08_recorrido_del_guano",
+   "cam": [
+    -98,
+    -22,
+    40
+   ],
+   "mira": [
+    -22,
+    20,
+    3
+   ],
+   "lente": 30,
+   "ancho": 1600,
+   "alto": 1000,
+   "muestras": 40
+  },
+  {
+   "nombre": "R12_deposito_de_huevos",
+   "cam": [
+    -30,
+    168,
+    16
+   ],
+   "mira": [
+    -50.5,
+    137,
+    2.5
+   ],
+   "lente": 30,
+   "ancho": 1600,
+   "alto": 1000,
+   "muestras": 40,
+   "ocultar": [
+    "G:Flujo de guano"
+   ]
+  },
+  {
+   "nombre": "R15_galpon_CCM_exterior",
+   "cam": [
+    -53.5,
+    18.5,
+    3.2
+   ],
+   "mira": [
+    -60.8,
+    23.7,
+    1.7
+   ],
+   "lente": 26,
+   "ancho": 1600,
+   "alto": 1000,
+   "muestras": 40,
+   "ocultar": [
+    "G:Flujo de guano"
+   ]
+  }
+ ]
+}

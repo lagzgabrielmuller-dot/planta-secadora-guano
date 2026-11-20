@@ -1,0 +1,412 @@
+{
+ "titulo": "CABEZAL DE LA CINTA PRINCIPAL CP-O",
+ "mira": [
+  -0.7,
+  1.0,
+  -0.6
+ ],
+ "piezas": 49,
+ "items": [
+  {
+   "n": 1,
+   "descripcion": "Tambor motriz Ø400 con revestimiento de goma romboidal 8 mm y eje SAE 1045",
+   "material": "acero pintado",
+   "punto": [
+    2.015,
+    14.6,
+    5.201
+   ],
+   "candidatos": [
+    [
+     2.015,
+     14.6,
+     5.201
+    ],
+    [
+     2.015,
+     14.239,
+     5.201
+    ],
+    [
+     2.015,
+     14.961,
+     5.201
+    ],
+    [
+     2.015,
+     14.6,
+     5.201
+    ],
+    [
+     2.015,
+     14.6,
+     5.201
+    ]
+   ]
+  },
+  {
+   "n": 2,
+   "descripcion": "Soporte de pie UCP 212 (2 unidades)",
+   "material": "fundición gris",
+   "punto": [
+    2.015,
+    15.085,
+    5.701
+   ],
+   "candidatos": [
+    [
+     2.02,
+     14.115,
+     5.646
+    ],
+    [
+     2.015,
+     14.115,
+     5.701
+    ],
+    [
+     2.017,
+     14.115,
+     5.682
+    ],
+    [
+     2.009,
+     14.115,
+     5.778
+    ],
+    [
+     2.02,
+     15.085,
+     5.646
+    ],
+    [
+     2.015,
+     15.085,
+     5.701
+    ],
+    [
+     2.017,
+     15.085,
+     5.682
+    ],
+    [
+     2.009,
+     15.085,
+     5.778
+    ]
+   ]
+  },
+  {
+   "n": 3,
+   "descripcion": "Motorreductor ortogonal M82 1,1 kW de eje hueco con brazo de reacción",
+   "material": "motor IE3 (carcasa de aluminio)",
+   "punto": [
+    1.818,
+    12.675,
+    5.205
+   ],
+   "candidatos": [
+    [
+     1.96,
+     12.675,
+     5.216
+    ],
+    [
+     1.93,
+     12.773,
+     5.188
+    ],
+    [
+     1.93,
+     12.577,
+     5.188
+    ],
+    [
+     1.923,
+     12.675,
+     5.347
+    ],
+    [
+     1.944,
+     12.675,
+     5.083
+    ],
+    [
+     1.707,
+     12.675,
+     5.197
+    ],
+    [
+     1.814,
+     12.675,
+     5.205
+    ],
+    [
+     1.58,
+     12.675,
+     5.187
+    ],
+    [
+     1.836,
+     12.675,
+     5.207
+    ],
+    [
+     1.699,
+     12.675,
+     5.295
+    ],
+    [
+     1.699,
+     12.635,
+     5.295
+    ],
+    [
+     1.677,
+     12.591,
+     5.201
+    ],
+    [
+     1.818,
+     12.675,
+     5.205
+    ],
+    [
+     1.891,
+     12.675,
+     4.973
+    ],
+    [
+     1.899,
+     12.675,
+     4.873
+    ]
+   ]
+  },
+  {
+   "n": 4,
+   "descripcion": "Tapa protectora del extremo del eje",
+   "material": "acero pintado amarillo",
+   "punto": [
+    2.015,
+    16.367,
+    5.201
+   ],
+   "candidatos": [
+    [
+     2.015,
+     16.367,
+     5.201
+    ]
+   ]
+  },
+  {
+   "n": 5,
+   "descripcion": "Rascador primario de poliuretano",
+   "material": "acero pintado",
+   "punto": [
+    2.977,
+    14.6,
+    4.425
+   ],
+   "candidatos": [
+    [
+     2.977,
+     14.6,
+     4.425
+    ],
+    [
+     2.998,
+     14.6,
+     4.523
+    ]
+   ]
+  },
+  {
+   "n": 6,
+   "descripcion": "Rascador secundario de láminas",
+   "material": "acero pintado",
+   "punto": [
+    2.377,
+    14.6,
+    3.811
+   ],
+   "candidatos": [
+    [
+     2.377,
+     14.6,
+     3.811
+    ]
+   ]
+  },
+  {
+   "n": 7,
+   "descripcion": "Chute de cabeza con puerta de inspección abisagrada",
+   "material": "acero galvanizado",
+   "punto": [
+    3.456,
+    14.6,
+    3.365
+   ],
+   "candidatos": [
+    [
+     3.04,
+     14.6,
+     3.215
+    ],
+    [
+     3.456,
+     14.6,
+     3.365
+    ]
+   ]
+  },
+  {
+   "n": 8,
+   "descripcion": "Terna de rodillos Ø89 y rodillo de retorno",
+   "material": "acero galvanizado",
+   "punto": [
+    -0.43,
+    14.6,
+    5.738
+   ],
+   "candidatos": [
+    [
+     -0.43,
+     14.6,
+     5.738
+    ],
+    [
+     -0.434,
+     14.348,
+     5.784
+    ],
+    [
+     -0.434,
+     14.852,
+     5.784
+    ],
+    [
+     -0.421,
+     14.6,
+     5.611
+    ],
+    [
+     -0.426,
+     14.472,
+     5.679
+    ],
+    [
+     -0.426,
+     14.728,
+     5.679
+    ],
+    [
+     -0.43,
+     14.152,
+     5.731
+    ],
+    [
+     -0.43,
+     15.048,
+     5.731
+    ],
+    [
+     -0.372,
+     14.6,
+     5.387
+    ]
+   ]
+  },
+  {
+   "n": 9,
+   "descripcion": "Detector de atascamiento LSH-CP-O (interruptor de inclinación)",
+   "material": "acero inoxidable / plástico",
+   "punto": [
+    2.389,
+    14.2,
+    6.49
+   ],
+   "candidatos": [
+    [
+     2.389,
+     14.2,
+     6.49
+    ]
+   ]
+  },
+  {
+   "n": 10,
+   "descripcion": "Baliza y sirena de prearranque XA-CP-O",
+   "material": "plástico",
+   "punto": [
+    1.651,
+    13.615,
+    6.268
+   ],
+   "candidatos": [
+    [
+     1.651,
+     13.615,
+     6.268
+    ]
+   ]
+  },
+  {
+   "n": 11,
+   "descripcion": "Placa de identificación de la CP-O",
+   "material": "aluminio",
+   "punto": [
+    1.729,
+    13.642,
+    5.908
+   ],
+   "candidatos": [
+    [
+     1.729,
+     13.642,
+     5.908
+    ]
+   ]
+  },
+  {
+   "n": 12,
+   "descripcion": "Seccionador de seguridad bloqueable Q-M82 (en el pórtico PC-01)",
+   "material": "PVC / policarbonato",
+   "punto": [
+    1.75,
+    16.74,
+    6.15
+   ],
+   "candidatos": [
+    [
+     1.75,
+     16.795,
+     6.15
+    ],
+    [
+     1.73,
+     16.719,
+     6.15
+    ],
+    [
+     1.75,
+     16.74,
+     6.15
+    ]
+   ]
+  }
+ ],
+ "caja": [
+  [
+   -0.43,
+   12.58,
+   3.21
+  ],
+  [
+   3.46,
+   16.8,
+   6.49
+  ]
+ ]
+}

@@ -1,0 +1,217 @@
+{
+ "glb": "modelo_3d/planta_central.glb",
+ "salida": "renders/_png",
+ "sol": [
+  215,
+  40
+ ],
+ "vistas": [
+  {
+   "nombre": "R03_interior_de_la_nave",
+   "cam": [
+    31.2,
+    16.9,
+    5.2
+   ],
+   "mira": [
+    12,
+    7.5,
+    2.0
+   ],
+   "lente": 18,
+   "ancho": 1600,
+   "alto": 1000,
+   "muestras": 40,
+   "exposicion": 1.1,
+   "ocultar": [
+    "G:Flujo de guano"
+   ]
+  },
+  {
+   "nombre": "R04_secador_SC4",
+   "cam": [
+    32.0,
+    -2.5,
+    6.2
+   ],
+   "mira": [
+    17.0,
+    9.3,
+    1.6
+   ],
+   "lente": 28,
+   "ancho": 1600,
+   "alto": 1000,
+   "muestras": 40,
+   "ocultar": [
+    "G:Nave de proceso - cubierta",
+    "G:Nave de proceso - cerramientos",
+    "G:Nave de proceso - aberturas",
+    "G:Flujo de guano",
+    "G:Planta - edificios auxiliares"
+   ]
+  },
+  {
+   "nombre": "R05_corte_tecnico_con_recorrido",
+   "cam": [
+    37,
+    -13,
+    25
+   ],
+   "mira": [
+    13.5,
+    9.5,
+    3
+   ],
+   "lente": 30,
+   "ancho": 1600,
+   "alto": 1000,
+   "muestras": 40,
+   "ocultar": [
+    "G:Nave de proceso - cubierta",
+    "G:Nave de proceso - cerramientos",
+    "G:Nave de proceso - aberturas",
+    "G:Nave de proceso - iluminación"
+   ],
+   "transparentes": [
+    "G:Nave de proceso - estructura",
+    "G:Planta - edificios auxiliares"
+   ],
+   "alfa_transparentes": 0.12
+  },
+  {
+   "nombre": "R07_instalacion_electrica",
+   "cam": [
+    38,
+    -15,
+    27
+   ],
+   "mira": [
+    13,
+    9.5,
+    3
+   ],
+   "lente": 30,
+   "ancho": 1600,
+   "alto": 1000,
+   "muestras": 40,
+   "ocultar": [
+    "G:Nave de proceso - cubierta",
+    "G:Nave de proceso - cerramientos",
+    "G:Nave de proceso - aberturas",
+    "G:Flujo de guano"
+   ],
+   "transparentes": [
+    "G:Nave de proceso - estructura",
+    "G:Nave de proceso - iluminación",
+    "G:Secador SC-4",
+    "G:Planta - alimentación del secador",
+    "G:Planta - cáscara de arroz",
+    "G:Planta - descarga y envasado",
+    "G:Planta - edificios auxiliares",
+    "G:Planta - generador de aire caliente",
+    "G:Planta - otros equipos",
+    "G:Planta - seguridad y mantenimiento",
+    "G:Planta - tratamiento de aire",
+    "G:Recepción - tolva pulmón TP-01",
+    "G:Torres de transferencia",
+    "G:Transporte de guano",
+    "G:Transporte de guano - obra civil",
+    "G:Contenedores de emergencia"
+   ],
+   "alfa_transparentes": 0.1,
+   "resaltar": {
+    "G:Instalación eléctrica - tableros y PLC": [
+     0.85,
+     0.1,
+     0.45
+    ],
+    "G:Instalación eléctrica - canalizaciones": [
+     0.95,
+     0.4,
+     0.08
+    ],
+    "G:Instalación eléctrica - seccionadores y botoneras": [
+     0.95,
+     0.8,
+     0.1
+    ],
+    "G:Instalación eléctrica - puesta a tierra y pararrayos": [
+     0.1,
+     0.6,
+     0.25
+    ],
+    "G:Planta - instalación eléctrica": [
+     0.2,
+     0.45,
+     0.9
+    ]
+   }
+  },
+  {
+   "nombre": "R11_torre_TT-O",
+   "cam": [
+    -2.0,
+    22.5,
+    9.8
+   ],
+   "mira": [
+    -10,
+    14.6,
+    5.6
+   ],
+   "lente": 26,
+   "ancho": 1600,
+   "alto": 1000,
+   "muestras": 40,
+   "ocultar": [
+    "G:Flujo de guano"
+   ]
+  },
+  {
+   "nombre": "R13_recepcion_TP-01",
+   "cam": [
+    10.8,
+    11.2,
+    3.3
+   ],
+   "mira": [
+    4.5,
+    15.2,
+    2.6
+   ],
+   "lente": 20,
+   "ancho": 1600,
+   "alto": 1000,
+   "muestras": 40,
+   "exposicion": 0.8,
+   "ocultar": [
+    "G:Flujo de guano"
+   ]
+  },
+  {
+   "nombre": "R14_sala_de_control_TS-GU",
+   "cam": [
+    21.2,
+    6.8,
+    5.4
+   ],
+   "mira": [
+    25.2,
+    2.2,
+    1.4
+   ],
+   "lente": 22,
+   "ancho": 1600,
+   "alto": 1000,
+   "muestras": 40,
+   "exposicion": 0.6,
+   "ocultar": [
+    "G:Planta - edificios auxiliares",
+    "G:Nave de proceso - cubierta",
+    "G:Nave de proceso - iluminación",
+    "G:Flujo de guano"
+   ]
+  }
+ ]
+}

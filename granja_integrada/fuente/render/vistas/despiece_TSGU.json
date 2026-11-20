@@ -1,0 +1,18 @@
+{
+ "glb": "modelo_3d/despieces/TSGU.glb",
+ "salida": "planos/img_tecnicas",
+ "vistas": [
+  {
+   "nombre": "X_TSGU",
+   "auto": true,
+   "mira": [
+    0.75,
+    1.0,
+    -0.45
+   ],
+   "px_ancho": 2000,
+   "margen": 0.03,
+   "retiro_m": 30
+  }
+ ]
+}

@@ -10,7 +10,7 @@ leen funciones y datos (formato de las láminas y de la memoria, modelo del SC-4
 
 | Para ver | Dónde |
 |---|---|
-| Visor 3D (granja, planta, galpón tipo y secador) | [`index.html`](index.html) · en GitHub Pages: `/granja_integrada/` |
+| Visor 3D (granja, planta, galpón tipo y secador) | [`index.html`](index.html) · en GitHub Pages: `/granja_integrada/`. Para que ande en cualquier compu, el visor dibuja las gallinas y los bebederos simplificados (de 290 a 7,8 millones de triángulos en la granja completa); los GLB conservan el detalle para los renders. |
 | Memoria técnica (37 páginas) | [`memoria/Memoria_tecnica_granja_integrada.pdf`](memoria/Memoria_tecnica_granja_integrada.pdf) y `.docx` |
 | Láminas GI-01 a GI-20 (A3) | [`planos/Planos_GI.pdf`](planos/Planos_GI.pdf) · una por una en `planos/pdf/` y `planos/*.png` |
 | Láminas en DXF | [`planos/dxf/Planos_DXF_GI.zip`](planos/dxf/Planos_DXF_GI.zip) (DXF con sus imágenes en `img/`) |

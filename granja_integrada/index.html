@@ -110,7 +110,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
+import { mergeGeometries, mergeVertices } from "three/addons/utils/BufferGeometryUtils.js";
 
 // Coordenadas del proyecto (x Este, y Norte, z arriba, m) → three.js (y arriba): (x, z, -y)
 const P = (x, y, z) => new THREE.Vector3(x, z, -y);
@@ -141,6 +141,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 const escena = new THREE.Scene();
+window.visor = { renderer, escena };             // para revisar desde la consola (triángulos por cuadro: visor.renderer.info)
 const oscuro = matchMedia("(prefers-color-scheme: dark)").matches;
 escena.background = new THREE.Color(oscuro ? 0x1b2128 : 0xdfe7ee);
 escena.add(new THREE.HemisphereLight(0xffffff, 0x8a9a7a, 1.4));
@@ -230,7 +231,53 @@ document.getElementById("soloElec").onclick = () => grupos.forEach((g, n) => {
 
 // El modelo trae un nodo por pieza (hasta 36.000). Para que la vista sea fluida, en cada sistema las piezas repetidas
 // (misma malla y material) pasan a una InstancedMesh y las únicas se juntan en una malla por material.
-function optimizar(grupo) {
+// Geometrías muy repetidas (las 60 gallinas de cada jaula, los bebederos): el GLB las trae con todo el detalle para los
+// renders, pero en el navegador serían cientos de millones de triángulos. Cada pieza conexa se cambia por una figura
+// liviana del mismo tamaño y en el mismo lugar: las gallinas por elipsoides y lo demás por cajas.
+const TRI_MAX = 3e6;                             // triángulos por geometría repetida a partir de los cuales se alivia
+const aliviadas = new Map();
+const triangulos = (g) => (g.index ? g.index.count : g.attributes.position.count) / 3;
+
+function aliviar(geo, esferas, muchas) {
+  const clave = `${geo.uuid}|${esferas}|${muchas}`;
+  if (aliviadas.has(clave)) return aliviadas.get(clave);
+  const base = new THREE.BufferGeometry();
+  base.setAttribute("position", geo.attributes.position);
+  if (geo.index) base.setIndex(geo.index);
+  const g = mergeVertices(base, 1e-4);           // suelda las costuras para que cada pieza quede conexa
+  const pos = g.attributes.position, idx = g.index;
+  const padre = new Int32Array(pos.count).map((_, i) => i);
+  const raiz = (i) => { while (padre[i] !== i) { padre[i] = padre[padre[i]]; i = padre[i]; } return i; };
+  for (let t = 0; t < idx.count; t += 3) {
+    const a = raiz(idx.getX(t));
+    padre[raiz(idx.getX(t + 1))] = a;
+    padre[raiz(idx.getX(t + 2))] = a;
+  }
+  const cajas = new Map(), v = new THREE.Vector3();
+  for (let i = 0; i < pos.count; i++) {
+    const r = raiz(i);
+    if (!cajas.has(r)) cajas.set(r, new THREE.Box3());
+    cajas.get(r).expandByPoint(v.fromBufferAttribute(pos, i));
+  }
+  const icosa = new THREE.IcosahedronGeometry(0.5, 1), octa = new THREE.OctahedronGeometry(0.5, 0);
+  const cubo = new THREE.BoxGeometry(1, 1, 1).toNonIndexed();
+  const partes = [];
+  for (const c of cajas.values()) {
+    const tam = c.getSize(new THREE.Vector3()), cen = c.getCenter(new THREE.Vector3());
+    const molde = esferas ? (!muchas && Math.min(tam.x, tam.y, tam.z) > 0.12 ? icosa : octa) : cubo;
+    const p = molde.clone();
+    p.scale(Math.max(tam.x, 1e-3), Math.max(tam.y, 1e-3), Math.max(tam.z, 1e-3)).translate(cen.x, cen.y, cen.z);
+    for (const n of Object.keys(p.attributes)) if (n !== "position" && n !== "normal") p.deleteAttribute(n);
+    partes.push(p);
+  }
+  const res = mergeGeometries(partes, false);
+  partes.forEach((p) => p.dispose());
+  [base, g, icosa, octa, cubo].forEach((x) => x.dispose());
+  aliviadas.set(clave, res);
+  return res;
+}
+
+function optimizar(grupo, usos) {
   grupo.updateMatrixWorld(true);
   const inv = new THREE.Matrix4().copy(grupo.matrixWorld).invert();
   const cubos = new Map();
@@ -242,6 +289,13 @@ function optimizar(grupo) {
   });
   const nuevos = [];
   const sueltas = new Map();                     // material → geometrías únicas ya transformadas
+  for (const c of cubos.values()) {
+    const gallina = /gallina/i.test(c.mat.name);
+    const total = usos.get(c.geo.uuid) || c.ms.length;   // repeticiones en todo el modelo, no solo en este grupo
+    if (c.ms.length > 1 && (gallina || triangulos(c.geo) * total > TRI_MAX)) {
+      c.geo = aliviar(c.geo, gallina, total >= 1000);
+    }
+  }
   for (const { geo, mat, ms } of cubos.values()) {
     if (ms.length === 1) {
       const g = geo.clone();
@@ -277,13 +331,15 @@ function cargar(url) {
   grupos.clear();
   cargador.load(url, (gltf) => {
     raiz = gltf.scene;
+    const usos = new Map();
+    raiz.traverse((o) => { if (o.isMesh) usos.set(o.geometry.uuid, (usos.get(o.geometry.uuid) || 0) + 1); });
     for (const n of raiz.children) {
       // GLTFLoader limpia los nombres (saca ":" y cambia espacios): el original está en el JSON del archivo
       const a = gltf.parser.associations.get(n);
       const original = a && a.nodes !== undefined ? gltf.parser.json.nodes[a.nodes].name : n.name;
       const nombre = (original || "").replace(/^G:/, "");
       n.userData.grupo = nombre;
-      optimizar(n);
+      optimizar(n, usos);
       grupos.set(nombre, n);
       if (/Flujo de guano/i.test(nombre)) n.visible = false;
     }
